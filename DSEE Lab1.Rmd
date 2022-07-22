@@ -1,0 +1,107 @@
+---
+title: "Introduction to R - Part 1"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    collapsed: false
+    number_sections: false
+    toc_depth: 3
+    #code_folding: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message=FALSE,warning=FALSE, cache=TRUE)
+```
+
+```{r klippy, echo=FALSE, include=TRUE}
+klippy::klippy()
+```
+
+
+*Learning goals:*
+
+  *1.  Understand what are R and R Studio*
+    
+  *2.  Develop the good habit of working with scripts*
+    
+  *3.  Learn to import data in R*
+  
+  *4.  Learn to manipulate R objects like vectors and data frames*
+    
+  *5.  Make a simple plot*
+    
+<br>
+    
+*Steps:*
+
+  *1.Download R and RStudio*
+    
+  *2.  Import and check data*
+    
+  *3.  Calculate yearly CO2 concentrations*
+    
+  *4.  Create a vector and plot it*
+    
+  *5.  Create a data frame and plot it*
+  
+<br>  
+    
+**Due:** Nothing at the end of lab, but be sure to save the plot I ask you to export in part 4 of this document. You will incorporate it into your final write-up for the Introduction to R lab module.
+
+<br>
+
+### Introduction
+
+In our first tutorial we will begin to explore “R” as a tool to analyze and visualize data.
+R is a statistical programming language that has rapidly gained popularity in many scientific fields. It was developed by Ross Ihaka and Robert Gentleman as an open source implementation of the “S” programming language. (Next time you need a fun fact, you can say “Did you know that S came before R?”) R is also the name of the software that uses this language for statistical computing. With a huge online support community and dedicated packages that provide extra functionality for virtually any application and field of study, there’s hardly anything you can’t do in R.
+
+If you already know your way around statistical software like SPSS, the main difference is that R has no **graphical user interface**, which means there are no buttons to click and no dropdown menus. R can be run entirely by typing commands into a text interface (welcome to the Matrix!). This may seem a little daunting, but it also means a whole lot more flexibility, as you are not relying on a pre-determined toolkit for your analyses.
+
+Like with any language, there is a learning curve, but we will take it step by step, and in no time you will be coding your own analyses and graphs!
+
+If you need any more convincing, why are we using R and not one of the many other statistical packages like MATLAB, Minitab, or even Microsoft Excel? Well, R is great because:
+
+ •  R is free and open source, and always will be! Anybody can use the code and see exactly how it works.
+    
+•  Because R is a programming language rather than a graphical interface, the user can easily save scripts as small text files for use in the future, or share them with collaborators.
+    
+•  R has a very active and helpful online community – normally a quick search is all it takes to find that somebody has already solved the problem you’re having. 
+
+<br>
+
+### 1. Download R and RStudio
+
+As we said before, R itself does not have a graphical interface, but most people interact with R through graphical platforms that provide extra functionality. We will be using a program called RStudio as a graphical front-end to R, so that we can access our scripts and data, find help, and preview plots and outputs all in one place.
+
+You can download R from [CRAN (The Comprehensive R Archive Network)] (https://cran.r-project.org/). Select the link appropriate for your operating system.
+
+Then, download RStudio from [the RStudio website](https://www.rstudio.com/products/rstudio/) (select the free open source desktop version).
+
+Open RStudio. Click on “File/New File/R script”.
+
+![](C:/Users/17163/Documents/DSEE/Labs/Intro_to_R/Introduction to R Part 1/R Studio orientation image.png)
+
+You will now see a window like the one above. You can type code directly into the console on the lower left (doesn’t mean that you should^!). Pressing enter at the end of the line runs the code (try typing 2 + 2 and running it now). You can (should!) also write your code in the script file in the top left window. To run a line of code from your script, press <mark style="background-color:grey">Ctrl+R</mark> on Windows or <mark style="background-color:grey">Cmd+Enter</mark> on a Mac. On newer Windows computers, the default shortcut is <mark style="background-color:grey">Ctrl+Enter</mark>. Or highlight the code you want to run and hit the run button (top right of the script window). The environment window gives you an overview of your current workspace^^. You will see the data you have imported, objects you have created, functions you have defined, etc. Finally, the last panel has multiple tabs and will preview your plot and allow you to navigate around folders and look at the packages you currently have installed and loaded.
+
+^A note about scripts (We love scripts!): Remember that if you enter code directly into the console, it will not be saved by R: it runs and disappears (although you can access your last few operations by hitting the ‘up’ key on your keyboard). Instead, by typing your code into a script file, you are creating a reproducible record of your analysis. Writing your code in a script is similar to writing an essay in Word: it saves your progress and you can always pick up where you left off, or make some changes to it. (Remember to click Save (Ctrl+S) often, so that you actually save your script!)
+
+**When writing a script, it’s useful to add comments to describe what you are doing by inserting a hasthag # in front of a line of text.** R will see anything that begins with # as text instead of code, so it will not try to run it, but the text will provide valuable information about the code for whoever is reading your script (including future you!). Like with any piece of writing, scripts benefit from structure and clarity.
+
+^^A quicker note about the workspace: The workspace will have everything you have used in a session floating around your computer memory. When you exit, R will ask you if you want to save the current workspace. You almost [never need to](https://www.r-bloggers.com/2017/04/using-r-dont-save-your-workspace/), and it’s best to click no and start with a clear slate every time. (DO make sure you save your script though!!)
+
+<br>
+
+#### Begin to write in your script
+
+For now, start by recording who is writing, the date, and the main goal – in our case, atmospheric CO2 concentrations from the Mauna Loa Observatory in Hawaii. Here’s an example, which you can copy, paste and edit into your new script:
+
+```{r}
+# DSEE – Introduction to R
+# Learning how to import and explore data, and make graphs
+# Modified by Prof Howard from exercise by Gergana Daskalova
+```
+
+The next few lines of code usually load the packages you will be needing for your analysis. A package is a bundle of commands that can be loaded into R to provide extra functionality. For example, you might load a package for formatting data, or for making maps. (Or for making graphs with [cats on them](https://github.com/Gibbsdavidl/CatterPlots), or whatever floats your boat… As we said before, there’s virtually nothing you cannot do!)
+
+To install a package, type <mark style="background-color:grey">install.packages("package-name")</mark>. You only need to install packages once, so in this case you can type directly in the console box, rather than saving the line in your script and re-installing the package every time.
