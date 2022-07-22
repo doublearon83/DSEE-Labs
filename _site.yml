@@ -1,6 +1,6 @@
 name: "DSEE Labs"
 navbar:
-  title: "MyLabJournal"
+  title: "DSEE Labs"
   left:
     - text: "Home"
       href: index.html
