@@ -80,7 +80,7 @@ Then, download RStudio from [the RStudio website](https://www.rstudio.com/produc
 
 Open RStudio. Click on “File/New File/R script”.
 
-![](C:/Users/17163/Documents/DSEE/Labs/Intro_to_R/Introduction to R Part 1/R Studio orientation image.png)
+![](images/R Studio orientation image.png)
 
 You will now see a window like the one above. You can type code directly into the console on the lower left (doesn’t mean that you should^!). Pressing enter at the end of the line runs the code (try typing 2 + 2 and running it now). You can (should!) also write your code in the script file in the top left window. To run a line of code from your script, press <mark style="background-color:grey">Ctrl+R</mark> on Windows or <mark style="background-color:grey">Cmd+Enter</mark> on a Mac. On newer Windows computers, the default shortcut is <mark style="background-color:grey">Ctrl+Enter</mark>. Or highlight the code you want to run and hit the run button (top right of the script window). The environment window gives you an overview of your current workspace^^. You will see the data you have imported, objects you have created, functions you have defined, etc. Finally, the last panel has multiple tabs and will preview your plot and allow you to navigate around folders and look at the packages you currently have installed and loaded.
 

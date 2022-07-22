@@ -11,7 +11,7 @@
 
 
 
-<title>Resources</title>
+<title>Introduction to R - Part 2</title>
 
 <script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -29,9 +29,16 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/clipboard-1.7.1/clipboard.min.js"></script>
+<link href="site_libs/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
+<link href="site_libs/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
+<script src="site_libs/klippy-0.0.0.9500/js/klippy.min.js"></script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -218,6 +225,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -225,6 +295,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -262,53 +342,39 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Resources</h1>
+<h1 class="title toc-ignore">Introduction to R - Part 2</h1>
 
 </div>
 
 
-<div id="r-and-r-studio" class="section level3">
-<h3>R and R-Studio</h3>
-<p><a href="http://www.r-project.org">R</a> is a free open-source
-programming language that can be used for statistical analysis,
-data-simulation, graphing, and lots of other stuff. Another free program
-is <a href="http://www.rstudio.com">R-studio</a>, that provides a nice
-graphic interface for R. Download R first, then download R-studio. Both
-can run on PCs, Macs or Linux. Students will be learning R in the stats
-labs using the lab manual <a href=""></a>.</p>
+<script>
+  addClassKlippyTo("pre.r, pre.markdown");
+  addKlippy('left', 'top', 'auto', '1', 'Copy code', 'Copied!');
+</script>
+<p><em>Learning goals:</em></p>
+<p><em>1. Learn base R syntax for data manipulation</em></p>
+<p><em>2. Turn messy data into tidy data with tidyr</em></p>
+<p><em>3. Use efficient tools from the dplyr package to manipulate
+data</em></p>
+<div class="line-block">    <em>-Gain comfort with loops</em><br />
+ <br></div>
+<p><em>Steps:</em></p>
+<p><em>1. Subset, extract and modify data with R base operators</em></p>
+<p><em>2. What is tidy data, and how do we achieve it?</em></p>
+<p><em>3. Explore the most common and useful functions of dplyr</em></p>
+<div class="line-block">     <em>-Investigate for loops</em></div>
+<p><em>4. Complete Introduction to R write-up</em></p>
+<p><br></p>
+<p><strong>Due:</strong> 2/8/22 at 12:45 PM, Introduction to R write-up
+(20 pts.). Includes everything asked of you in the blue questions within
+this document along with the additional materials and questions at the
+very end. The write-up should be completed in your favorite word
+processor and uploaded to the assignment on Canvas.</p>
+
+
+
 </div>
-<div id="additional-r-resources" class="section level3">
-<h3>Additional R resources</h3>
-<ol style="list-style-type: decimal">
-<li>Google is great, Google your problem</li>
-<li><a href="https://stackoverflow.com">Stackoverflow</a> is great,
-google will often take you there because someone has already asked your
-question, and someone else has answered, usually many people have
-answered your question many ways.</li>
-<li>Danielle Navarro wrote a <a
-href="https://compcogscisydney.org/learning-statistics-with-r/">free
-Psych Stats textbook using R</a>, it’s worth checking out (some of our
-textbook are based on Danielle’s)</li>
-<li>I am currently writing another stats textbook (incorporating some of
-the above). You can read it while it’s being made right here <a
-href="https://crumplab.github.io/statistics/">https://crumplab.github.io/statistics/</a>,
-also check out the lab manual for more specific things about doing
-various stats in R (also in draft right now) <a
-href="https://crumplab.github.io/statisticsLab/">https://crumplab.github.io/statisticsLab/</a></li>
-<li>Daniell Navarro recently made this website for introducing R, it’s
-great, check it out (also made using this R markdown process): <a
-href="http://compcogscisydney.org/psyr/">http://compcogscisydney.org/psyr/</a></li>
-<li>Check out my slightly older programming book that also introduces R
-<a
-href="https://crumplab.github.io/programmingforpsych/">https://crumplab.github.io/programmingforpsych/</a></li>
-<li>This is the definitive guide for all things R Markdown (you will
-find this very useful as you get better at this skill): <a
-href="https://bookdown.org/yihui/rmarkdown/">https://bookdown.org/yihui/rmarkdown/</a></li>
-</ol>
 </div>
-
-
-
 
 </div>
 
@@ -341,6 +407,35 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
