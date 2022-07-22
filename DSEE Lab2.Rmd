@@ -1,0 +1,32 @@
+---
+title: "Introduction to R - Part 2"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    collapsed: false
+    number_sections: false
+    toc_depth: 3
+    #code_folding: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message=FALSE,warning=FALSE, cache=TRUE)
+```
+
+```{r klippy, echo=FALSE, include=TRUE}
+klippy::klippy()
+```
+
+Learning goals:
+    1.  Learn base R syntax for data manipulation
+    2.  Turn messy data into tidy data with tidyr
+    3.  Use efficient tools from the dplyr package to manipulate data
+        ◦  Gain comfort with loops
+Steps:
+    1.  Subset, extract and modify data with R base operators
+    2.  What is tidy data, and how do we achieve it?
+    3.  Explore the most common and useful functions of dplyr
+        ◦  Investigate for loops
+    4.  Complete Introduction to R write-up
+Due: 2/8/22 at 12:45 PM, Introduction to R write-up (20 pts.).  Includes everything asked of you in the blue questions within this document along with the additional materials and questions at the very end.  The write-up should be completed in your favorite word processor and uploaded to the assignment on Canvas.

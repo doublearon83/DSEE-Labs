@@ -6,6 +6,6 @@ navbar:
       href: index.html
     - text: "DSEE Lab #1"
       href: DSEE-Lab1.html
-    - text: "Links"
-      href: Links.html
+    - text: "DSEE Lab #2"
+      href: DSEE-Lab2.html
 output_dir: "docs"
