@@ -29,6 +29,6 @@ output: html_document
 
 ### [Data Science for Ecology and the Environment](https://fandm.instructure.com/courses/17827)
 
-![](images/logo.png)
+![](images/Covid.png)
 </a>
 </div>
