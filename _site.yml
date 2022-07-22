@@ -1,10 +1,10 @@
-name: "MyLabJournal"
+name: "DSEE Labs"
 navbar:
   title: "MyLabJournal"
   left:
     - text: "Home"
       href: index.html
-    - text: "Journal"
+    - text: "DSEE Labs"
       href: Journal.html
     - text: "Links"
       href: Links.html
