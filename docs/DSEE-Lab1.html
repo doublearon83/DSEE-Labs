@@ -13,7 +13,7 @@
 
 <title>Introduction to R - Part 1</title>
 
-<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -67,6 +67,7 @@ if (window.hljs) {
 
 
 
+
 <style type = "text/css">
 .main-container {
   max-width: 940px;
@@ -87,6 +88,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -312,7 +316,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -536,6 +540,316 @@ first row of your data as the column names) and click Import. In the
 console, you will see the code for your import, which includes the file
 path - it’s a good idea to copy this code into your script, so that for
 future reference you know where your dataset came from.</p>
+<p><img src="images/R%20Studio%20import%20data.png" /></p>
+<p>R works best with <mark style="background-color:grey">.csv</mark>
+(comma separated values) files. If you entered your data in Excel, you
+would need to click on Save as and select
+<mark style="background-color:grey">csv</mark> as the file extension.
+When entering data in Excel, don’t put any spaces in your row names, as
+they will confuse R later (e.g. go for something like
+<mark style="background-color:grey">CO2_ppm</mark> rather than
+<mark style="background-color:grey">CO2 (ppm)</mark>. Some computers
+save <mark style="background-color:grey">.csv</mark> files with
+semicolons <mark style="background-color:grey">;</mark>, not commas
+<mark style="background-color:grey">,</mark> as the separators. This
+usually happens when English is not the first or only language on your
+computer. If your files are separated by semicolons, use
+<mark style="background-color:grey">read.csv2()</mark> instead of
+<mark style="background-color:grey">read.csv</mark>, or alternatively
+use the argument “sep” (for separator) in the
+<mark style="background-color:grey">read.csv</mark> function:
+<mark style="background-color:grey">read.csv(“your-file-path”, sep =
+“;”)</mark>.</p>
+<pre class="r"><code>ML_CO2 &lt;- read.csv(&quot;C:/Users/17163/Documents/DSEE/Labs/Intro_to_R/MLO_CO2.csv&quot;)  
+# This is just an example that will not work for you because you have not downloaded the data.</code></pre>
+<p>Today, we will just read the data in directly from the NOAA website.
+The <mark style="background-color:grey">read.table()</mark> function
+allows you to read data in from a path on your computer or a
+website.</p>
+<pre class="r"><code>MLO_CO2 &lt;- read.table(&quot;https://gml.noaa.gov/aftp/data/trace_gases/co2/flask/surface/txt/co2_mlo_surface-flask_1_ccgg_month.txt&quot;) 
+# This downloads data from the NOAA website.</code></pre>
+<p>Remember to save your script once in a while! If you haven’t saved it
+already, why not save it in the same directory as the rest of the
+tutorial file, and give it a meaningful name.</p>
+<p><mark style="background-color:lightblue">A note about objects: R is
+an object-based language - this means that the data you import, and any
+values you create later, are stored in objects that you name. The arrow
+</mark><mark style="background-color:grey">&lt;-</mark><mark style="background-color:lightblue">
+in the code above is how you assign objects. Here, we assigned our csv
+file to the object
+</mark><mark style="background-color:grey">MLO_CO2</mark><mark style="background-color:lightblue">.
+We could just as easily have called it
+</mark><mark style="background-color:grey">mydata</mark><mark style="background-color:lightblue">
+or
+</mark><mark style="background-color:grey">hello</mark><mark style="background-color:lightblue">
+or
+</mark><mark style="background-color:grey">whatever</mark><mark style="background-color:lightblue">,
+but it’s best to choose a unique, informative, and short name. In the
+top right window of RStudio, you can see the names of any objects
+currently loaded into R. See your
+</mark><mark style="background-color:grey">MLO_CO2</mark><mark style="background-color:lightblue">
+object?</mark></p>
+<p><mark style="background-color:lightblue">When you import your data
+into R, it will most likely become an object called a data frame. A data
+frame is like a table, or spreadsheet – it has rows and columns with the
+different variables and observations you have loaded. But more on that
+later!</mark></p>
+<p>A really important step is to check that your data was imported
+without any mistakes. It’s good practice to always run this code and
+check the output in the console – do you see any missing values, do the
+numbers/names make sense? If you go straight into analysis, you risk
+later finding out that R didn’t read your data correctly and having to
+re-do it, or worse, analyzing wrong data without noticing. To preview
+more than just the few first lines, you can also click on the object in
+your Environment panel, and it will show up as a spreadsheet in a new
+tab next to your open script. Large files may not display entirely, so
+keep in mind you could be missing rows or columns.</p>
+<pre class="r"><code>head(MLO_CO2)      # Displays the first few rows</code></pre>
+<pre><code>##    V1   V2 V3     V4
+## 1 MLO 1969  8 322.51
+## 2 MLO 1969  9 321.36
+## 3 MLO 1969 10 320.74
+## 4 MLO 1969 11 321.98
+## 5 MLO 1969 12 323.78
+## 6 MLO 1970  1 325.13</code></pre>
+<pre class="r"><code>tail(MLO_CO2)        # Displays the last rows</code></pre>
+<pre><code>##      V1   V2 V3     V4
+## 558 MLO 2021  7 416.73
+## 559 MLO 2021  8 414.35
+## 560 MLO 2021  9 413.18
+## 561 MLO 2021 10 413.76
+## 562 MLO 2021 11 414.91
+## 563 MLO 2021 12 416.77</code></pre>
+<pre class="r"><code>str(MLO_CO2)         # Tells you whether the variables are continuous, integers, categorical or characters</code></pre>
+<pre><code>## &#39;data.frame&#39;:    563 obs. of  4 variables:
+##  $ V1: chr  &quot;MLO&quot; &quot;MLO&quot; &quot;MLO&quot; &quot;MLO&quot; ...
+##  $ V2: int  1969 1969 1969 1969 1969 1970 1970 1970 1970 1970 ...
+##  $ V3: int  8 9 10 11 12 1 2 3 4 5 ...
+##  $ V4: num  323 321 321 322 324 ...</code></pre>
+<p><mark style="background-color:grey">str(object.name)</mark> is a
+great command that shows the structure of your data. So often, analyses
+in R go wrong because R decides that a variable is a certain type of
+data that it is not. For instance, you might have four study groups that
+you simply called “1, 2, 3, 4”, and while you know that it should be a
+categorical grouping variable (i.e., a factor), R might decide that this
+column contains numeric (numbers) or integer (whole number) data. If
+your study groups were called “one, two, three, four”, R might decide
+it’s a character variable (words or strings of words), which will not
+get you far if you want to compare means among groups. Bottom line:
+always check your data structure!</p>
+<p>You’ll notice the variables have no names! We can specify them with
+the <mark style="background-color:grey">names()</mark> function.</p>
+<pre class="r"><code>names(MLO_CO2) &lt;- c(&quot;Site&quot;,&quot;Year&quot;,&quot;Month&quot;,&quot;CO2&quot;)   
+# Applies names to each variable in the dataset</code></pre>
+<p>We also used the <mark style="background-color:grey">c()</mark>
+function (c stands for concatenate, or chain if that makes it easier to
+remember). This just combines values, in this case variable names, into
+a vector. We will talk more about vectors later.</p>
+<p>The dataset is composed of four variables: Site (Mauna Loa), Year,
+Month (of year), and CO2 concentration in ppm (parts per million).</p>
+<p>When you want to access just one column of a data frame, you append
+the variable name to the object name with a dollar
+<mark style="background-color:grey">$</mark> sign. This syntax lets you
+see, modify, and/or reassign this variable.</p>
+<pre class="r"><code>unique(MLO_CO2$Year) # The unique function here prints all of the unique year values in the dataset</code></pre>
+<pre><code>##  [1] 1969 1970 1976 1977 1978 1979 1980 1981 1982 1983 1984 1985 1986 1987 1988
+## [16] 1989 1990 1991 1992 1993 1994 1995 1996 1997 1998 1999 2000 2001 2002 2003
+## [31] 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016 2017 2018
+## [46] 2019 2020 2021</code></pre>
+<pre class="r"><code># More exploration
+dim(MLO_CO2) # Displays number of rows and columns</code></pre>
+<pre><code>## [1] 563   4</code></pre>
+<pre class="r"><code>summary(MLO_CO2) # Gives you a summary of the data</code></pre>
+<pre><code>##      Site                Year          Month             CO2       
+##  Length:563         Min.   :1969   Min.   : 1.000   Min.   :320.7  
+##  Class :character   1st Qu.:1986   1st Qu.: 4.000   1st Qu.:347.8  
+##  Mode  :character   Median :1998   Median : 7.000   Median :366.7  
+##                     Mean   :1998   Mean   : 6.563   Mean   :369.0  
+##                     3rd Qu.:2010   3rd Qu.:10.000   3rd Qu.:389.1  
+##                     Max.   :2021   Max.   :12.000   Max.   :419.2</code></pre>
+<pre class="r"><code>summary(MLO_CO2$CO2) # Gives you a summary of that particular variable (column) in your dataset</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   320.7   347.8   366.7   369.0   389.1   419.2</code></pre>
+<p><br></p>
+</div>
+<div id="calculate-yearly-co2-averages" class="section level3">
+<h3>3. Calculate yearly CO2 averages</h3>
+<p>Our <mark style="background-color:grey">MLO_CO2</mark> object has CO2
+records from 1969 through 2020, though a few years are missing. To
+explore these values, we will create a graph showing CO2 concentration
+averages for a subset of those years. You could calculate averages in
+Excel, but that has several disadvantages, especially when working with
+large datasets like ours – you have no record of what you clicked on,
+how you sorted the data and what you copied/deleted - mistakes can slip
+by without you noticing. In R, on the other hand, you have your script,
+so you can go back and check all the steps in your analysis.</p>
+<p>To do this, first we need to split
+<mark style="background-color:grey">MLO_CO2</mark> into multiple
+objects, each containing rows for only one year. We do this with the
+useful <mark style="background-color:grey">filter()</mark> function from
+the <mark style="background-color:grey">dplyr</mark> package.</p>
+<pre class="r"><code>Y1976 &lt;- filter(MLO_CO2, Year == &quot;1976&quot;)
+# The first argument of the function is the data frame, the second argument is the condition you want to filter on. Because we only want the year 1969 here, we say: the variable Year MUST BE EXACTLY (==) 1969 – drop everything else from the dataset. (R is case-sensitive so it&#39;s important to watch your spelling! &quot;year&quot; or &quot;Years&quot; would not have worked here.)
+
+Y1977 &lt;- filter(MLO_CO2, Year == &quot;1977&quot;)  # We do the same with 1977. It&#39;s very similar to filtering in Excel if you are used to it.
+# You can create the objects for the years 1978 through 1980.</code></pre>
+<p>You need to do these steps for the years 1978 through 1980, here we
+have given examples for the first two. If you see an error saying
+<mark style="background-color:grey">R</mark> can’t find the object
+<mark style="background-color:grey">1969</mark> or something similar,
+chances are you either haven’t installed and/or loaded the
+<mark style="background-color:grey">dplyr</mark> package. Go back and
+install it using
+<mark style="background-color:grey">install.packages(“dplyr”)</mark> and
+then load it using
+<mark style="background-color:grey">library(dplyr)</mark>.</p>
+<p>Once you have created objects for each year, we can calculate yearly
+averages. For this, we will use the
+<mark style="background-color:grey">mean()</mark> function.</p>
+<pre class="r"><code>a &lt;- mean(Y1976$CO2)
+b &lt;- mean(Y1977$CO2)
+# You can choose whatever names you want for your objects, here I used a, b, c, d... for the sake of brevity.</code></pre>
+<p>If you type <mark style="background-color:grey">a</mark> (or however
+you named your variables) in the console, what does it return? What does
+it mean? It should represent the year average CO2 concentration.</p>
+<p>Again, calculate the yearly average up to 1980. You are probably
+noticing this is quite repetitive and uses a lot of copying and pasting!
+We will learn how to use more of
+<mark style="background-color:grey">dplyr</mark>’s functions and achieve
+the same result with way less code!</p>
+<p><br></p>
+</div>
+<div id="create-a-vector-and-plot-it" class="section level3">
+<h3>4. Create a vector and plot it</h3>
+<p>Now that we have mean concentration by year, we can combine all those
+values in a vector. A vector is another type of R object that stores
+values. As opposed to a data frame, which has two dimensions (rows and
+columns), a vector only has one. When you call a column of a data frame
+like we did earlier with
+<mark style="background-color:grey">MLO_CO2$CO2</mark>, you are
+essentially producing a vector – but you can also create them from
+scratch.</p>
+<p>We do this using the <mark style="background-color:grey">c()</mark>
+and <mark style="background-color:grey">names()</mark> functions
+again.</p>
+<pre class="r"><code>CO2_y &lt;- c(a, b, c, d, e)     # We are chaining together all the values; pay attention to the object names you have calculated and their order
+names(CO2_y) &lt;- c(&quot;1976&quot;, &quot;1977&quot;, &quot;1978&quot;, &quot;1979&quot;, &quot;1980&quot;)</code></pre>
+<p>Notice:</p>
+<p>• The spaces in front of and behind
+<mark style="background-color:grey">&lt;-</mark> and after
+<mark style="background-color:grey">,</mark> are added to make it easier
+to read the code.</p>
+<p>• Take care to check that you are matching your vector values and
+labels correctly! The good thing about keeping a script is that we can
+go back and check that we have indeed assigned the mean of 1976 to
+<mark style="background-color:grey">a</mark>. Even better practice would
+have been to give more meaningful names to our objects, such as
+<mark style="background-color:grey">mean_1976</mark>.</p>
+<p>• If you highlight a bracket
+<mark style="background-color:grey">)</mark> with your mouse, R Studio
+will highlight its matching one in your code. Missing brackets,
+especially when you start nesting functions like we did earlier with
+<mark style="background-color:grey">length(unique())</mark> are one of
+the most common sources of frustration and error when you start
+coding!</p>
+<p>We can now visualize CO2 concentration with the
+<mark style="background-color:grey">barplot()</mark> function. Plots
+appear in the bottom right window in RStudio.</p>
+<pre class="r"><code>barplot(CO2_y)</code></pre>
+<p><img src="DSEE-Lab1_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>Ta-daaaa! But there are a few things not quite right that we should
+fix – there are no axis titles, not all column labels are visible, and
+the CO2 values exceed the highest value on the y axis, so we need to
+extend it. The great thing about R is that you don’t need to come up
+with all the code on your own - you can use the
+<mark style="background-color:grey">help()</mark> function and see what
+arguments you need to add in. Look through the help output, what code do
+you need to add in?</p>
+<pre class="r"><code>help(barplot)     # For help with the barplot() function
+help(par)         # For help with plotting in general</code></pre>
+<p>We also want to save our plot. To do this, click Export in the Plots
+window. If you don’t change the directory, the file will be saved in
+your working directory. You can adjust the dimensions to get the bar
+chart to look how you like it, and you should also add in a meaningful
+file name - <mark style="background-color:grey">Rplot01.png</mark> won’t
+be helpful when you try to find the file later.</p>
+<p><img src="images/R%20Studio%20barplot.png" /></p>
+<pre class="r"><code>barplot(CO2_y, xlab=&quot;Year&quot;, ylab=&quot;CO2 in parts per million (ppm)&quot;, ylim=c(0,400), cex.names= 1.5, cex.axis=1.5, cex.lab=1.5)</code></pre>
+<p><img src="DSEE-Lab1_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<pre class="r"><code># The cex code increases the font size when greater than one (and decreases it when less than one). </code></pre>
+<p><img src="images/R%20Studio%20barplot%20improved.png" /> Figure 1.
+Yearly atmospheric CO2 concentration (ppm) for five years (1976-1980) at
+the Mauna Loa Observatory, Hawaii.</p>
+<p><br></p>
+</div>
+<div id="create-a-data-frame-and-plot-it" class="section level3">
+<h3>5. Create a data frame and plot it</h3>
+<p>In the last section we created vectors, i.e., a series of values,
+each with a label. This object type is suitable when dealing with just
+one set of values. Often, however, you will have more than one variable
+and have multiple data types - e.g. some continuous, some categorical.
+In those cases, we use data frame objects. Data frames are tables of
+values: they have a two-dimensional structure with rows and columns,
+where each column can have a different data type. For instance, a column
+called “Wingspan” would have numeric values measured on different birds
+(21.3, 182.1, 25.1, 8.9), and a column “Species” would have character
+values of with the names of the species (“House sparrow”, “Golden
+eagle”, “Eurasian kingfisher”, “Ruby-throated hummingbird”). Another
+possible data format is a matrix - a matrix can have several rows of
+data as well (e.g., you can combine vectors into a matrix), but the
+variables must be all of the same type. For instance they are all
+numerical and are the same length in terms of the number of rows.</p>
+<p><mark style="background-color:lightblue">A note on good housekeeping:
+ALWAYS keep a copy of your raw data as you first collected it. The
+beauty of manipulating a file in an R script is that the modifications
+live on the script, not in the data. For Photoshop-savvy people, it’s
+like adding layers to an image: you’re not altering the original photo,
+just creating new things on top of it. That said, if you wrote a long
+piece of code to tidy up a large dataset and get it ready to analyze,
+you may not want to re-run the whole script every time you need to
+access the clean data. It’s therefore a good idea to save your shiny new
+object as a new csv file that you can load, ready-to-go, with just one
+command. We will now create a data frame with our CO2 concentration
+data, and then save it using
+</mark><mark style="background-color:grey">write.csv()</mark><mark style="background-color:lightblue">.</mark></p>
+<p>We will use the
+<mark style="background-color:grey">data.frame()</mark> function, but
+first we will create an object that contains the names of all the years
+(one column) and another object with the values of CO2 concentration for
+each year (another column).</p>
+<pre class="r"><code># Creating an object called &quot;Year&quot;
+Year &lt;- c(&quot;1976&quot;, &quot;1977&quot;, &quot;1978&quot;, &quot;1979&quot;, &quot;1980&quot;)
+
+# Combining all the values for the CO2 concentrations in an object called CO2
+CO2 &lt;- c(a, b, c, d, e)
+
+# Creating the data frame from the two vectors
+CO2_year &lt;- data.frame(Year, CO2)
+
+# Saving the file
+write.csv(CO2_year, file=&quot;CO2_year.csv&quot;)  # it will be saved in your working directory</code></pre>
+<p>If we want to create and save a barplot using the data frame, we need
+to slightly change the code because data frames can contain multiple
+variables. We need to tell R exactly which one we want it to plot. Like
+before, we can specify columns from a data frame using
+<mark style="background-color:grey">$</mark>:</p>
+<pre class="r"><code>barplot(CO2_year$CO2, names.arg = c(&quot;1976&quot;,&quot;1977&quot;,&quot;1978&quot;,&quot;1979&quot;,&quot;1980&quot;),
+        ylab = &quot;CO2 in parts per million (ppm)&quot;, xlab = &quot;Year&quot;, ylim=c(0,400),
+        cex.names= 1.5, cex.axis=1.5, cex.lab=1.5)</code></pre>
+<p><img src="DSEE-Lab1_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p><br></p>
+<p><em>This is the end of part 1. You have accomplished a lot:</em></p>
+<p><em>1. You are familiar with the RStudio interface</em></p>
+<p><em>2. You can create and annotate a script file</em></p>
+<p><em>3. You can import your own datasets into RStudio</em></p>
+<p><em>4. You can check and explore data</em></p>
+<p><em>5. You can make simple figures</em></p>
+<p><br></p>
+<p>Next week, in Part 2 we will learn how to format and manipulate data
+in a tidy and efficient way. More specifically, in just a few lines of
+code we will create a data frame with the mean CO2 concentration for ALL
+years in the dataset, then we will combine those data frame with
+temperature values from Mauna Loa and graph them using scatterplots!</p>
 </div>
 
 
