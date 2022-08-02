@@ -276,6 +276,9 @@ barplot(CO2_y, xlab="Year", ylab="CO2 in parts per million (ppm)", ylim=c(0,400)
 ```
 
 ![](images/R Studio barplot improved.png)
+
+<br>
+
 Figure 1. Yearly atmospheric CO2 concentration (ppm) for five years (1976-1980) at the Mauna Loa Observatory, Hawaii.
 
 <br>
