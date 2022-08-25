@@ -154,3 +154,5 @@ The default <mark style="background-color:grey">ggplot()</mark> settings are not
         panel.grid = element_blank(),                                 # Removing the gray grid lines
         plot.margin = unit(c(1,1,1,1), units = , "cm")))              # Putting a 1 cm margin around the plot
 ```
+
+
