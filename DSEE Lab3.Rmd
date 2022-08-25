@@ -1,0 +1,156 @@
+---
+title: "Data Visualization - Part 1"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    collapsed: false
+    number_sections: false
+    toc_depth: 3
+    #code_folding: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message=FALSE,warning=FALSE, cache=TRUE)
+```
+
+```{r klippy, echo=FALSE, include=TRUE}
+klippy::klippy()
+```
+
+*Learning goals and steps:*
+
+*1.  Get familiar with the ggplot2 syntax*
+  
+*2.  Decide on the right type of plot*
+  
+*3.  Practice making different plots with ggplot2*
+
+|     *-Histograms*
+|     *-Scatter plots*
+|     *-Box plots*
+      
+<br>
+
+**Due:** Nothing this week
+
+For the next two labs we will focus on communicating results using visualizations, or graphics.  The data we are going to use for these labs is from a paper published in 2013 on the role of biodiversity in mitigating phenological mismatches.  The [paper](https://fandm.instructure.com/courses/17827/files?preview=1433579) uses a long term dataset of bloom times for apple trees (*Malus* ssp.) and flight times for apple flower pollinators.
+
+For part 1, there are a few bits of code and several plots that you will need to save for your write-up.  They are indicated with the *<mark style="color:blue">blue text</mark>*.
+
+<br>
+
+### 1. Good data visualization and ggplot2 syntax
+
+When it comes to data visualization, the package ggplot2 by Hadley Wickham has won over many scientists’ hearts. In this tutorial, we will learn how to make beautiful and informative graphs and how to arrange them in a panel. Before we tackle the ggplot2 syntax, let’s briefly cover what good graphs have in common.
+
+![](images/Plot table.png)
+
+ggplot2 is a great package to guide you through those steps. The gg in ggplot2 stands for grammar of graphics. Writing the code for your graph is like constructing a sentence made up of different parts that logically follow from one another. In a more visual way, it means adding layers that take care of different elements of the plot. Your plotting workflow will therefore be something like creating an empty plot, adding a layer with your data points, then your measure of uncertainty, the axis labels, and so on.
+
+![](images/Graphs in ggplot2.png)
+
+<br>
+
+### 2. Decide on the right type of plot
+
+A very key part of making any data visualization is making sure that it is appropriate to your data type (e.g. discrete vs continuous), and fits your purpose, i.e. what you are trying to communicate!
+
+You can start with our simple guide for common graph types, and visit the [R Graph Gallery](https://r-graph-gallery.com/), a fantastic resource for ggplot2 code and inspiration!
+
+![](images/Graphs in ggplot2 2.png)
+
+<br>
+
+### 3. Making different plots with ggplot2
+
+Before we make plots, let’s set up the script.  **Do not forget to annotate!!!**
+
+```{r}
+# Purpose of the script
+# Your name, date and email
+
+# Libraries - if you haven't installed them before, run the code install.packages("package_name")
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+library(readr)
+library(gridExtra)
+```
+
+Next, we need to get data into R.  There are three datasets provided for you on Canvas:
+
+1) **Mid_bloom.csv** – mean mid-bloom date of apple trees by year
+
+2) **Pollinators.csv** – data on pollinators including scientific name, date collected (Julian day of year), year collected, and corrected collection day (controlling for effect of latitude).  You should use the corrected collection day and not collection date.
+
+3) **Climate.csv** – Has daily maximum and minimum daily temperature (along with other variables) for the field site from 1969 through 2010.
+
+Get them uploaded into R (review “Introduction to R” labs for assistance).
+
+```{r,eval=T, echo=F}
+#import datasets
+Mid_bloom<-read.csv("C:/Users/17163/Documents/DSEE/Labs/Apple pollinators/Mid_bloom.csv",header=T)
+Climate<-read.csv("C:/Users/17163/Documents/DSEE/Labs/Apple pollinators/Climate.csv",header=T)
+Pollinators<-read.csv("C:/Users/17163/Documents/DSEE/Labs/Apple pollinators/Pollinators.csv",header=T)
+
+```
+
+<br>
+
+### 3a. Histograms to visualize data distribution
+
+We are going to make a histogram of asynchrony from the Pollinator dataset, but first we need to calculate it.  Asynchrony is the difference between mid-bloom date of the apples and the collection date for the pollinators.  Collection date is an estimate of the flight period (when pollinators are out visiting plants).  The bigger the asynchrony the more phenological mismatch.
+
+```{r}
+#calculate asynchrony
+
+#join mid bloom date with pollinators
+Pollinators <- left_join(Pollinators, Mid_bloom, by = c("Year"))
+
+#calculate asynchrony and add to the dataset using mutate
+Pollinators <- Pollinators %>%
+  mutate(Asynchrony = CorrectedCollectionDay - Mid_bloom_day)
+```
+
+Then, we need to filter the data so that we only keep pollinators with absolute asynchrony values less than 25 (hint: <mark style="background-color:grey">abs()</mark> is a function that produces absolute value).  We do this to avoid including pollinators that do not normally forage when the apple trees are blooming.
+
+<mark style="color:blue">*Write the code to filter the data and include it in your write-up.*</mark>
+
+We will do a quick comparison between base R graphics and ggplot2 - of course both can make good graphs when used well, but we like working with ggplot2 because of its powerful customization abilities.
+
+```{r}
+# With base R graphics
+base_hist <- hist(Pollinators$Asynchrony)
+```
+
+Using <mark style="background-color:grey">gglot()</mark>, we specify the type of graph using <mark style="background-color:grey">geom_histogram()</mark>. Note that putting your entire ggplot code in brackets () creates the graph and then shows it in the plot viewer. If you don’t have the brackets, you’ve only created the object, but haven’t visualized it. You would then have to call the object in the command line, e.g. by typing <mark style="background-color:grey">asynchrony_hist</mark> after creating the object.
+
+```{r}
+# With ggplot2: creating graph with no brackets
+asynchrony_hist <- ggplot(Pollinators, aes(x = Asynchrony))  +
+  geom_histogram() 
+  
+# Calling the object to display it in the plot viewer
+asynchrony_hist
+
+# With brackets: you create and display the graph at the same time
+(asynchrony_hist <- ggplot(Pollinators, aes(x = Asynchrony))  +
+  geom_histogram())
+```
+
+The default <mark style="background-color:grey">ggplot()</mark> settings are not ideal: there is lots of unnecessary gray space behind the histogram, the axis labels are quite small, and the bars blend with each other. Lets beautify the histogram a bit! This is where the true power of ggplot2 shines.
+
+```{r}
+(asynchrony_hist <- ggplot(Pollinators, aes(x = Asynchrony)) +                
+  geom_histogram(binwidth = 2, color = "#8B5A00", fill = "#CD8500") +    # Changing the binwidth and colors
+  geom_vline(aes(xintercept = mean(Asynchrony)),                       # Adding a line for mean abundance
+             color = "red", linetype = "dashed", size=1) +           # Changing the look of the line
+    theme_bw() +                                                      # Changing the theme to get rid of the gray background
+  ylab("Frequency\n") +                                                   # Changing the text of the y axis label
+  xlab("\nPollinator asynchrony")  +                              # \n adds a blank line between axis and text
+  theme(axis.title.x = element_text(size = 14, face = "plain"),   # x axis face="plain" is the default, you can change it to italic, bold, etc. 
+        axis.title.y = element_text(size = 14, face = "plain"),       # y axis 
+        panel.grid = element_blank(),                                 # Removing the gray grid lines
+        plot.margin = unit(c(1,1,1,1), units = , "cm")))              # Putting a 1 cm margin around the plot
+```

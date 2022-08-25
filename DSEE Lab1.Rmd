@@ -137,7 +137,7 @@ You can download the dataset to your working directory and read the data into R 
 R works best with <mark style="background-color:grey">.csv</mark> (comma separated values) files. If you entered your data in Excel, you would need to click on Save as and select <mark style="background-color:grey">csv</mark> as the file extension. When entering data in Excel, don’t put any spaces in your row names, as they will confuse R later (e.g. go for something like <mark style="background-color:grey">CO2_ppm</mark> rather than <mark style="background-color:grey">CO2 (ppm)</mark>. Some computers save <mark style="background-color:grey">.csv</mark> files with semicolons <mark style="background-color:grey">;</mark>, not commas <mark style="background-color:grey">,</mark> as the separators. This usually happens when English is not the first or only language on your computer. If your files are separated by semicolons, use <mark style="background-color:grey">read.csv2()</mark> instead of <mark style="background-color:grey">read.csv</mark>, or alternatively use the argument “sep” (for separator) in the <mark style="background-color:grey">read.csv</mark> function: <mark style="background-color:grey">read.csv("your-file-path", sep = ";")</mark>.
 
 ```{r}
-ML_CO2 <- read.csv("C:/Users/17163/Documents/DSEE/Labs/Intro_to_R/MLO_CO2.csv")  
+MLO_CO2 <- read.csv("C:/Users/17163/Documents/DSEE/Labs/Intro_to_R/MLO_CO2.csv")  
 # This is just an example that will not work for you because you have not downloaded the data.
 ```
 

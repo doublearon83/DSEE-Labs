@@ -8,4 +8,6 @@ navbar:
       href: DSEE-Lab1.html
     - text: "DSEE Lab #2"
       href: DSEE-Lab2.html
+    - text: "DSEE Lab #3"
+      href: DSEE-Lab3.html
 output_dir: "docs"

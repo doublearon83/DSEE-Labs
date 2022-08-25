@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Data Visualization - Part 1</title>
+
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/clipboard-1.7.1/clipboard.min.js"></script>
+<link href="site_libs/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
+<link href="site_libs/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
+<script src="site_libs/klippy-0.0.0.9500/js/klippy.min.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">DSEE Labs</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="DSEE-Lab1.html">DSEE Lab #1</a>
+</li>
+<li>
+  <a href="DSEE-Lab2.html">DSEE Lab #2</a>
+</li>
+<li>
+  <a href="DSEE-Lab3.html">DSEE Lab #3</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Data Visualization - Part 1</h1>
+
+</div>
+
+
+<script>
+  addClassKlippyTo("pre.r, pre.markdown");
+  addKlippy('left', 'top', 'auto', '1', 'Copy code', 'Copied!');
+</script>
+<p><em>Learning goals and steps:</em></p>
+<p><em>1. Get familiar with the ggplot2 syntax</em></p>
+<p><em>2. Decide on the right type of plot</em></p>
+<p><em>3. Practice making different plots with ggplot2</em></p>
+<div class="line-block">    <em>-Histograms</em><br />
+    <em>-Scatter plots</em><br />
+    <em>-Box plots</em></div>
+<p><br></p>
+<p><strong>Due:</strong> Nothing this week</p>
+<p>For the next two labs we will focus on communicating results using
+visualizations, or graphics. The data we are going to use for these labs
+is from a paper published in 2013 on the role of biodiversity in
+mitigating phenological mismatches. The <a
+href="https://fandm.instructure.com/courses/17827/files?preview=1433579">paper</a>
+uses a long term dataset of bloom times for apple trees (<em>Malus</em>
+ssp.) and flight times for apple flower pollinators.</p>
+<p>For part 1, there are a few bits of code and several plots that you
+will need to save for your write-up. They are indicated with the
+<em><mark style="color:blue">blue text</mark></em>.</p>
+<p><br></p>
+<div id="good-data-visualization-and-ggplot2-syntax"
+class="section level3">
+<h3>1. Good data visualization and ggplot2 syntax</h3>
+<p>When it comes to data visualization, the package ggplot2 by Hadley
+Wickham has won over many scientists’ hearts. In this tutorial, we will
+learn how to make beautiful and informative graphs and how to arrange
+them in a panel. Before we tackle the ggplot2 syntax, let’s briefly
+cover what good graphs have in common.</p>
+<p><img src="images/Plot%20table.PNG" /></p>
+<p>ggplot2 is a great package to guide you through those steps. The gg
+in ggplot2 stands for grammar of graphics. Writing the code for your
+graph is like constructing a sentence made up of different parts that
+logically follow from one another. In a more visual way, it means adding
+layers that take care of different elements of the plot. Your plotting
+workflow will therefore be something like creating an empty plot, adding
+a layer with your data points, then your measure of uncertainty, the
+axis labels, and so on.</p>
+<p><img src="images/Graphs%20in%20ggplot2.PNG" /></p>
+<p><br></p>
+</div>
+<div id="decide-on-the-right-type-of-plot" class="section level3">
+<h3>2. Decide on the right type of plot</h3>
+<p>A very key part of making any data visualization is making sure that
+it is appropriate to your data type (e.g. discrete vs continuous), and
+fits your purpose, i.e. what you are trying to communicate!</p>
+<p>You can start with our simple guide for common graph types, and visit
+the <a href="https://r-graph-gallery.com/">R Graph Gallery</a>, a
+fantastic resource for ggplot2 code and inspiration!</p>
+<p><img src="images/Graphs%20in%20ggplot2%202.PNG" /></p>
+<p><br></p>
+</div>
+<div id="making-different-plots-with-ggplot2" class="section level3">
+<h3>3. Making different plots with ggplot2</h3>
+<p>Before we make plots, let’s set up the script. <strong>Do not forget
+to annotate!!!</strong></p>
+<pre class="r"><code># Purpose of the script
+# Your name, date and email
+
+# Libraries - if you haven&#39;t installed them before, run the code install.packages(&quot;package_name&quot;)
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+library(readr)
+library(gridExtra)</code></pre>
+<p>Next, we need to get data into R. There are three datasets provided
+for you on Canvas:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Mid_bloom.csv</strong> – mean mid-bloom date of apple
+trees by year</p></li>
+<li><p><strong>Pollinators.csv</strong> – data on pollinators including
+scientific name, date collected (Julian day of year), year collected,
+and corrected collection day (controlling for effect of latitude). You
+should use the corrected collection day and not collection
+date.</p></li>
+<li><p><strong>Climate.csv</strong> – Has daily maximum and minimum
+daily temperature (along with other variables) for the field site from
+1969 through 2010.</p></li>
+</ol>
+<p>Get them uploaded into R (review “Introduction to R” labs for
+assistance).</p>
+<p><br></p>
+</div>
+<div id="a.-histograms-to-visualize-data-distribution"
+class="section level3">
+<h3>3a. Histograms to visualize data distribution</h3>
+<p>We are going to make a histogram of asynchrony from the Pollinator
+dataset, but first we need to calculate it. Asynchrony is the difference
+between mid-bloom date of the apples and the collection date for the
+pollinators. Collection date is an estimate of the flight period (when
+pollinators are out visiting plants). The bigger the asynchrony the more
+phenological mismatch.</p>
+<pre class="r"><code>#calculate asynchrony
+
+#join mid bloom date with pollinators
+Pollinators &lt;- left_join(Pollinators, Mid_bloom, by = c(&quot;Year&quot;))
+
+#calculate asynchrony and add to the dataset using mutate
+Pollinators &lt;- Pollinators %&gt;%
+  mutate(Asynchrony = CorrectedCollectionDay - Mid_bloom_day)</code></pre>
+<p>Then, we need to filter the data so that we only keep pollinators
+with absolute asynchrony values less than 25 (hint:
+<mark style="background-color:grey">abs()</mark> is a function that
+produces absolute value). We do this to avoid including pollinators that
+do not normally forage when the apple trees are blooming.</p>
+<p><mark style="color:blue"><em>Write the code to filter the data and
+include it in your write-up.</em></mark></p>
+<p>We will do a quick comparison between base R graphics and ggplot2 -
+of course both can make good graphs when used well, but we like working
+with ggplot2 because of its powerful customization abilities.</p>
+<pre class="r"><code># With base R graphics
+base_hist &lt;- hist(Pollinators$Asynchrony)</code></pre>
+<p><img src="DSEE-Lab3_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>Using <mark style="background-color:grey">gglot()</mark>, we specify
+the type of graph using
+<mark style="background-color:grey">geom_histogram()</mark>. Note that
+putting your entire ggplot code in brackets () creates the graph and
+then shows it in the plot viewer. If you don’t have the brackets, you’ve
+only created the object, but haven’t visualized it. You would then have
+to call the object in the command line, e.g. by typing
+<mark style="background-color:grey">asynchrony_hist</mark> after
+creating the object.</p>
+<pre class="r"><code># With ggplot2: creating graph with no brackets
+asynchrony_hist &lt;- ggplot(Pollinators, aes(x = Asynchrony))  +
+  geom_histogram() 
+  
+# Calling the object to display it in the plot viewer
+asynchrony_hist</code></pre>
+<p><img src="DSEE-Lab3_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<pre class="r"><code># With brackets: you create and display the graph at the same time
+(asynchrony_hist &lt;- ggplot(Pollinators, aes(x = Asynchrony))  +
+  geom_histogram())</code></pre>
+<p><img src="DSEE-Lab3_files/figure-html/unnamed-chunk-5-2.png" width="672" /></p>
+<p>The default <mark style="background-color:grey">ggplot()</mark>
+settings are not ideal: there is lots of unnecessary gray space behind
+the histogram, the axis labels are quite small, and the bars blend with
+each other. Lets beautify the histogram a bit! This is where the true
+power of ggplot2 shines.</p>
+<pre class="r"><code>(asynchrony_hist &lt;- ggplot(Pollinators, aes(x = Asynchrony)) +                
+  geom_histogram(binwidth = 2, color = &quot;#8B5A00&quot;, fill = &quot;#CD8500&quot;) +    # Changing the binwidth and colors
+  geom_vline(aes(xintercept = mean(Asynchrony)),                       # Adding a line for mean abundance
+             color = &quot;red&quot;, linetype = &quot;dashed&quot;, size=1) +           # Changing the look of the line
+    theme_bw() +                                                      # Changing the theme to get rid of the gray background
+  ylab(&quot;Frequency\n&quot;) +                                                   # Changing the text of the y axis label
+  xlab(&quot;\nPollinator asynchrony&quot;)  +                              # \n adds a blank line between axis and text
+  theme(axis.title.x = element_text(size = 14, face = &quot;plain&quot;),   # x axis face=&quot;plain&quot; is the default, you can change it to italic, bold, etc. 
+        axis.title.y = element_text(size = 14, face = &quot;plain&quot;),       # y axis 
+        panel.grid = element_blank(),                                 # Removing the gray grid lines
+        plot.margin = unit(c(1,1,1,1), units = , &quot;cm&quot;)))              # Putting a 1 cm margin around the plot</code></pre>
+<p><img src="DSEE-Lab3_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
