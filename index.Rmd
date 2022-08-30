@@ -23,7 +23,7 @@ output: html_document
 
 1. This site is the source of your DSEE lab documents.  It is a resource additional to those found on Canvas.
 2. You can find the appropriate document for each lab in the menu above.
-3. Additional information can be found on the course Canvas site.
+3. All assignments should be turned in to the [Canvas site](https://fandm.instructure.com/courses/17827).
 4. If you have additional questions outside of class email me at: ahoward@fandm.edu
 
 
