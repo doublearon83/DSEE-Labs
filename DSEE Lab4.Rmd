@@ -1,0 +1,206 @@
+---
+title: "Data Visualization - Part 2"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    collapsed: false
+    number_sections: false
+    toc_depth: 3
+    #code_folding: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message=FALSE,warning=FALSE, cache=TRUE)
+```
+
+```{r klippy, echo=FALSE, include=TRUE}
+klippy::klippy()
+```
+
+*Learning goals and steps:*
+
+*1.  Customize histograms in ggplot2*
+
+|        *-Add titles, subtitles, and captions*
+        
+*2.  Barplots in ggplot2*
+
+|        *-Reorder factors, modify legend*
+        
+*3.  More practice with scatterplots and regression lines*
+
+*4.  Animate your plots*
+
+*5.  Create your own ggplot theme*
+
+*6.  Challenge yourself!*
+
+      
+<br>
+
+**Due:** Nothing this week
+
+Following from our first tutorial on data visualization using ggplot2, we are now back for more ggplot2 practice and customization. Since no two figures are ever the same, the ability to customize your figures is key. The ultimate aim of this tutorial is to help you to make your figures even more beautiful and informative! 
+
+As with part 1, there are several plots that you will need to save for your write-up.  They are indicated with the <mark style="color:blue">*blue text*</mark>.
+
+Before starting: 1) get the three datasets and packages from last week uploaded into R, 2) setup your script and, 3) ANNOTATE it!
+
+<br>
+
+### 1. Customize histograms in ggplot2
+
+Use the code from last week to generate the histogram of flower-pollinator asynchrony. 
+
+If we want to manipulate the x-axis to display every 5 values from -30 through 30 you can run the following code <mark style="background-color:grey">breaks = c(seq(-30,30,5))</mark> within the <mark style="background-color:grey">scale_x_continuous()</mark> function of ggplot2. Do you understand what the <mark style="background-color:grey">seq()</mark> function does?  Look up the help documentation if you are unsure.
+
+We can also specify the limits of the plot axes – add the layers (of code) below to your <mark style="background-color:grey">ggplot()</mark> code and you’ll be able to see that the limit of the y axis now extends to the value of 160.  I’ll leave it to you to decide where to add these layers.  Remember that layers override each other if they modify the same features of the plot.
+
+```{r, eval=T, echo=F}
+#import datasets
+Mid_bloom<-read.csv("C:/Users/17163/Documents/DSEE/Labs/Apple pollinators/Mid_bloom.csv",header=T)
+Climate<-read.csv("C:/Users/17163/Documents/DSEE/Labs/Apple pollinators/Climate.csv",header=T)
+Pollinators<-read.csv("C:/Users/17163/Documents/DSEE/Labs/Apple pollinators/Pollinators.csv",header=T)
+
+#calculate asynchrony
+
+#join mid bloom date with pollinators
+Pollinators <- left_join(Pollinators, Mid_bloom, by = c("Year"))
+
+#calculate asynchrony and add to the dataset using mutate
+Pollinators <- Pollinators %>%
+  mutate(Asynchrony = CorrectedCollectionDay - Mid_bloom_day)
+
+#subset only asynchrony <= 25
+Pollinators <- filter(Pollinators, abs(Asynchrony) <= 25)
+```
+
+```{r, eval=F, echo=T}
+    scale_x_continuous(breaks = c(seq(-30,30,5))) + 
+    scale_y_continuous(limits = c(0,160)) +
+```
+
+<br>
+
+### 1a. Add titles, subtitles, and captions
+
+Now it’s time for us to add more information to our graphs, for example, the plot title, subtitle, and partial caption. This might not be particularly useful in this case, but here’s some guidance just in case you do require it in your own work.
+
+```{r, eval=F, echo=T}
+   labs(title = "Plant-pollinator asynchrony", 
+         subtitle = "For Malus ssp. (apple) flowers and bee pollinators",
+         caption = "Data from Bartomeus et al. 2013")
+```
+
+<br>
+
+#### <mark style="background-color:#F9E59B">Control everything!</mark>
+
+<mark style="background-color:#F9E59B">Remember, you can also add in </mark><mark style="background-color:grey">theme()</mark><mark style="background-color:#F9E59B"> elements to your plot, which let you customize even more aspects! We already introduced theme elements in our [previous tutorial](https://ourcodingclub.github.io/tutorials/datavis/index.html). Other things you can play around with are:</mark>
+
+|    <mark style="background-color:#F9E59B">- italicize or bold the text with </mark><mark style="background-color:grey">face = 'italic'</mark><mark style="background-color:#F9E59B"> or </mark><mark style="background-color:grey">face = 'bold'</mark><mark style="background-color:#F9E59B"> respectively</mark>
+
+|    <mark style="background-color:#F9E59B">- center the title using </mark><mark style="background-color:grey">hjust = 0.5</mark>
+
+<br>
+
+Add the following code to your theme layer to modify the title of the plot.
+
+```{r, eval=F, echo=T}
+theme(plot.title = element_text(size = 14, hjust = 0.5, face = "bold"))
+```
+
+We can also italicize portions of titles or axes labels using <mark style="background-color:grey">expression()</mark>. For example, we can italicize the genus name Malus by substituting the following code into the theme layer.
+
+```{r, eval=F, echo=T}
+subtitle = expression("For"~italic("Malus")~"ssp. (apple) flowers and bee pollinators")
+```
+
+
+```{r, eval=T, echo=F}
+#add title, subtitle and caption
+(asynchrony_hist <- ggplot(Pollinators, aes(x = Asynchrony)) +                
+    geom_histogram(binwidth = 2, color = "#8B5A00", fill = "#CD8500") +    # Changing the binwidth and colors
+    geom_vline(aes(xintercept = mean(Asynchrony)),                       # Adding a line for mean abundance
+               color = "red", linetype = "dashed", size=1) +           # Changing the look of the line
+    theme_bw() +                                                      # Changing the theme to get rid of the grey background
+    ylab("Frequency\n") +                                                   # Changing the text of the y axis label
+    xlab("\nPollinator asynchrony")  +                              # \n adds a blank line between axis and text
+    scale_x_continuous(breaks = c(seq(-30,30,5))) + 
+    scale_y_continuous(limits = c(0,160)) +
+    labs(title = "Plant-pollinator asynchrony", 
+         subtitle = expression("For"~italic("Malus")~"ssp. (apple) flowers and bee pollinators"),
+         caption = "Data from Bartomeus et al. 2013") +
+    theme(axis.title.x = element_text(size = 14, face = "plain"),       # x axis face="plain" is the default, you can change it to italic, bold, etc. 
+          axis.title.y = element_text(size = 14, face = "plain"),       # y axis 
+          panel.grid = element_blank(),                                 # Removing the grey grid lines
+          plot.margin = unit(c(1,1,1,1), units = , "cm"),               # Putting a 1 cm margin around the plot
+          plot.title = element_text(size = 14, hjust = 0.5, face = "bold"))) 
+```
+
+
+<br>
+
+### 2. Barplot to examine whether asynchrony differs between families
+
+A barplot is a useful alternative to a boxplot.  In fact, I would say that they are used more frequently in many fields (including ecology) than boxplots.
+
+The first thing we need to do is calculate the mean asynchrony for each family.  You should be able to generate that code on your own using the <mark style="background-color:grey">dplyr</mark> functionality.
+
+```{r, eval=T, echo=F}
+# generate object of Family mean Asynchrony values
+Pollinator_fam <- Pollinators %>%
+  group_by(Family) %>%
+  summarize(Asynchrony = mean(Asynchrony, na.rm=T))
+```
+
+```{r}
+# Plotting the mean asynchrony for families
+(Asynch_barplot <- ggplot(Pollinator_fam, aes(x = Family, y = Asynchrony, fill = Family)) +
+    geom_bar(position = position_dodge(), stat = "identity") +
+    theme_bw() +
+    ylab("Asynchrony\n") +                             
+    xlab("Family")  +
+    theme(axis.text.x = element_text(size = 12, angle = 45, vjust = 1, hjust = 1), 
+          axis.text.y = element_text(size = 12),
+          axis.title = element_text(size = 14, face = "plain"),                      
+          panel.grid = element_blank(),                                          
+          plot.margin = unit(c(1,1,1,1), units = , "cm")))
+```
+
+This is a pretty nice plot. However, as biologists, we should hopefully notice something is missing from these plots… ERROR BARS.  In order to add error bars to the plot, we must first calculate them.  Then, we will add them to the plot using the <mark style="background-color:grey">geom_errorbar()</mark> function.  From looking at the code, do you understand how the error bars are added?  Can you explain it in your own words?
+
+```{r}
+#calculate standard error 
+Pollinator_fam <- Pollinators %>%
+  group_by(Family) %>%
+  summarize(Asynchrony_mean = mean(Asynchrony,  na.rm=T),
+            AsyncSD = sd(Asynchrony,  na.rm=T),
+            AsyncN = n(),
+            AsynchSE = AsyncSD/sqrt(AsyncN))
+
+# Plotting the mean asynchrony for families with SE
+(Asynch_barplot <- ggplot(Pollinator_fam, aes(x = Family, y = Asynchrony_mean, fill = Family)) +
+    geom_bar(position = position_dodge(), stat = "identity") +
+    geom_errorbar(aes(ymin = Asynchrony_mean - AsynchSE, ymax = Asynchrony_mean + AsynchSE), width = .3,  position = "identity") +
+    theme_bw() +
+    ylab("Asynchrony\n") +                             
+    xlab("Family")  +
+    theme(axis.text.x = element_text(size = 12, angle = 45, vjust = 1, hjust = 1),  
+          axis.text.y = element_text(size = 12),
+          axis.title = element_text(size = 14, face = "plain"),                      
+          panel.grid = element_blank(),                                          
+          plot.margin = unit(c(1,1,1,1), units = , "cm")))
+```
+
+
+<br>
+
+### 6. Challenge yourself!
+
+<mark style="color:blue">*Continue flexing those new graphing muscles by making and saving the following plots for your write-up:*</mark> 
+
+|       <mark style="color:blue">*1) A plot that examines the potential relationship between the climate and pollinator data.*</mark>
+
+|       <mark style="color:blue">*2) A plot that is animated in some way to emphasize a meaningful pattern.*</mark>

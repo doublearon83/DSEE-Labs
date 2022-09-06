@@ -2,12 +2,11 @@
 title: "Introduction to R - Part 1"
 output:
   html_document:
-    toc: true
-    toc_float: true
-    collapsed: false
-    number_sections: false
+    toc: yes
+    toc_float: yes
+    collapsed: no
+    number_sections: no
     toc_depth: 3
-    #code_folding: hide
 ---
 
 ```{r setup, include=FALSE}
@@ -102,18 +101,18 @@ For now, start by recording who is writing, the date, and the main goal – in o
 # Modified by Prof Howard from exercise by Gergana Daskalova
 ```
 
-The next few lines of code usually load the packages you will be needing for your analysis. A package is a bundle of commands that can be loaded into R to provide extra functionality. For example, you might load a package for formatting data, or for making maps. (Or for making graphs with [cats on them](https://github.com/Gibbsdavidl/CatterPlots), or whatever floats your boat… As we said before, there’s virtually nothing you cannot do!)
+The next few lines of code usually load the packages you will need for your analysis. A package is a bundle of commands that can be loaded into R to provide extra functionality. For example, you might load a package for formatting data, or for making maps. (Or for making graphs with [cats on them](https://github.com/Gibbsdavidl/CatterPlots), or whatever floats your boat… As we said before, there’s virtually nothing you cannot do!)
 
-To install a package, type <mark style="background-color:grey">install.packages("package-name")</mark>. You only need to install packages once, so in this case you can type directly in the console box, rather than saving the line in your script and re-installing the package every time.
-
-Once installed, you just need to load the packages using <mark style="background-color:grey">library(package-name)</mark>. Today we will be using the <mark style="background-color:grey">dplyr</mark> [package](https://cran.r-project.org/web/packages/dplyr/index.html) to provide extra commands for formatting and manipulating data.
-
-The next lines of code should define your working directory. This is a folder on your computer where R will look for data, save your plots, etc. To make your workflow easier, it is good practice to save everything related to one project in the same place, as it will save you a lot of time typing up computer paths or hunting for files that got saved R-knows-where. For instance, you could save your script and all the data for this tutorial in a folder called “Intro_to_R”. (It is good practice to avoid spaces in file names as it can sometimes confuse R.) For bigger projects, consider having a root folder with the name of the project (e.g. “My_PhD”) as your working directory, and other folders nested within to separate data, scripts, images, etc. (e.g. My_PhD/Chapter_1/data, My_PhD/Chapter_1/plots, My_PhD/Chapter_2/data, etc.)
-
-To find out where your working directory is now, run the code <mark style="background-color:grey">getwd()</mark>. If you want to change it, you can use <mark style="background-color:grey">setwd()</mark>. Set your working directory to a place that makes sense to you:
+To install a package, type <mark style="background-color:grey">install.packages("package-name")</mark>. You only need to install packages once, so in this case you can type directly in the console box, rather than saving the line in your script and re-installing the package every time.  Today we will be using the <mark style="background-color:grey">dplyr</mark> [package](https://cran.r-project.org/web/packages/dplyr/index.html) to provide extra commands for formatting and manipulating data.
 
 ```{r, eval=F, echo=T}
+#install package
 install.packages("dplyr")
+```
+
+Once installed, you just need to load the packages using <mark style="background-color:grey">library(package-name)</mark>.  The next lines of code should define your working directory. This is a folder on your computer where R will look for data, save your plots, etc. To make your workflow easier, it is good practice to save everything related to one project in the same place, as it will save you a lot of time typing up computer paths or hunting for files that got saved R-knows-where. For instance, you could save your script and all the data for this tutorial in a folder called “Intro_to_R”. (It is good practice to avoid spaces in file names as it can sometimes confuse R.) For bigger projects, consider having a root folder with the name of the project (e.g. “My_PhD”) as your working directory, and other folders nested within to separate data, scripts, images, etc. (e.g. My_PhD/Chapter_1/data, My_PhD/Chapter_1/plots, My_PhD/Chapter_2/data, etc.).
+
+```{r}
 library(dplyr)
 # Note that there are quotation marks when installing a package, but not when loading it
 # and remember that hashtags let you add useful notes to your code! 
@@ -121,6 +120,8 @@ library(dplyr)
 setwd("C:/Users/17163/Documents/DSEE/Labs/Intro_to_R")
 # This is an example filepath, alter to your own filepath
 ```
+
+To find out where your working directory is now, run the code <mark style="background-color:grey">getwd()</mark>. If you want to change it, you can use <mark style="background-color:grey">setwd()</mark>. Set your working directory to a place that makes sense to you.
 
 Watch out! Note that on a Windows computer, a copied-and-pasted file path will have backslashes separating the folders <mark style="background-color:grey">("C:\folder\data")</mark>, but the filepath you enter into R should use forward slashes <mark style="background-color:grey">("C:/folder/data")</mark>.
 
@@ -136,7 +137,7 @@ You can download the dataset to your working directory and read the data into R 
 
 R works best with <mark style="background-color:grey">.csv</mark> (comma separated values) files. If you entered your data in Excel, you would need to click on Save as and select <mark style="background-color:grey">csv</mark> as the file extension. When entering data in Excel, don’t put any spaces in your row names, as they will confuse R later (e.g. go for something like <mark style="background-color:grey">CO2_ppm</mark> rather than <mark style="background-color:grey">CO2 (ppm)</mark>. Some computers save <mark style="background-color:grey">.csv</mark> files with semicolons <mark style="background-color:grey">;</mark>, not commas <mark style="background-color:grey">,</mark> as the separators. This usually happens when English is not the first or only language on your computer. If your files are separated by semicolons, use <mark style="background-color:grey">read.csv2()</mark> instead of <mark style="background-color:grey">read.csv</mark>, or alternatively use the argument “sep” (for separator) in the <mark style="background-color:grey">read.csv</mark> function: <mark style="background-color:grey">read.csv("your-file-path", sep = ";")</mark>.
 
-```{r}
+```{r, eval=F, echo=T}
 MLO_CO2 <- read.csv("C:/Users/17163/Documents/DSEE/Labs/Intro_to_R/MLO_CO2.csv")  
 # This is just an example that will not work for you because you have not downloaded the data.
 ```
@@ -329,4 +330,4 @@ barplot(CO2_year$CO2, names.arg = c("1976","1977","1978","1979","1980"),
 
 <br>
 
-Next week, in Part 2 we will learn how to format and manipulate data in a tidy and efficient way. More specifically, in just a few lines of code we will create a data frame with the mean CO2 concentration for ALL years in the dataset, then we will combine those data frame with temperature values from Mauna Loa and graph them using scatterplots!
+Next week, in Part 2 we will learn how to format and manipulate data in a tidy and efficient way. More specifically, in just a few lines of code we will create a data frame with the mean CO2 concentration for ALL years in the dataset, then we will combine those data with temperature values from Mauna Loa and graph them using scatterplots!

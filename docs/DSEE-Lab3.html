@@ -337,6 +337,9 @@ div.tocify {
 <li>
   <a href="DSEE-Lab3.html">DSEE Lab #3</a>
 </li>
+<li>
+  <a href="DSEE-Lab4.html">DSEE Lab #4</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -469,7 +472,7 @@ of course both can make good graphs when used well, but we like working
 with ggplot2 because of its powerful customization abilities.</p>
 <pre class="r"><code># With base R graphics
 base_hist &lt;- hist(Pollinators$Asynchrony)</code></pre>
-<p><img src="DSEE-Lab3_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="DSEE-Lab3_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>Using <mark style="background-color:grey">gglot()</mark>, we specify
 the type of graph using
 <mark style="background-color:grey">geom_histogram()</mark>. Note that
@@ -485,11 +488,11 @@ asynchrony_hist &lt;- ggplot(Pollinators, aes(x = Asynchrony))  +
   
 # Calling the object to display it in the plot viewer
 asynchrony_hist</code></pre>
-<p><img src="DSEE-Lab3_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="DSEE-Lab3_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <pre class="r"><code># With brackets: you create and display the graph at the same time
 (asynchrony_hist &lt;- ggplot(Pollinators, aes(x = Asynchrony))  +
   geom_histogram())</code></pre>
-<p><img src="DSEE-Lab3_files/figure-html/unnamed-chunk-5-2.png" width="672" /></p>
+<p><img src="DSEE-Lab3_files/figure-html/unnamed-chunk-6-2.png" width="672" /></p>
 <p>The default <mark style="background-color:grey">ggplot()</mark>
 settings are not ideal: there is lots of unnecessary gray space behind
 the histogram, the axis labels are quite small, and the bars blend with
@@ -506,7 +509,236 @@ power of ggplot2 shines.</p>
         axis.title.y = element_text(size = 14, face = &quot;plain&quot;),       # y axis 
         panel.grid = element_blank(),                                 # Removing the gray grid lines
         plot.margin = unit(c(1,1,1,1), units = , &quot;cm&quot;)))              # Putting a 1 cm margin around the plot</code></pre>
-<p><img src="DSEE-Lab3_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="DSEE-Lab3_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><mark style="color:blue"><em>Save this plot for your Data
+visualization write-up.</em></mark></p>
+<p>Note: Pressing enter after each “layer” of your plot (i.e. indenting
+it) prevents the code from being one gigantic line and makes it much
+easier to read.</p>
+<p><br></p>
+</div>
+<div id="understanding-ggplot2s-jargon" class="section level3">
+<h3><mark style="background-color:lightblue">Understanding ggplot2’s
+jargon</mark></h3>
+<p><mark style="background-color:lightblue">Perhaps the trickiest bit
+when starting out with ggplot2 is understanding what type of elements
+are responsible for the contents (data) versus the container (general
+look) of your plot. Let’s de-mystify some of the common words you will
+encounter.</mark></p>
+<p><mark style="background-color:lightblue">geom: a geometric object
+which defines the type of graph you are making. It reads your data in
+the aesthetics mapping to know which variables to use, and creates the
+graph accordingly. Some common types are
+</mark><mark style="background-color:grey">geom_point()</mark><mark style="background-color:lightblue">,
+</mark><mark style="background-color:grey">geom_boxplot()</mark><mark style="background-color:lightblue">,
+</mark><mark style="background-color:grey">geom_histogram()</mark><mark style="background-color:lightblue">,
+</mark><mark style="background-color:grey">geom_col()</mark><mark style="background-color:lightblue">,
+etc.</mark></p>
+<p><mark style="background-color:lightblue">aes: short for aesthetics.
+Usually placed within a
+</mark><mark style="background-color:grey">geom_</mark><mark style="background-color:lightblue">,
+this is where you specify your data source and variables, AND the
+properties of the graph which depend on those variables. For instance,
+if you want all data points to be the same color, you would define the
+<mark style="background-color:grey">color
+=</mark><mark style="background-color:lightblue"> argument outside the
+</mark><mark style="background-color:grey">aes()</mark><mark style="background-color:lightblue">
+function; if you want the data points to be colored by a factor’s levels
+(e.g. by site or species), you specify the
+</mark><mark style="background-color:grey">color
+=</mark><mark style="background-color:lightblue"> argument inside the
+</mark><mark style="background-color:grey">aes()</mark><mark style="background-color:lightblue">.</mark></p>
+<p><mark style="background-color:lightblue">stat: a stat layer applies
+some statistical transformation to the underlying data: for instance,
+</mark><mark style="background-color:grey">stat_smooth(method =
+‘lm’)</mark><mark style="background-color:lightblue"> displays a linear
+regression line and confidence interval ribbon on top of a scatter plot
+(defined with
+</mark><mark style="background-color:grey">geom_point()</mark><mark style="background-color:lightblue">).</mark></p>
+<p><mark style="background-color:lightblue">theme: a theme is made of a
+set of visual parameters that control the background, borders, grid
+lines, axes, text size, legend position, etc. You can use <a
+href="https://ourcodingclub.github.io/tutorials/data-vis-2/index.html#theme">pre-defined
+themes, create your own</a>, or use a theme and overwrite only the
+elements you don’t like. Examples of elements within themes are
+</mark><mark style="background-color:grey">axis.text</mark><mark style="background-color:lightblue">,
+</mark><mark style="background-color:grey">panel.grid</mark><mark style="background-color:lightblue">,
+</mark><mark style="background-color:grey">legend.title</mark><mark style="background-color:lightblue">,
+and so on. You define their properties with
+</mark><mark style="background-color:grey">elements_…()</mark><mark style="background-color:lightblue">
+functions:
+</mark><mark style="background-color:grey">element_blank()</mark><mark style="background-color:lightblue">
+would return something empty (ideal for removing background color),
+while </mark><mark style="background-color:grey">element_text(size = …,
+face = …, angle = …)</mark><mark style="background-color:lightblue">
+lets you control all kinds of text properties.</mark></p>
+<p><mark style="background-color:lightblue">It is also useful to
+remember is that layers are added on top of each other as you progress
+into the code, which means that elements written later may hide or
+overwrite previous elements.</mark></p>
+<p><br></p>
+</div>
+<div id="learning-how-to-use-colourpicker" class="section level3">
+<h3>Learning how to use colourpicker</h3>
+<p>In the code above, you can see a color code
+<mark style="background-color:grey">colour = “#8B5A00”</mark> - each
+color you can dream of has a code, called a “hex code”, a combination of
+letters and numbers. You can get the codes for different colors online,
+from Paint, Photoshop or similar programs, or even from RStudio, which
+is very convenient! There is an RStudio
+<mark style="background-color:grey">Colourpicker</mark> addin which was
+a game changer for us - to install it, run the following code:</p>
+<pre class="r"><code># package for generating color hex codes
+install.packages(&quot;colourpicker&quot;)</code></pre>
+<p>To find out the code for a color you like, click on
+<mark style="background-color:grey">Addins/Colour picker</mark>.</p>
+<p><img src="images/Colourpicker.PNG" /></p>
+<p>When you click on <mark style="background-color:grey">All R
+colours</mark> (bottom right) you will see lots of different colors you
+can choose from - a good color scheme makes your graph stand out, but of
+course, don’t go crazy with the colors. When you click on
+<mark style="background-color:grey">1</mark>, and then on a certain
+color, you fill up <mark style="background-color:grey">1</mark> with
+that color, same goes for <mark style="background-color:grey">2</mark>,
+<mark style="background-color:grey">3</mark> - you can add more colors
+with the <mark style="background-color:grey">+</mark>, or delete them by
+clicking the bin. Once you’ve made your pick, click
+<mark style="background-color:grey">Done</mark>. You will see a line of
+code <mark style="background-color:grey">c(“#8B5A00”, “#CD8500”)</mark>
+appear in your script - in this case, we just need the color code, so we
+can copy that, and delete the rest. Try changing the color of the
+histogram you made just now.</p>
+<p><img src="images/Colourpicker2.PNG" /></p>
+<p><br></p>
+</div>
+<div id="b.-scatter-plot-to-examine-change-over-time"
+class="section level3">
+<h3>3b. Scatter plot to examine change over time</h3>
+<p>We have taken a quick look at asynchrony, and we will come back to
+it. But let’s examine some of the underlying data by making a
+scatterplot of pollinator collection date by time and family.</p>
+<pre class="r"><code># Make family a factor (categorical variable)
+Pollinators$Family &lt;- as.factor(Pollinators$Family)
+
+# Using default ggplot2 graphics
+(pollinator_scatter &lt;- ggplot(Pollinators, aes(x = Year, y = CorrectedCollectionDay, color = Family)) +  
+                             geom_point())</code></pre>
+<p><img src="DSEE-Lab3_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>Hopefully by now we’ve convinced you of the perks of ggplot2, but
+again like with the histogram, the graph above needs a bit more work. We
+are adding best fit lines, along with other features.</p>
+<pre class="r"><code># Create vector colors to be used in plot for each family
+colors &lt;-  c(&quot;#0000EE&quot;, &quot;#8A2BE2&quot;, &quot;#FF1493&quot;, &quot;#CDAD00&quot;, &quot;#548B54&quot;, &quot;#8B5A00&quot;)
+
+(pollinator_scatter &lt;- ggplot(Pollinators, aes (x = Year, y = CorrectedCollectionDay, color = Family)) +
+    geom_point(size = 2) +                                               # Changing point size
+    geom_smooth(method = &quot;lm&quot;, aes(fill = Family)) +               # Adding linear model fit, color-code by country
+    theme_bw() +
+    scale_fill_manual(values = colors) +                # Adding custom colors for solid geoms (ribbon)
+    scale_color_manual(values = colors) +              # Adding custom colors for lines and points
+    ylab(&quot;Collection Day\n&quot;) +                             
+    xlab(&quot;\nYear&quot;)  +
+    theme(axis.text.x = element_text(size = 12, angle = 45, vjust = 1, hjust = 1),     # making the years at a bit of an angle
+          axis.text.y = element_text(size = 12),
+          axis.title = element_text(size = 12, face = &quot;plain&quot;),                        
+          panel.grid = element_blank(),                                   # Removing the background grid lines               
+          plot.margin = unit(c(1,1,1,1), units = , &quot;cm&quot;),                 # Adding a 1cm margin around the plot
+          legend.text = element_text(size = 12, face = &quot;italic&quot;),         # Setting the font for the legend text
+          legend.title = element_blank(),                                 # Removing the legend title
+          legend.position = c(0.87, 0.84)))                                 # Setting legend position - 0 is left/bottom, 1 is top/right</code></pre>
+<p><img src="DSEE-Lab3_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>That’s cluttered! Can you really figure out what the families are
+doing? By adding a facetting layer, we can split the data in multiple
+facets representing the different families. This is done using
+<mark style="background-color:grey">facet_wrap()</mark>.</p>
+<pre class="r"><code># Create colors to be used in plot
+colors &lt;-  c(&quot;#0000EE&quot;, &quot;#8A2BE2&quot;, &quot;#FF1493&quot;, &quot;#CDAD00&quot;, &quot;#548B54&quot;, &quot;#8B5A00&quot;)
+
+# Plot the collection day by time for countries individually
+(pollinator_scatter &lt;- ggplot(Pollinators, aes (x = Year, y = CorrectedCollectionDay, color = Family)) +
+    geom_point(size = 2) +                              # Changing point size
+    geom_smooth(method = &quot;lm&quot;, aes(fill = Family)) +    # Adding linear model fit, color-code by country
+    theme_bw() +
+    facet_wrap(~ Family, scales = &quot;free_y&quot;) +           # THIS LINE CREATES THE FACETTING
+    scale_fill_manual(values = colors) +                # Adding custom colors for solid geoms (ribbon)
+    scale_color_manual(values = colors) +               # Adding custom colors for lines and points
+    ylab(&quot;Collection Day\n&quot;) +                             
+    xlab(&quot;\nYear&quot;)  +
+    theme(axis.text.x = element_text(size = 12, angle = 45, vjust = 1, hjust = 1),     # making the years at a bit of an angle
+          axis.text.y = element_text(size = 12),
+          axis.title = element_text(size = 12, face = &quot;plain&quot;),                        
+          panel.grid = element_blank(),                 # Removing the background grid lines               
+          plot.margin = unit(c(1,1,1,1), units = , &quot;cm&quot;),   # Adding a 1cm margin around the plot
+          legend.text = element_text(size = 12, face = &quot;italic&quot;),   # Setting the font for the legend text
+          legend.title = element_blank(),   # Removing the legend title
+          legend.position = &quot;right&quot;))       # Setting legend position</code></pre>
+<p><img src="DSEE-Lab3_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>Some useful arguments to include in
+<mark style="background-color:grey">facet_wrap()</mark> are
+<mark style="background-color:grey">nrow =</mark> or
+<mark style="background-color:grey">ncol =</mark> , specifying the
+number of rows or columns, respectively. You can also see that we used
+<mark style="background-color:grey">scales = “free_y”</mark>, to allow
+different y axis values because of the wide range of abundance values in
+the data. You can use “fixed” when you want to constrain all axis
+values.</p>
+<p><br></p>
+<div id="good-to-know" class="section level4">
+<h4><mark style="background-color:#F9E59B">Good to know</mark></h4>
+<p><mark style="background-color:#F9E59B">If your axis labels need to
+contain special characters or superscript, you can get ggplot2 to plot
+that, too. It might require some googling regarding your specific case,
+but for example, this code
+</mark><mark style="background-color:grey">ylabs(expression(paste(‘Grain
+yield’,’ ‘,’(ton.’, ha^-1, ‘)’,
+sep=’’)))</mark><mark style="background-color:#F9E59B"> will create a y
+axis with a label reading Grain yield (ton. ha-1).</mark></p>
+<p><mark style="background-color:#F9E59B">To create additional space
+between an axis title and the axis itself, use when writing your title,
+and it will act as a line break.</mark></p>
+<p><br></p>
+</div>
+</div>
+<div
+id="c.-boxplot-to-examine-whether-asynchrony-differs-between-families"
+class="section level3">
+<h3>3c. Boxplot to examine whether asynchrony differs between
+families</h3>
+<p>Box plots are very informative as they show the median and spread of
+your data, and allow you to quickly compare values among groups.</p>
+<pre class="r"><code># boxplot of pollinator family asynchrony
+(pollinator_boxplot &lt;- ggplot(Pollinators, aes(Family, Asynchrony)) + geom_boxplot())</code></pre>
+<p><img src="DSEE-Lab3_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<pre class="r"><code># Beautifying
+(pollinator_boxplot &lt;- ggplot(Pollinators, aes(Family, Asynchrony)) + 
+    geom_boxplot(aes(fill = Family)) +
+    theme_bw() +
+    scale_fill_manual(values = colors) +      # Adding custom colors
+    scale_color_manual(values = colors) +     # Adding custom colors
+    ylab(&quot;Asynchrony\n&quot;) +                             
+    xlab(&quot;\nFamily&quot;)  +
+    theme(axis.text = element_text(size = 12),
+          axis.title = element_text(size = 12, face = &quot;plain&quot;),                     
+          panel.grid = element_blank(),                     # Removing the background grid lines               
+          plot.margin = unit(c(1,1,1,1), units = , &quot;cm&quot;),   # Adding a margin
+          legend.position = &quot;none&quot;))                        # Removing legend</code></pre>
+<p><img src="DSEE-Lab3_files/figure-html/unnamed-chunk-12-2.png" width="672" /></p>
+<p>We have made several plots today! Do any patterns you saw in the
+plots tell us something interesting about the relationships between
+plants, pollinators, and climate?</p>
+<p><br></p>
+</div>
+<div id="challenge-yourself" class="section level3">
+<h3>4. Challenge yourself!</h3>
+<p><mark style="color:blue"><em>Using your new found graphing powers, I
+want you to make and save the following plots for your
+write-up:</em></mark></p>
+<div class="line-block">      <mark style="color:blue"><em>1) A fully
+formatted (aka beautified) plot of apple mid-bloom date by
+year.</em></mark></div>
+<div class="line-block">      <mark style="color:blue"><em>2) A fully
+formatted plot of corrected collection day by pollinator
+genera.</em></mark></div>
 </div>
 
 
