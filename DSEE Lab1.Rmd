@@ -46,7 +46,7 @@ klippy::klippy()
   
 <br>  
     
-**Due:** Nothing at the end of lab, but be sure to save the plot I ask you to export in part 4 of this document. You will incorporate it into your final write-up for the Introduction to R lab module.
+**Due:** Nothing at the end of lab, but be sure to save the plot I ask you to export in part 4 of this document. You will incorporate it into your final write-up for the Introduction to R lab module.  All material you need to include and questions that you must answer for final write-ups will be indicated with <mark style="color:blue">*blue text*</mark>.
 
 <br>
 
@@ -275,6 +275,8 @@ We also want to save our plot. To do this, click Export in the Plots window. If 
 barplot(CO2_y, xlab="Year", ylab="CO2 in parts per million (ppm)", ylim=c(0,400), cex.names= 1.5, cex.axis=1.5, cex.lab=1.5)
 # The cex code increases the font size when greater than one (and decreases it when less than one). 
 ```
+
+Below is what the final plot should look like with a caption.  <mark style="color:blue">*Be sure to save your plot* </mark> for your write-up.
 
 ![](images/R Studio barplot improved.png)
 
