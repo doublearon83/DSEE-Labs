@@ -407,7 +407,7 @@ for (i in 1:nrow(MLO_temp)) {
 
 Now that we have a temperature data frame.  The next step is to merge it with the yearly CO2 dataset.  We can do this because both datasets have a column representing the Year.
 
-There are [many types of joins](https://dtplyr.tidyverse.org/reference/left_join.dtplyr_step.html) you can perform. They differ in how they handle data that is not shared by both tables, so always ask yourself which observations you need to keep and which you want to drop, and look up the help pages if necessary (in doubt, <mark style="background-color:grey">full_join()</mark> will keep everything). In the following example, we want to keep all the information in <mark style="background-color:grey">MLO_temp</mark> and <mark style="background-color:grey">left_join()</mark.
+There are [many types of joins](https://dtplyr.tidyverse.org/reference/left_join.dtplyr_step.html) you can perform. They differ in how they handle data that is not shared by both tables, so always ask yourself which observations you need to keep and which you want to drop, and look up the help pages if necessary (in doubt, <mark style="background-color:grey">full_join()</mark> will keep everything). In the following example, we want to keep all the information in <mark style="background-color:grey">MLO_temp</mark> and <mark style="background-color:grey">left_join()</mark>.
 
 ```{r}
 # Join the two data frames by Year. If the column names were spelled differently, we would need to tell the function which columns represent a match.
