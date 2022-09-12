@@ -44,7 +44,7 @@ klippy::klippy()
     
 <br>
 
-**Due:** 9/21/22 at 1:30 PM, Introduction to R write-up (20 pts.).  Includes everything asked of you in the <mark style="color:blue">*blue questions*</mark> within this document along with the additional materials and questions at the very end.  The write-up should be completed in your favorite word processor and uploaded to the assignment on Canvas.
+**Due:** 9/21/22 at 1:30 PM, Introduction to R write-up (20 pts.).  This assignment includes the plot from lab #1, everything asked of you in the <mark style="color:blue">*blue questions*</mark> within this document, along with the additional materials and questions at the very end.  The write-up should be completed in your favorite word processor and uploaded to the assignment on Canvas.
 
 <br>
 
@@ -159,7 +159,7 @@ As you can see, the more demanding you are with your conditions, the more clutte
 
 <mark style="background-color:#F9E59B">Remember how we’ve been using the arrow <- to create new objects? This is a special convention in R that allows you to pick whichever name you want and assign it to an object (vector, list, data frame…).</mark>
 
-<mark style="background-color:#F9E59B">Something to keep in mind is that if you use a name again in a same session, it will overwrite the former object. With experience, you can start making changes to an object and overwrite as you go, to “update” the object rather than creating many intermediaries (“object1”, “object2”, …). However, when you’re starting out, it’s a good idea to create these intermediary objects, or at least to create a “working copy” that you can reassign to the main data object once you’re satisfied with the changes.</mark>
+<mark style="background-color:#F9E59B">Something to keep in mind is that if you use a name again in the same session, it will overwrite the former object. With experience, you can start making changes to an object and overwrite as you go, to “update” the object rather than creating many intermediaries (“object1”, “object2”, …). However, when you’re starting out, it’s a good idea to create these intermediary objects, or at least to create a “working copy” that you can reassign to the main data object once you’re satisfied with the changes.</mark>
 
 <mark style="background-color:#F9E59B">As you will now see, we can also make use of the arrow </mark><mark style="background-color:grey"><-</mark><mark style="background-color:#F9E59B"> to overwrite specific values or range of values we need to change.</mark>
 
@@ -237,7 +237,7 @@ MLO_CO2_wide <- spread(MLO_CO2, Year, CO2)		          # in this order: data fram
 
 # Let's reverse! gather() is the inverse function, allowing you to go from wide to long format
 MLO_CO2_long <- gather(MLO_CO2_wide,Year, CO2,        # in this order: data frame, key, value
-                                      c(3:50))        # we gather CO2 values by year
+                                      c(3:50))        # we gather CO2 values by year (the first two of the 50 columns in MLO_CO2_wide are not CO2 values)
 ```
 
 Since our original data was in long, tidy form, the new data frame MLO_CO2_long should be very similar to the original dataset.  However it is slightly different.  It added a few extra rows for the missing months of CO2 concentration in 1969 and 1976.
@@ -288,7 +288,7 @@ MLO_CO2_subset <- filter(MLO_CO2, Month %in% c(2, 3), Year %in% c(2009:2011)) # 
 MLO_CO2[MLO_CO2$Month %in% c(2,3) & MLO_CO2$Year %in% c(2009:2011), ]
 ```
 
-Note that here, we use <mark style="background-color:grey">%in%</mark> as a logical operator because we are looking to match a list of exact values. If you want to keep observations within a range of numeric values, you either need two logical statements in your <mark style="background-color:grey">filter()</mark> function, e.g. <mark style="background-color:grey">M > 4 & M <= 6</mark> or you can use the convenient <mark style="background-color:grey">between()</mark> function, e.g. <mark style="background-color:grey">between(M, 4, 6)</mark>.
+Note that here, we use <mark style="background-color:grey">%in%</mark> as a logical operator because we are looking to match a list of exact values. If you want to keep observations within a range of numeric values, you either need two logical statements in your <mark style="background-color:grey">filter()</mark> function, e.g. <mark style="background-color:grey">Month > 4 & Month <= 6</mark> or you can use the convenient <mark style="background-color:grey">between()</mark> function, e.g. <mark style="background-color:grey">between(Month, 4, 6)</mark>.
 
 <mark style="color:blue">*2.  Write and run the code to create a new subset using the filter function that keeps values from months 8 through 12 in the years 1994 and 1995.  Include the code in your write-up.*</mark>
 
@@ -298,7 +298,7 @@ See how <mark style="background-color:grey">dplyr</mark> is already starting to 
 
 <mark style="background-color:#F9E59B">You may have noticed how we sometimes call values in quotes "", and sometimes not. This depends on:</mark>
 
-<mark style="background-color:#F9E59B">- Whether the value you are calling is a character or numeric value: above, M is of class integer (a number), so we don’t need quotes around the values it takes.</mark>
+<mark style="background-color:#F9E59B">- Whether the value you are calling is a character or numeric value: above, Month is of class integer (a number), so we don’t need quotes around the values it takes.</mark>
     
 <mark style="background-color:#F9E59B">-Whether you are calling an existing object or referring to a value that R does not yet know about. Compare:</mark>
     
@@ -426,7 +426,7 @@ Now that we have gone to the trouble of merging our data, let’s check if tempe
 plot(Temperature ~ CO2,data = MLO_t_c)
 ```
 
-Are these differences statistically significant? We’ll go into more detail regarding how to test this in subsequent labs, but we can run a quick linear regression right now because who doesn’t like a little instant gratification.
+Are these variable related to each other? It is hard to tell without running an inferential statistical test.  We’ll go into more detail regarding how to test this in subsequent labs, but we can run a quick linear regression right now because who doesn’t like a little instant gratification.
 
 ```{r}
 # linear regression of yearly temperature by CO2 concentration
@@ -438,11 +438,11 @@ summary(lm(Temperature ~ CO2, data = MLO_t_c))
 
 ### Assignment
 
-<mark style="color:blue">*Your Introduction to R write-up should be completed in your favorite word processor, uploaded to the assignment on Canvas, and include:*</mark?
+<mark style="color:blue">*Your Introduction to R write-up should be completed in your favorite word processor, uploaded to the assignment on Canvas, and include:*</mark>
 
 |    <mark style="color:blue">*A) The barplot from Introduction to R – part 1*</mark>
 |    <mark style="color:blue">*B) The code and plots asked for in questions 1-4 of Introduction to R – part 2*</mark>
-|    <mark style="color:blue">*C) Answers to the following questions*:*</mark>
+|    <mark style="color:blue">*C) Answers to the following questions:*</mark>
 |        <mark style="color:blue">*1) What is one thing that you find useful about R?*</mark>
 |        <mark style="color:blue">*2) What is one thing that you find frustrating?  What can you do (e.g., in coding practice or attitude, for example) to help limit that frustration?*</mark>
 |        <mark style="color:blue">*3) There is a significant and positive linear relationship between Mauna Loa CO2 and temperature. However, the relationship has much more variation than the Keeling curve.  Given what we know about climate change, what is a possible explanation for the higher variation?*</mark>
