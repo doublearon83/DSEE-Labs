@@ -426,7 +426,7 @@ Now that we have gone to the trouble of merging our data, let’s check if tempe
 plot(Temperature ~ CO2,data = MLO_t_c)
 ```
 
-Are these variable related to each other? It is hard to tell without running an inferential statistical test.  We’ll go into more detail regarding how to test this in subsequent labs, but we can run a quick linear regression right now because who doesn’t like a little instant gratification.
+Are these variables related to each other? It is hard to tell without running an inferential statistical test.  We’ll go into more detail regarding how to test this in subsequent labs, but we can run a quick linear regression right now because who doesn’t like a little instant gratification.
 
 ```{r}
 # linear regression of yearly temperature by CO2 concentration

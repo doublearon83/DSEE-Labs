@@ -376,11 +376,12 @@ data</em></p>
 <p><em>4. Complete Introduction to R write-up</em></p>
 <p><br></p>
 <p><strong>Due:</strong> 9/21/22 at 1:30 PM, Introduction to R write-up
-(20 pts.). Includes everything asked of you in the
-<mark style="color:blue"><em>blue questions</em></mark> within this
-document along with the additional materials and questions at the very
-end. The write-up should be completed in your favorite word processor
-and uploaded to the assignment on Canvas.</p>
+(20 pts.). This assignment includes the plot from lab #1, everything
+asked of you in the <mark style="color:blue"><em>blue
+questions</em></mark> within this document, along with the additional
+materials and questions at the very end. The write-up should be
+completed in your favorite word processor and uploaded to the assignment
+on Canvas.</p>
 <p><br></p>
 <div id="introduction" class="section level3">
 <h3>Introduction</h3>
@@ -751,7 +752,7 @@ the arrow &lt;- to create new objects? This is a special convention in R
 that allows you to pick whichever name you want and assign it to an
 object (vector, list, data frame…).</mark></p>
 <p><mark style="background-color:#F9E59B">Something to keep in mind is
-that if you use a name again in a same session, it will overwrite the
+that if you use a name again in the same session, it will overwrite the
 former object. With experience, you can start making changes to an
 object and overwrite as you go, to “update” the object rather than
 creating many intermediaries (“object1”, “object2”, …). However, when
@@ -860,7 +861,7 @@ MLO_CO2_wide &lt;- spread(MLO_CO2, Year, CO2)                # in this order: da
 
 # Let&#39;s reverse! gather() is the inverse function, allowing you to go from wide to long format
 MLO_CO2_long &lt;- gather(MLO_CO2_wide,Year, CO2,        # in this order: data frame, key, value
-                                      c(3:50))        # we gather CO2 values by year</code></pre>
+                                      c(3:50))        # we gather CO2 values by year (the first two of the 50 columns in MLO_CO2_wide are not CO2 values)</code></pre>
 <p>Since our original data was in long, tidy form, the new data frame
 MLO_CO2_long should be very similar to the original dataset. However it
 is slightly different. It added a few extra rows for the missing months
@@ -938,10 +939,11 @@ because we are looking to match a list of exact values. If you want to
 keep observations within a range of numeric values, you either need two
 logical statements in your
 <mark style="background-color:grey">filter()</mark> function,
-e.g. <mark style="background-color:grey">M &gt; 4 &amp; M &lt;= 6</mark>
-or you can use the convenient
+e.g. <mark style="background-color:grey">Month &gt; 4 &amp; Month &lt;=
+6</mark> or you can use the convenient
 <mark style="background-color:grey">between()</mark> function,
-e.g. <mark style="background-color:grey">between(M, 4, 6)</mark>.</p>
+e.g. <mark style="background-color:grey">between(Month, 4,
+6)</mark>.</p>
 <p><mark style="color:blue"><em>2. Write and run the code to create a
 new subset using the filter function that keeps values from months 8
 through 12 in the years 1994 and 1995. Include the code in your
@@ -955,8 +957,9 @@ quote?</mark></p>
 sometimes call values in quotes ““, and sometimes not. This depends
 on:</mark></p>
 <p><mark style="background-color:#F9E59B">- Whether the value you are
-calling is a character or numeric value: above, M is of class integer (a
-number), so we don’t need quotes around the values it takes.</mark></p>
+calling is a character or numeric value: above, Month is of class
+integer (a number), so we don’t need quotes around the values it
+takes.</mark></p>
 <p><mark style="background-color:#F9E59B">-Whether you are calling an
 existing object or referring to a value that R does not yet know about.
 Compare:</mark></p>
@@ -1124,7 +1127,7 @@ the help pages if necessary (in doubt,
 <mark style="background-color:grey">full_join()</mark> will keep
 everything). In the following example, we want to keep all the
 information in <mark style="background-color:grey">MLO_temp</mark> and
-<mark style="background-color:grey">left_join()&lt;/mark.</p>
+<mark style="background-color:grey">left_join()</mark>.</p>
 <pre class="r"><code># Join the two data frames by Year. If the column names were spelled differently, we would need to tell the function which columns represent a match.
 
 MLO_t_c &lt;- left_join(MLO_temp, MLO_CO2_y, by = c(&quot;Year&quot;))
@@ -1139,10 +1142,11 @@ if temperature and CO2 concentration are related to each other.</p>
 <pre class="r"><code># scatterplot of yearly temperature by CO2 concentration
 plot(Temperature ~ CO2,data = MLO_t_c)</code></pre>
 <p><img src="DSEE-Lab2_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
-<p>Are these differences statistically significant? We’ll go into more
-detail regarding how to test this in subsequent labs, but we can run a
-quick linear regression right now because who doesn’t like a little
-instant gratification.</p>
+<p>Are these variable related to each other? It is hard to tell without
+running an inferential statistical test. We’ll go into more detail
+regarding how to test this in subsequent labs, but we can run a quick
+linear regression right now because who doesn’t like a little instant
+gratification.</p>
 <pre class="r"><code># linear regression of yearly temperature by CO2 concentration
 # Values in the second row of the “Coefficients” table indicate the slope of the best fit line, SE, t-value, and p-value
 summary(lm(Temperature ~ CO2, data = MLO_t_c))</code></pre>
@@ -1170,13 +1174,13 @@ summary(lm(Temperature ~ CO2, data = MLO_t_c))</code></pre>
 <h3>Assignment</h3>
 <p><mark style="color:blue"><em>Your Introduction to R write-up should
 be completed in your favorite word processor, uploaded to the assignment
-on Canvas, and include:</em>&lt;/mark?</p>
+on Canvas, and include:</em></mark></p>
 <div class="line-block">   <mark style="color:blue"><em>A) The barplot
 from Introduction to R – part 1</em></mark><br />
    <mark style="color:blue"><em>B) The code and plots asked for in
 questions 1-4 of Introduction to R – part 2</em></mark><br />
    <mark style="color:blue"><em>C) Answers to the following
-questions</em>:*</mark><br />
+questions:</em></mark><br />
        <mark style="color:blue"><em>1) What is one thing that you find
 useful about R?</em></mark><br />
        <mark style="color:blue"><em>2) What is one thing that you find
