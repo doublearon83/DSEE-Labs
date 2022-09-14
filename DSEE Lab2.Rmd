@@ -436,7 +436,7 @@ summary(lm(Temperature ~ CO2, data = MLO_t_c))
 
 <br>
 
-### Assignment
+### 4. Assignment
 
 <mark style="color:blue">*Your Introduction to R write-up should be completed in your favorite word processor, uploaded to the assignment on Canvas, and include:*</mark>
 
