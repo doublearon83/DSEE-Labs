@@ -441,7 +441,7 @@ summary(lm(Temperature ~ CO2, data = MLO_t_c))
 <mark style="color:blue">*Your Introduction to R write-up should be completed in your favorite word processor, uploaded to the assignment on Canvas, and include:*</mark>
 
 |    <mark style="color:blue">*A) The barplot from Introduction to R – part 1*</mark>
-|    <mark style="color:blue">*B) The code and plots asked for in questions 1-4 of Introduction to R – part 2*</mark>
+|    <mark style="color:blue">*B) The code and plots asked for in questions 1-3 of Introduction to R – part 2*</mark>
 |    <mark style="color:blue">*C) Answers to the following questions:*</mark>
 |        <mark style="color:blue">*1) What is one thing that you find useful about R?*</mark>
 |        <mark style="color:blue">*2) What is one thing that you find frustrating?  What can you do (e.g., in coding practice or attitude, for example) to help limit that frustration?*</mark>
