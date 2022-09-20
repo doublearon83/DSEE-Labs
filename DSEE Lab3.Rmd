@@ -179,13 +179,13 @@ Note: Pressing enter after each “layer” of your plot (i.e. indenting it) pre
 
 <mark style="background-color:lightblue">theme: a theme is made of a set of visual parameters that control the background, borders, grid lines, axes, text size, legend position, etc. You can use [pre-defined themes, create your own](https://ourcodingclub.github.io/tutorials/data-vis-2/index.html#theme), or use a theme and overwrite only the elements you don’t like. Examples of elements within themes are </mark><mark style="background-color:grey">axis.text</mark><mark style="background-color:lightblue">, </mark><mark style="background-color:grey">panel.grid</mark><mark style="background-color:lightblue">, </mark><mark style="background-color:grey">legend.title</mark><mark style="background-color:lightblue">, and so on. You define their properties with </mark><mark style="background-color:grey">elements_...()</mark><mark style="background-color:lightblue"> functions: </mark><mark style="background-color:grey">element_blank()</mark><mark style="background-color:lightblue"> would return something empty (ideal for removing background color), while </mark><mark style="background-color:grey">element_text(size = ..., face = ..., angle = ...)</mark><mark style="background-color:lightblue"> lets you control all kinds of text properties.</mark>
 
-<mark style="background-color:lightblue">It is also useful to remember is that layers are added on top of each other as you progress into the code, which means that elements written later may hide or overwrite previous elements.</mark>
+<mark style="background-color:lightblue">It is also useful to remember] that layers are added on top of each other as you progress into the code, which means that elements written later may hide or overwrite previous elements.</mark>
 
 <br>
 
 ### Learning how to use colourpicker
 
-In the code above, you can see a color code <mark style="background-color:grey">colour = "#8B5A00"</mark> - each color you can dream of has a code, called a “hex code”, a combination of letters and numbers. You can get the codes for different colors online, from Paint, Photoshop or similar programs, or even from RStudio, which is very convenient! There is an RStudio <mark style="background-color:grey">Colourpicker</mark> addin which was a game changer for us - to install it, run the following code:
+In the code above, you can see a color code <mark style="background-color:grey">colour = "#8B5A00"</mark> - any color you can dream of has a code, called a “hex code”, a combination of letters and numbers. You can get the codes for different colors online, from Paint, Photoshop or similar programs, or even from RStudio, which is very convenient! There is an RStudio <mark style="background-color:grey">Colourpicker</mark> addin which was a game changer for us - to install it, run the following code:
 
 ```{r, eval=F, echo=T}
 # package for generating color hex codes
@@ -272,8 +272,6 @@ Some useful arguments to include in <mark style="background-color:grey">facet_wr
 #### <mark style="background-color:#F9E59B">Good to know</mark>
 
 <mark style="background-color:#F9E59B">If your axis labels need to contain special characters or superscript, you can get ggplot2 to plot that, too. It might require some googling regarding your specific case, but for example, this code </mark><mark style="background-color:grey">ylabs(expression(paste('Grain yield',' ','(ton.', ha^-1, ')', sep='')))</mark><mark style="background-color:#F9E59B"> will create a y axis with a label reading Grain yield (ton. ha-1).</mark>
-
-<mark style="background-color:#F9E59B">To create additional space between an axis title and the axis itself, use \n when writing your title, and it will act as a line break.</mark>
 
 <br>
 
