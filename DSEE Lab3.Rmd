@@ -84,7 +84,7 @@ Next, we need to get data into R.  There are three datasets provided for you on 
 
 2) **Pollinators.csv** – data on pollinators including scientific name, date collected (Julian day of year), year collected, and corrected collection day (controlling for effect of latitude).  You should use the corrected collection day and not collection date.
 
-3) **Climate.csv** – Has daily maximum and minimum daily temperature (along with other variables) for the field site from 1969 through 2010.
+3) **Climate.csv** – Has daily maximum and minimum temperature (along with other variables) for the field site from 1969 through 2010.
 
 Get them uploaded into R (review “Introduction to R” labs for assistance).
 
