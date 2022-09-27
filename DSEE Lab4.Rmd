@@ -194,6 +194,153 @@ Pollinator_fam <- Pollinators %>%
           plot.margin = unit(c(1,1,1,1), units = , "cm")))
 ```
 
+<br>
+
+### 2a. Reorder factors
+
+Sometimes you need to reorder the levels of a variable that is or could be a factor (e.g., Family). We often want to do this so that we can plot values in a specific order.
+
+If we wanted to have the family Colletinae come before Andreninae, we would first have to reorder the data in the dataframe. From this point, after reordering the data, <mark style="background-color:grey">ggplot</mark> will always plot Colletinae before Andreninae. 
+
+```{r}
+# make Family a factor
+Pollinator_fam$Family <- as.factor(Pollinator_fam$Family)
+
+# Reordering the data
+Pollinator_fam$Family <- factor(Pollinator_fam$Family, 
+                             levels = c("Colletinae", "Andreninae", "Apinae", "Halictinae", "Xylocopinae"),
+                             labels = c("Colletinae", "Andreninae", "Apinae", "Halictinae", "Xylocopinae"))
+```
+
+If you re-run the barplot from above, the columns and legend should be reordered appropriately.
+
+<br>
+
+### 2b. Modify the legend
+
+We can change the legend title to “Bee Family,” by specifying <mark style="background-color:grey">name = "Bee Family"</mark> in <mark style="background-color:grey">scale_fill_manual()</mark>. In some cases, we might not want to have a title for the legend at all, which you can do by specifying in <mark style="background-color:grey">scale_fill_manual</mark>, <mark style="background-color:grey">name = NULL</mark>.  There are a lot of other ways to modify the look of the legend within <mark style="background-color:grey">theme()</mark>.  Try out some of the modifications on your plot!
+
+```{r, eval=F, echo=T}
+ theme(legend.title = element_text(face = "bold"),
+          legend.position = "bottom", 
+          legend.box.background = element_rect(color = "grey", size = 0.3))
+```
+
+Let’s cover some more of the <mark style="background-color:grey">theme()</mark> elements we’ve used in the examples above:
+
+|    • <mark style="background-color:grey">legend.title</mark> allows you to change the font size of the legend, or its formatting (e.g. bold).
+    
+|    • The <mark style="background-color:grey">legend.position</mark> can be defined with accepted positions such as <mark style="background-color:grey">"bottom"</mark>, but you can also modify the coordinate position with something like this <mark style="background-color:grey">legend.position = c(0.1, 0.8)</mark>. This is a neat trick in some cases, where you have lots of blank space within your plot itself and want to fine-tune the legend position.
+    
+|    • Finally, we’ve used <mark style="background-color:grey">legend.box.background = element_rect()</mark> to create a light grey rectangle that surrounds the legend. If you don’t want this, you can just remove that line of code.
+<br>
+Don’t forget that we can use the <mark style="background-color:grey">scale_...()</mark> functions to customize both the color code AND the legend at once. The <mark style="background-color:grey">scale_fill_manual(values = c("your-color-1", "your-color-2", ...))</mark> function lets you decide on custom color values for solid elements (bars, boxplots, ribbons, etc.), and its counterpart <mark style="background-color:grey">scale_color_manual()</mark> works exactly the same for line elements (points in a scatter plot, regression lines, box or column outlines, etc.). You need to make sure you put in as many colors as there are factor levels in your data.
+
+<br>
+
+#### <mark style="background-color:lightblue">Need inspiration for your colors?</mark>
+
+<mark style="background-color:lightblue">Remember, you can define colors using R’s [built-in colour names](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf) or by specifying their [Hex codes](https://www.color-hex.com/). The Colour Picker package is a great way to pick colors within the comfort of R Studio.</mark>
+
+<br>
+
+### 3. More practice with scatterplots and regression lines
+
+In our first data visualization exercise, we added best fit lines to scatterplots.  Here, we will review this skill and expand upon it.
+
+Using your amazing data wrangling skills, and a few new tricks we will add the climate data to the Mid_bloom dataset.  
+
+The Bartomeus paper (from which these data come) used only April temperatures in their analysis.  To extract those values, we need to convert the date variable in the climate dataset from a Character class variable to a Date class variable.  Then, we will filter the April temperatures out, generate a new dataset with yearly average April temperatures (calculated from maximum daily values), and join it with the Mid_bloom dataset.
+
+```{r, eval=F, echo=T}
+# package for converting date
+install.packages("lubridate")
+```
+
+```{r}
+library(lubridate)
+
+# convert "date" from chr to a Date class and specify current date format
+Climate$DATE<- as.Date(Climate$DATE)
+
+# calculate average April max temperature
+April_temp<-filter(Climate,format.Date(DATE, "%m")== "04")
+
+# create year variable
+April_temp$Year<-year(April_temp$DATE)
+
+# overwrite April_temp with yearly means
+April_temp <- April_temp %>%
+  group_by(Year) %>%
+  summarize(Tmax = mean(TMAX, na.rm=T))
+
+# join climate data with Mid_bloom data
+Mid_bloom <- left_join(Mid_bloom, April_temp, by = c("Year"))
+```
+
+We can view this as a basic scatterplot in ggplot2:
+
+```{r}
+(MB_T_scatter <- ggplot(Mid_bloom, aes(x = Mid_bloom_day, y = Tmax)) +
+  geom_point() +
+  theme_bw())
+```
+
+We can see a pretty clear trend over time. So let’s try to plot a simple straight line through this using <mark style="background-color:grey">geom_smooth</mark> in ggplot2.  If you can’t remember how to do this, look up the code from last week!  <mark style="color:blue">*Beautify this plot and save it for your write-up.*</mark>
+
+However, sometimes the relationship isn’t linear. An alternative would be to use a different equation. Do you remember the Keeling curve from our second week of lab?  You should reproduce that curve using ggplot2 (make it pretty!) and add a best fit straight line.  Then try a quadratic fit - something slightly more complicated to produce than the standard fits provided by R. Thankfully, ggplot2 lets us customize to pretty much any type of fit we want, as we can add in an equation to tell it what to plot. There are also several different base fits available. You can check out some here.
+
+```{r, eval=F, echo=T}
+# Modify your geom_smooth layer as follows to add a quadratic fit instead of a straight line fit
+geom_smooth(method = "lm", formula = y ~ x + I(x^2)) +
+```
+
+
+Take some time to explore the different ggplot2 fits! For instance, <mark style="background-color:grey">method = "loess"</mark> gives a smoothed curve.  <mark style="color:blue">*Save your Keeling curve with the quadratic fit for your write-up.*</mark>
+
+<br>
+
+### 4. Animate your plots
+
+Plotting best fit lines is a great way to emphasize a trend or pattern in a graph.  Another effective tool for visualizing patterns is to animate your plot.  We will animate the scatterplot you made of Mid bloom day by year using the <mark style="background-color:grey">gganimate</mark> package. 
+
+The process sounds intimidating, but it is quite easy.  All you have to do is add a layer to your code telling R how you want to transition between states, in this case from year to year.  We use the <mark style="background-color:grey">transition_reveal()</mark> function for this.  Then you use a couple other functions that tell R to run the animation and save it as a .gif file.  Warning, the animation may take a minute to render and run in RStudio.  Be patient.
+
+```{r, eval=F, echo=T}
+# Get required packages
+install.packages("gganimate")
+install.packages("gifski")
+```
+
+```{r}
+require(gganimate)
+require(gifski)
+
+# Plot mid bloom day by year
+MB_scatter <- ggplot(Mid_bloom, aes (x = Year, y = Mid_bloom_day)) +
+  geom_point(alpha = 0.5, size = 3) + 
+  geom_line() + 
+  theme_bw() +
+  ylab("Mid bloom day\n") +                             
+  xlab("\nYear")  +
+  ylim(90,170) +
+  theme(axis.text.x = element_text(size = 14, angle = 45, vjust = 1, hjust = 1),
+        axis.text.y = element_text(size = 14),
+        axis.title = element_text(size = 16, face = "plain"),                        
+        panel.grid = element_blank(),                                                 
+        plot.margin = unit(c(1,1,1,1), units = , "cm")) +                 
+        transition_reveal(Year) # Reveals each new time frame
+ 
+animate(MB_scatter, renderer = gifski_renderer()) # plays the animation in RStudio
+anim_save("Mid_bloom_by_year.gif") # saves animation as a .gif to your working directory
+```
+
+
+Check out the [documentation](https://cran.r-project.org/web/packages/gganimate/gganimate.pdf) for the <mark style="background-color:grey">gganimate</mark> package.  There are a lot of different ways to animate plots besides just using the <mark style="background-color:grey">transition_reveal()</mark> function.
+
+<br>
+
+### 5. Create your own ggplot theme
 
 <br>
 

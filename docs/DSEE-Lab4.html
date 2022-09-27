@@ -501,6 +501,199 @@ Pollinator_fam &lt;- Pollinators %&gt;%
 <p><img src="DSEE-Lab4_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p><br></p>
 </div>
+<div id="a.-reorder-factors" class="section level3">
+<h3>2a. Reorder factors</h3>
+<p>Sometimes you need to reorder the levels of a variable that is or
+could be a factor (e.g., Family). We often want to do this so that we
+can plot values in a specific order.</p>
+<p>If we wanted to have the family Colletinae come before Andreninae, we
+would first have to reorder the data in the dataframe. From this point,
+after reordering the data,
+<mark style="background-color:grey">ggplot</mark> will always plot
+Colletinae before Andreninae.</p>
+<pre class="r"><code># make Family a factor
+Pollinator_fam$Family &lt;- as.factor(Pollinator_fam$Family)
+
+# Reordering the data
+Pollinator_fam$Family &lt;- factor(Pollinator_fam$Family, 
+                             levels = c(&quot;Colletinae&quot;, &quot;Andreninae&quot;, &quot;Apinae&quot;, &quot;Halictinae&quot;, &quot;Xylocopinae&quot;),
+                             labels = c(&quot;Colletinae&quot;, &quot;Andreninae&quot;, &quot;Apinae&quot;, &quot;Halictinae&quot;, &quot;Xylocopinae&quot;))</code></pre>
+<p>If you re-run the barplot from above, the columns and legend should
+be reordered appropriately.</p>
+<p><br></p>
+</div>
+<div id="b.-modify-the-legend" class="section level3">
+<h3>2b. Modify the legend</h3>
+<p>We can change the legend title to “Bee Family,” by specifying
+<mark style="background-color:grey">name = “Bee Family”</mark> in
+<mark style="background-color:grey">scale_fill_manual()</mark>. In some
+cases, we might not want to have a title for the legend at all, which
+you can do by specifying in
+<mark style="background-color:grey">scale_fill_manual</mark>,
+<mark style="background-color:grey">name = NULL</mark>. There are a lot
+of other ways to modify the look of the legend within
+<mark style="background-color:grey">theme()</mark>. Try out some of the
+modifications on your plot!</p>
+<pre class="r"><code> theme(legend.title = element_text(face = &quot;bold&quot;),
+          legend.position = &quot;bottom&quot;, 
+          legend.box.background = element_rect(color = &quot;grey&quot;, size = 0.3))</code></pre>
+<p>Let’s cover some more of the
+<mark style="background-color:grey">theme()</mark> elements we’ve used
+in the examples above:</p>
+<div class="line-block">   •
+<mark style="background-color:grey">legend.title</mark> allows you to
+change the font size of the legend, or its formatting (e.g. bold).<br />
+   • The <mark style="background-color:grey">legend.position</mark> can
+be defined with accepted positions such as
+<mark style="background-color:grey">“bottom”</mark>, but you can also
+modify the coordinate position with something like this
+<mark style="background-color:grey">legend.position = c(0.1,
+0.8)</mark>. This is a neat trick in some cases, where you have lots of
+blank space within your plot itself and want to fine-tune the legend
+position.<br />
+   • Finally, we’ve used
+<mark style="background-color:grey">legend.box.background =
+element_rect()</mark> to create a light grey rectangle that surrounds
+the legend. If you don’t want this, you can just remove that line of
+code.</div>
+<p><br> Don’t forget that we can use the
+<mark style="background-color:grey">scale_…()</mark> functions to
+customize both the color code AND the legend at once. The
+<mark style="background-color:grey">scale_fill_manual(values =
+c(“your-color-1”, “your-color-2”, …))</mark> function lets you decide on
+custom color values for solid elements (bars, boxplots, ribbons, etc.),
+and its counterpart
+<mark style="background-color:grey">scale_color_manual()</mark> works
+exactly the same for line elements (points in a scatter plot, regression
+lines, box or column outlines, etc.). You need to make sure you put in
+as many colors as there are factor levels in your data.</p>
+<p><br></p>
+<div id="need-inspiration-for-your-colors" class="section level4">
+<h4><mark style="background-color:lightblue">Need inspiration for your
+colors?</mark></h4>
+<p><mark style="background-color:lightblue">Remember, you can define
+colors using R’s <a
+href="http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf">built-in
+colour names</a> or by specifying their <a
+href="https://www.color-hex.com/">Hex codes</a>. The Colour Picker
+package is a great way to pick colors within the comfort of R
+Studio.</mark></p>
+<p><br></p>
+</div>
+</div>
+<div id="more-practice-with-scatterplots-and-regression-lines"
+class="section level3">
+<h3>3. More practice with scatterplots and regression lines</h3>
+<p>In our first data visualization exercise, we added best fit lines to
+scatterplots. Here, we will review this skill and expand upon it.</p>
+<p>Using your amazing data wrangling skills, and a few new tricks we
+will add the climate data to the Mid_bloom dataset.</p>
+<p>The Bartomeus paper (from which these data come) used only April
+temperatures in their analysis. To extract those values, we need to
+convert the date variable in the climate dataset from a Character class
+variable to a Date class variable. Then, we will filter the April
+temperatures out, generate a new dataset with yearly average April
+temperatures (calculated from maximum daily values), and join it with
+the Mid_bloom dataset.</p>
+<pre class="r"><code># package for converting date
+install.packages(&quot;lubridate&quot;)</code></pre>
+<pre class="r"><code>library(lubridate)
+
+# convert &quot;date&quot; from chr to a Date class and specify current date format
+Climate$DATE&lt;- as.Date(Climate$DATE)
+
+# calculate average April max temperature
+April_temp&lt;-filter(Climate,format.Date(DATE, &quot;%m&quot;)== &quot;04&quot;)
+
+# create year variable
+April_temp$Year&lt;-year(April_temp$DATE)
+
+# overwrite April_temp with yearly means
+April_temp &lt;- April_temp %&gt;%
+  group_by(Year) %&gt;%
+  summarize(Tmax = mean(TMAX, na.rm=T))
+
+# join climate data with Mid_bloom data
+Mid_bloom &lt;- left_join(Mid_bloom, April_temp, by = c(&quot;Year&quot;))</code></pre>
+<p>We can view this as a basic scatterplot in ggplot2:</p>
+<pre class="r"><code>(MB_T_scatter &lt;- ggplot(Mid_bloom, aes(x = Mid_bloom_day, y = Tmax)) +
+  geom_point() +
+  theme_bw())</code></pre>
+<p><img src="DSEE-Lab4_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>We can see a pretty clear trend over time. So let’s try to plot a
+simple straight line through this using
+<mark style="background-color:grey">geom_smooth</mark> in ggplot2. If
+you can’t remember how to do this, look up the code from last week!
+<mark style="color:blue"><em>Beautify this plot and save it for your
+write-up.</em></mark></p>
+<p>However, sometimes the relationship isn’t linear. An alternative
+would be to use a different equation. Do you remember the Keeling curve
+from our second week of lab? You should reproduce that curve using
+ggplot2 (make it pretty!) and add a best fit straight line. Then try a
+quadratic fit - something slightly more complicated to produce than the
+standard fits provided by R. Thankfully, ggplot2 lets us customize to
+pretty much any type of fit we want, as we can add in an equation to
+tell it what to plot. There are also several different base fits
+available. You can check out some here.</p>
+<pre class="r"><code># Modify your geom_smooth layer as follows to add a quadratic fit instead of a straight line fit
+geom_smooth(method = &quot;lm&quot;, formula = y ~ x + I(x^2)) +</code></pre>
+<p>Take some time to explore the different ggplot2 fits! For instance,
+<mark style="background-color:grey">method = “loess”</mark> gives a
+smoothed curve. <mark style="color:blue"><em>Save your Keeling curve
+with the quadratic fit for your write-up.</em></mark></p>
+<p><br></p>
+</div>
+<div id="animate-your-plots" class="section level3">
+<h3>4. Animate your plots</h3>
+<p>Plotting best fit lines is a great way to emphasize a trend or
+pattern in a graph. Another effective tool for visualizing patterns is
+to animate your plot. We will animate the scatterplot you made of Mid
+bloom day by year using the
+<mark style="background-color:grey">gganimate</mark> package.</p>
+<p>The process sounds intimidating, but it is quite easy. All you have
+to do is add a layer to your code telling R how you want to transition
+between states, in this case from year to year. We use the
+<mark style="background-color:grey">transition_reveal()</mark> function
+for this. Then you use a couple other functions that tell R to run the
+animation and save it as a .gif file. Warning, the animation may take a
+minute to render and run in RStudio. Be patient.</p>
+<pre class="r"><code># Get required packages
+install.packages(&quot;gganimate&quot;)
+install.packages(&quot;gifski&quot;)</code></pre>
+<pre class="r"><code>require(gganimate)
+require(gifski)
+
+# Plot mid bloom day by year
+MB_scatter &lt;- ggplot(Mid_bloom, aes (x = Year, y = Mid_bloom_day)) +
+  geom_point(alpha = 0.5, size = 3) + 
+  geom_line() + 
+  theme_bw() +
+  ylab(&quot;Mid bloom day\n&quot;) +                             
+  xlab(&quot;\nYear&quot;)  +
+  ylim(90,170) +
+  theme(axis.text.x = element_text(size = 14, angle = 45, vjust = 1, hjust = 1),
+        axis.text.y = element_text(size = 14),
+        axis.title = element_text(size = 16, face = &quot;plain&quot;),                        
+        panel.grid = element_blank(),                                                 
+        plot.margin = unit(c(1,1,1,1), units = , &quot;cm&quot;)) +                 
+        transition_reveal(Year) # Reveals each new time frame
+ 
+animate(MB_scatter, renderer = gifski_renderer()) # plays the animation in RStudio</code></pre>
+<p><img
+src="DSEE-Lab4_files/figure-html/unnamed-chunk-17-1.gif" /><!-- --></p>
+<pre class="r"><code>anim_save(&quot;Mid_bloom_by_year.gif&quot;) # saves animation as a .gif to your working directory</code></pre>
+<p>Check out the <a
+href="https://cran.r-project.org/web/packages/gganimate/gganimate.pdf">documentation</a>
+for the <mark style="background-color:grey">gganimate</mark> package.
+There are a lot of different ways to animate plots besides just using
+the <mark style="background-color:grey">transition_reveal()</mark>
+function.</p>
+<p><br></p>
+</div>
+<div id="create-your-own-ggplot-theme" class="section level3">
+<h3>5. Create your own ggplot theme</h3>
+<p><br></p>
+</div>
 <div id="challenge-yourself" class="section level3">
 <h3>6. Challenge yourself!</h3>
 <p><mark style="color:blue"><em>Continue flexing those new graphing

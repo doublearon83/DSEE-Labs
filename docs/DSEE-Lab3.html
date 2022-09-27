@@ -461,7 +461,7 @@ Pollinators &lt;- left_join(Pollinators, Mid_bloom, by = c(&quot;Year&quot;))
 Pollinators &lt;- Pollinators %&gt;%
   mutate(Asynchrony = CorrectedCollectionDay - Mid_bloom_day)</code></pre>
 <p>Then, we need to filter the data so that we only keep pollinators
-with absolute asynchrony values less than 25 (hint:
+with absolute asynchrony values less than or equal to 25 (hint:
 <mark style="background-color:grey">abs()</mark> is a function that
 produces absolute value). We do this to avoid including pollinators that
 do not normally forage when the apple trees are blooming.</p>
