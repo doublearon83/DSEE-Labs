@@ -692,6 +692,37 @@ function.</p>
 </div>
 <div id="create-your-own-ggplot-theme" class="section level3">
 <h3>5. Create your own ggplot theme</h3>
+<p>You might have noticed that the lines starting with
+<mark style="background-color:grey">theme()</mark> quickly pile up.
+We’ve been adjusting the font size of the axes and the labels, the
+position of the title, the background color of the plot, etc. And then
+we’ve been copying and pasting those many lines of codes on all of our
+graphs, which really increases the length of our script, and makes our
+code less readable.</p>
+<p>Here is a simple solution: create a customized theme that combines
+all the <mark style="background-color:grey">theme()</mark> elements you
+want! You can then apply it to your graphs to make things easier and
+increase consistency. You can include as many elements in your theme as
+you want, and when you apply your theme to a graph, only the relevant
+elements will be considered - e.g. for our histograms we won’t need to
+use <mark style="background-color:grey">legend.position</mark>, but it’s
+fine to keep it in the theme in case any future graphs we apply it to do
+have the need for legends.</p>
+<pre class="r"><code>theme_coding &lt;- function(){            # creating a new theme function
+  theme_bw()+                          # using a predefined theme as a base
+  theme(axis.text.x = element_text(size = 12, angle = 45, vjust = 1, hjust = 1),       # customizing lots of things
+        axis.text.y = element_text(size = 12),
+        axis.title = element_text(size = 14),
+        panel.grid = element_blank(),
+        plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), units = , &quot;cm&quot;),
+        plot.title = element_text(size = 20, vjust = 1, hjust = 0.5),
+        legend.text = element_text(size = 12, face = &quot;italic&quot;),
+        legend.title = element_blank(),
+        legend.position = c(0.9, 0.9))
+}</code></pre>
+<p>Try out the effects of the theme by replacing all the code starting
+with <mark style="background-color:grey">theme(……..)</mark> with just
+<mark style="background-color:grey">theme_coding()</mark>.</p>
 <p><br></p>
 </div>
 <div id="challenge-yourself" class="section level3">
