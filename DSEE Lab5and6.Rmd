@@ -401,28 +401,20 @@ Your write-up should:
 
 1) Address the following question:
 
-	- Is there phenological mismatch between apple (Malus ssp.) flowers and their pollinators.  
-
-<br>
+-  Is there phenological mismatch between apple (Malus ssp.) flowers and their pollinators.  
 	
 2) Include all the plots you saved from the data visualization labs, and at least one additional plot that includes prediction intervals.
 
-	- If you are writing a scientific paper, the plots need captions.
-	- If you are writing a blog post, the plots need titles.
-
-<br>
+-  If you are writing a scientific paper, the plots need captions.
+-  If you are writing a blog post, the plots need titles.
 
 3) Include any statistical results that are required to assess patterns or relationships shown in plots.
 
-	- If you are writing a scientific paper, the statistical results should be provided parenthetically (remember back to BIO 110!).
-	- If you are writing a blog post, they can be included as endnotes.
-	- I don’t really care about formatting details.  Use whatever citation type you want.
-
-<br>
+-  If you are writing a scientific paper, the statistical results should be provided parenthetically (remember back to BIO 110!).
+-  If you are writing a blog post, they can be included as endnotes.
+-  I don’t really care about formatting details.  Use whatever citation type you want.
 
 4) Include a discussion section that addresses the question given above and associated hypotheses and makes some predictions about the ecological future of both the pollinators and apple trees.  You do not need to address the literature at large, discuss weaknesses in the experiment, or provide future directions.
-
-<br>
 
 5) Include any code I asked you to save from previous labs. Include it as an appendix.
 
