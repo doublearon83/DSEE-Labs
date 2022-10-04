@@ -97,7 +97,7 @@ Now it’s time for us to add more information to our graphs, for example, the p
 
 #### <mark style="background-color:#F9E59B">Control everything!</mark>
 
-<mark style="background-color:#F9E59B">Remember, you can also add in </mark><mark style="background-color:grey">theme()</mark><mark style="background-color:#F9E59B"> elements to your plot, which let you customize even more aspects! We already introduced theme elements in our [previous tutorial](https://ourcodingclub.github.io/tutorials/datavis/index.html). Other things you can play around with are:</mark>
+<mark style="background-color:#F9E59B">Remember, you can also add in </mark><mark style="background-color:grey">theme()</mark><mark style="background-color:#F9E59B"> elements to your plot, which let you customize even more aspects! We already introduced theme elements in our [previous lab](https://doublearon83.github.io/DSEE-Labs/DSEE-Lab3.html). Other things you can play around with are:</mark>
 
 |    <mark style="background-color:#F9E59B">- italicize or bold the text with </mark><mark style="background-color:grey">face = 'italic'</mark><mark style="background-color:#F9E59B"> or </mark><mark style="background-color:grey">face = 'bold'</mark><mark style="background-color:#F9E59B"> respectively</mark>
 
@@ -169,7 +169,7 @@ Pollinator_fam <- Pollinators %>%
           plot.margin = unit(c(1,1,1,1), units = , "cm")))
 ```
 
-This is a pretty nice plot. However, as biologists, we should hopefully notice something is missing from these plots… ERROR BARS.  In order to add error bars to the plot, we must first calculate them.  Then, we will add them to the plot using the <mark style="background-color:grey">geom_errorbar()</mark> function.  From looking at the code, do you understand how the error bars are added?  Can you explain it in your own words?
+This is a pretty nice plot. However, as biologists, we should hopefully notice something is missing from these plots… ERROR BARS.  In order to add error bars, we must first calculate them.  Then, we will add them to the plot using the <mark style="background-color:grey">geom_errorbar()</mark> function.  From looking at the code, do you understand how the error bars are added?  Can you explain it in your own words?
 
 ```{r}
 #calculate standard error 
