@@ -567,20 +567,21 @@ Xylocopinae in the year 1970?</p>
 <p><img src="images/ANCOVA%20output.png" /></p>
 <p>Let’s write the equation. To do this, we are modifying the intercepts
 and slopes according the family and year.</p>
+<p>Note, for both Xylocopinae (and other families) there is a
+significant interaction term, meaning that asynchrony changes
+significantly over time that family. It always makes a lot more sense
+when you can visualize the relationship. So I suggest looking at the
+appropriate plot (hint: you’ve already made something very similar in a
+previous lab!).</p>
 <p>For Xylocopinae, in the year 1970:</p>
 <p>asynchrony = 196.11 + -742.21 + -0.098x(Year) + 0.37258x(year). The
 asynchrony in 1970 would be 196.11 + -742.21 + -0.098x(1970) +
 0.37258x(1970) = -5.1774 days.</p>
-<p>For Halictinae in the year 2010, it would be:</p>
+<p>Let’s try another example. For Halictinae in the year 2010, it would
+be:</p>
 <p>asynchrony = 196.11 + -342.56 + -0.098x(Year) + 0.17257x(year). The
 asynchrony in 2010 would be 196.11 + -342.56 + -0.098x(2010) +
 0.17257x(2010) = 3.4257 days.</p>
-<p>Note, for both Xylocopinae and Halictinae there is a significant
-interaction term, meaning that asynchrony changes significantly over
-time for these two families. It always makes a lot more sense when you
-can visualize the relationship. So I suggest looking at the appropriate
-plot (hint: you’ve already made something very similar in a previous
-lab!).</p>
 <p><br></p>
 </div>
 <div id="choosing-your-model-structure" class="section level3">
@@ -844,6 +845,40 @@ article</a>, the <a href="https://www.nytimes.com/section/upshot">NY
 Times The Upshot</a>, or The American Scientist (<a
 href="https://fandm.instructure.com/courses/17827/files/folder/Readings?preview=1470284">Budburst
 article</a> example).</em></mark></p>
+<p><br></p>
+</div>
+<div id="additional-prediction-interval-code" class="section level4">
+<h4>Additional Prediction Interval Code</h4>
+<p>Below is example code for generating prediction intervals using
+<mark style="background-color:grey">lm()</mark>.</p>
+<pre class="r"><code># run model
+bloom.lm&lt;-lm(Mid_bloom_day~Year, data = Mid_bloom)
+
+# create new data for predictions
+newdata&lt;-as.data.frame(c(2011:2050))
+names(newdata)&lt;-c(&quot;Year&quot;)
+
+# predict new values
+pred_vals&lt;-predict(bloom.lm,newdata,interval= &quot;predict&quot;)
+
+# create dataframe of new data with prediction values
+pred_data&lt;-data.frame(pred_vals,newdata)
+names(pred_data)&lt;- c(&quot;Mid_bloom_day&quot;,&quot;lwr&quot;,&quot;upr&quot;,&quot;Year&quot;)
+
+# make plot
+(LG_plot &lt;- ggplot(Mid_bloom, aes(x = Year, y = Mid_bloom_day)) +
+geom_point(size = 3, color = &quot;blue&quot;) +
+geom_line(aes(x = Mid_bloom$Year, y = predict(bloom.lm)), size = 1.25, alpha = 0.5) + 
+geom_line(data = pred_data, aes(x = Year, y = Mid_bloom_day), size = 1.25, alpha = 0.5) + # prediction (from best-fit line)
+geom_ribbon(data = pred_data, aes(ymin = lwr, ymax = upr), fill = &quot;blue&quot;, alpha = 0.2) + # prediction interval
+theme_bw() +
+    theme(axis.text.x = element_text(size = 12, angle = 45, vjust = 1, hjust = 1),
+     axis.text.y = element_text(size = 12),
+     axis.title = element_text(size = 12, face = &quot;plain&quot;),
+     panel.grid = element_blank(), 
+     plot.margin = unit(c(1,1,1,1), units = , &quot;cm&quot;))
+)</code></pre>
+<p><img src="DSEE-Lab5and6_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 </div>
 </div>
 

@@ -220,15 +220,15 @@ Can you make sense of the output? Take a moment to examine yours and try to work
 
 Let’s write the equation.  To do this, we are modifying the intercepts and slopes according the family and year.
 
+Note, for both Xylocopinae (and other families) there is a significant interaction term, meaning that asynchrony changes significantly over time that family.  It always makes a lot more sense when you can visualize the relationship.  So I suggest looking at the appropriate plot (hint: you’ve already made something very similar in a previous lab!).
+
 For Xylocopinae, in the year 1970:
 
 asynchrony = 196.11 + -742.21 + -0.098x(Year)  + 0.37258x(year). The asynchrony in 1970 would be 196.11 + -742.21 + -0.098x(1970)  + 0.37258x(1970) = -5.1774 days.
 
-For Halictinae in the year 2010, it would be: 
+Let's try another example.  For Halictinae in the year 2010, it would be: 
 
 asynchrony = 196.11 + -342.56 + -0.098x(Year)  + 0.17257x(year). The asynchrony in 2010 would be 196.11 + -342.56 + -0.098x(2010)  + 0.17257x(2010) = 3.4257 days.
-
-Note, for both Xylocopinae and Halictinae there is a significant interaction term, meaning that asynchrony changes significantly over time for these two families.  It always makes a lot more sense when you can visualize the relationship.  So I suggest looking at the appropriate plot (hint: you’ve already made something very similar in a previous lab!).
 
 <br>
 
@@ -426,3 +426,40 @@ Notice that as our prediction moves father away from the existing data the inter
 <mark style="color:blue">*You may use the published paper (cited at the start of this lab document) as a guide (no reference section is required), but note that many of its figures are quite bad, visually.*</mark>
 
 <mark style="color:blue">*For data driven blog post examples, you should look at [FiveThirtyEight](https://fivethirtyeight.com/) (Nate Silver is my statistical hero!), like the [Ukraine article](https://fandm.instructure.com/courses/17827/files/folder/Readings?preview=1470282), the [NY Times The Upshot](https://www.nytimes.com/section/upshot), or The American Scientist ([Budburst article](https://fandm.instructure.com/courses/17827/files/folder/Readings?preview=1470284) example).*</mark>
+
+<br>
+
+#### Additional Prediction Interval Code
+
+Below is example code for generating prediction intervals using <mark style="background-color:grey">lm()</mark>.
+
+```{r}
+# run model
+bloom.lm<-lm(Mid_bloom_day~Year, data = Mid_bloom)
+
+# create new data for predictions
+newdata<-as.data.frame(c(2011:2050))
+names(newdata)<-c("Year")
+
+# predict new values
+pred_vals<-predict(bloom.lm,newdata,interval= "predict")
+
+# create dataframe of new data with prediction values
+pred_data<-data.frame(pred_vals,newdata)
+names(pred_data)<- c("Mid_bloom_day","lwr","upr","Year")
+
+# make plot
+(LG_plot <- ggplot(Mid_bloom, aes(x = Year, y = Mid_bloom_day)) +
+geom_point(size = 3, color = "blue") +
+geom_line(aes(x = Mid_bloom$Year, y = predict(bloom.lm)), size = 1.25, alpha = 0.5) + 
+geom_line(data = pred_data, aes(x = Year, y = Mid_bloom_day), size = 1.25, alpha = 0.5) + # prediction (from best-fit line)
+geom_ribbon(data = pred_data, aes(ymin = lwr, ymax = upr), fill = "blue", alpha = 0.2) + # prediction interval
+theme_bw() +
+    theme(axis.text.x = element_text(size = 12, angle = 45, vjust = 1, hjust = 1),
+     axis.text.y = element_text(size = 12),
+     axis.title = element_text(size = 12, face = "plain"),
+     panel.grid = element_blank(), 
+     plot.margin = unit(c(1,1,1,1), units = , "cm"))
+)
+```
+
