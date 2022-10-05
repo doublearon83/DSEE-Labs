@@ -352,6 +352,8 @@ Now let’s produce predictions for the decadal censuses through 2100.
 install.packages("propagate")
 ```
 
+For those using Macs, you may run into an error when loading the propagate package.  If you do, it usually can be fixed by going to this website: https://github.com/fxcoudert/gfortran-for-macOS/releases and downloading, then loading the package that matches your computer's operating system.
+
 ```{r}
 require(propagate)
 
