@@ -691,6 +691,53 @@ for the <mark style="background-color:grey">gganimate</mark> package.
 There are a lot of different ways to animate plots besides just using
 the <mark style="background-color:grey">transition_reveal()</mark>
 function.</p>
+<p>For example, you can build a plot that transitions between pollinator
+families (ie, filters by family). This would be another way (in addition
+to a facetted plot made in the previous lab) to avoid cluttering up your
+visualization with too much information</p>
+<pre class="r"><code>colors &lt;-  c(&quot;#0000EE&quot;, &quot;#8A2BE2&quot;, &quot;#FF1493&quot;, &quot;#CDAD00&quot;, &quot;#548B54&quot;, &quot;#8B5A00&quot;)
+
+#Install the package if you don&#39;t have it!
+require(transformr)
+
+#create the plot
+pollinator_scatter &lt;- ggplot(Pollinators, aes (x = Year, y = CorrectedCollectionDay, color = Family)) +
+    geom_point(size = 6) +                                               # Changing point size
+    geom_smooth(method = &quot;lm&quot;, aes(fill = Family), se=F, size=3) +               # Adding linear model fit, color-code by country
+    theme_bw() +
+    scale_fill_manual(values = colors) +                # Adding custom colors for solid geoms (ribbon)
+    scale_color_manual(values = colors) +              # Adding custom colors for lines and points
+    ylab(&quot;Collection Day\n&quot;) +                             
+    xlab(&quot;\nYear&quot;)  +
+    theme(axis.text.x = element_text(size = 14, angle = 45, vjust = 1, hjust = 1),     # making the years at a bit of an angle
+          axis.text.y = element_text(size = 14),
+          axis.title = element_text(size = 16, face = &quot;plain&quot;),                        
+          panel.grid = element_blank(),                                   # Removing the background grid lines               
+          plot.margin = unit(c(1,1,1,1), units = , &quot;cm&quot;),                 # Adding a 1cm margin around the plot
+          legend.text = element_text(size = 14, face = &quot;italic&quot;),         # Setting the font for the legend text
+          legend.title = element_blank(),                                 # Removing the legend title
+          legend.position = c(0.87, 0.84))+
+    transition_filter(
+      transition_length = 2,
+      filter_length = 1,
+      Andreninae = Family == &#39;Andreninae&#39;,
+      Apinae = Family == &#39;Apinae&#39;,
+      Colletinae = Family == &#39;Colletinae&#39;,
+      Halictinae = Family == &#39;Halictinae&#39;,
+      Xylocopinae = Family == &#39;Xylocopinae&#39;,
+      keep = TRUE
+    ) +
+    ggtitle(
+      &#39;Filter: {closest_filter}&#39;,
+      subtitle = &#39;{closest_expression}&#39;
+    ) +
+    exit_recolour(colour = &#39;grey&#39;) +
+    exit_shrink(size = 0.5)+
+    exit_fade(alpha=0.2)
+
+animate(pollinator_scatter, renderer = gifski_renderer(), width = 900, height = 900)</code></pre>
+<p><img
+src="DSEE-Lab4_files/figure-html/unnamed-chunk-18-1.gif" /><!-- --></p>
 <p><br></p>
 </div>
 <div id="create-your-own-ggplot-theme" class="section level3">
