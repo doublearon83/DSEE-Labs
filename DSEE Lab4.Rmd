@@ -338,7 +338,7 @@ anim_save("Mid_bloom_by_year.gif") # saves animation as a .gif to your working d
 
 Check out the [documentation](https://cran.r-project.org/web/packages/gganimate/gganimate.pdf) for the <mark style="background-color:grey">gganimate</mark> package.  There are a lot of different ways to animate plots besides just using the <mark style="background-color:grey">transition_reveal()</mark> function.
 
-For example, you can build a plot that transitions between pollinator families (ie, filters by family).  This would be another way (in addition to a facetted plot made in the previous lab) to avoid cluttering up your visualization with too much information
+For example, you can build a plot that transitions between pollinator families (ie, filters by family using <mark style="background-color:grey">transition_filter()</mark>) when investigating collection day over time.  This would be another way (in addition to the facetted plot made in the previous lab) to avoid cluttering up your visualization with too much information.
 
 ```{r}
 colors <-  c("#0000EE", "#8A2BE2", "#FF1493", "#CDAD00", "#548B54", "#8B5A00")
