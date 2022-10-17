@@ -343,6 +343,9 @@ div.tocify {
 <li>
   <a href="DSEE-Lab5and6.html">DSEE Lab #5 and 6</a>
 </li>
+<li>
+  <a href="DSEE-Lab7.html">DSEE Lab #7</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -717,12 +720,12 @@ pollinator_scatter &lt;- ggplot(Pollinators, aes (x = Year, y = CorrectedCollect
           panel.grid = element_blank(),                                   # Removing the background grid lines               
           plot.margin = unit(c(1,1,1,1), units = , &quot;cm&quot;),                 # Adding a 1cm margin around the plot
           legend.text = element_text(size = 14, face = &quot;italic&quot;),         # Setting the font for the legend text
-          legend.title = element_blank(),                                 # Removing the legend title
+          legend.title = element_blank(),                                 
           legend.position = c(0.87, 0.84))+
-    transition_filter(
-      transition_length = 2,
-      filter_length = 1,
-      Andreninae = Family == &#39;Andreninae&#39;,
+    transition_filter(                                                    # layer for filter transition
+      transition_length = 2,                                              # amount of time for transition
+      filter_length = 1,                                                  
+      Andreninae = Family == &#39;Andreninae&#39;,                                # Filtering groups
       Apinae = Family == &#39;Apinae&#39;,
       Colletinae = Family == &#39;Colletinae&#39;,
       Halictinae = Family == &#39;Halictinae&#39;,
@@ -733,9 +736,9 @@ pollinator_scatter &lt;- ggplot(Pollinators, aes (x = Year, y = CorrectedCollect
       &#39;Filter: {closest_filter}&#39;,
       subtitle = &#39;{closest_expression}&#39;
     ) +
-    exit_recolour(colour = &#39;grey&#39;) +
-    exit_shrink(size = 0.5)+
-    exit_fade(alpha=0.2)
+    exit_recolour(colour = &#39;grey&#39;) +                                      # Color when filtered
+    exit_shrink(size = 0.5)+                                              # Size when filtered
+    exit_fade(alpha=0.2)                                                  # Transparency when filtered
 
 animate(pollinator_scatter, renderer = gifski_renderer(), width = 900, height = 900)</code></pre>
 <p><img

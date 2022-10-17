@@ -361,12 +361,12 @@ pollinator_scatter <- ggplot(Pollinators, aes (x = Year, y = CorrectedCollection
           panel.grid = element_blank(),                                   # Removing the background grid lines               
           plot.margin = unit(c(1,1,1,1), units = , "cm"),                 # Adding a 1cm margin around the plot
           legend.text = element_text(size = 14, face = "italic"),         # Setting the font for the legend text
-          legend.title = element_blank(),                                 # Removing the legend title
+          legend.title = element_blank(),                                 
           legend.position = c(0.87, 0.84))+
-    transition_filter(
-      transition_length = 2,
-      filter_length = 1,
-      Andreninae = Family == 'Andreninae',
+    transition_filter(                                                    # layer for filter transition
+      transition_length = 2,                                              # amount of time for transition
+      filter_length = 1,                                                  
+      Andreninae = Family == 'Andreninae',                                # Filtering groups
       Apinae = Family == 'Apinae',
       Colletinae = Family == 'Colletinae',
       Halictinae = Family == 'Halictinae',
@@ -377,9 +377,9 @@ pollinator_scatter <- ggplot(Pollinators, aes (x = Year, y = CorrectedCollection
       'Filter: {closest_filter}',
       subtitle = '{closest_expression}'
     ) +
-    exit_recolour(colour = 'grey') +
-    exit_shrink(size = 0.5)+
-    exit_fade(alpha=0.2)
+    exit_recolour(colour = 'grey') +                                      # Color when filtered
+    exit_shrink(size = 0.5)+                                              # Size when filtered
+    exit_fade(alpha=0.2)                                                  # Transparency when filtered
 
 animate(pollinator_scatter, renderer = gifski_renderer(), width = 900, height = 900)
 ```
