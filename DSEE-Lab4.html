@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Data Visualization - Part 2</title>
+
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/clipboard-1.7.1/clipboard.min.js"></script>
+<link href="site_libs/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
+<link href="site_libs/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
+<script src="site_libs/klippy-0.0.0.9500/js/klippy.min.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">DSEE Labs</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="DSEE-Lab1.html">DSEE Lab #1</a>
+</li>
+<li>
+  <a href="DSEE-Lab2.html">DSEE Lab #2</a>
+</li>
+<li>
+  <a href="DSEE-Lab3.html">DSEE Lab #3</a>
+</li>
+<li>
+  <a href="DSEE-Lab4.html">DSEE Lab #4</a>
+</li>
+<li>
+  <a href="DSEE-Lab5and6.html">DSEE Lab #5 and 6</a>
+</li>
+<li>
+  <a href="DSEE-Lab7.html">DSEE Lab #7</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Data Visualization - Part 2</h1>
+
+</div>
+
+
+<script>
+  addClassKlippyTo("pre.r, pre.markdown");
+  addKlippy('left', 'top', 'auto', '1', 'Copy code', 'Copied!');
+</script>
+<p><em>Learning goals and steps:</em></p>
+<p><em>1. Customize histograms in ggplot2</em></p>
+<div class="line-block">       <em>-Add titles, subtitles, and
+captions</em></div>
+<p><em>2. Barplots in ggplot2</em></p>
+<div class="line-block">       <em>-Reorder factors, modify
+legend</em></div>
+<p><em>3. More practice with scatterplots and regression lines</em></p>
+<p><em>4. Animate your plots</em></p>
+<p><em>5. Create your own ggplot theme</em></p>
+<p><em>6. Challenge yourself!</em></p>
+<p><br></p>
+<p><strong>Due:</strong> Nothing this week</p>
+<p>Following from our first tutorial on data visualization using
+ggplot2, we are now back for more ggplot2 practice and customization.
+Since no two figures are ever the same, the ability to customize your
+figures is key. The ultimate aim of this tutorial is to help you to make
+your figures even more beautiful and informative!</p>
+<p>As with part 1, there are several plots that you will need to save
+for your write-up. They are indicated with the
+<mark style="color:blue"><em>blue text</em></mark>.</p>
+<p>Before starting: 1) get the three datasets and packages from last
+week uploaded into R, 2) setup your script and, 3) ANNOTATE it!</p>
+<p><br></p>
+<div id="customize-histograms-in-ggplot2" class="section level3">
+<h3>1. Customize histograms in ggplot2</h3>
+<p>Use the code from last week to generate the histogram of
+flower-pollinator asynchrony.</p>
+<p>If we want to manipulate the x-axis to display every 5 values from
+-30 through 30 you can run the following code
+<mark style="background-color:grey">breaks = c(seq(-30,30,5))</mark>
+within the
+<mark style="background-color:grey">scale_x_continuous()</mark> function
+of ggplot2. Do you understand what the
+<mark style="background-color:grey">seq()</mark> function does? Look up
+the help documentation if you are unsure.</p>
+<p>We can also specify the limits of the plot axes – add the layers (of
+code) below to your <mark style="background-color:grey">ggplot()</mark>
+code and you’ll be able to see that the limit of the y axis now extends
+to the value of 160. I’ll leave it to you to decide where to add these
+layers. Remember that layers override each other if they modify the same
+features of the plot.</p>
+<pre class="r"><code>    scale_x_continuous(breaks = c(seq(-30,30,5))) + 
+    scale_y_continuous(limits = c(0,160)) +</code></pre>
+<p><br></p>
+</div>
+<div id="a.-add-titles-subtitles-and-captions" class="section level3">
+<h3>1a. Add titles, subtitles, and captions</h3>
+<p>Now it’s time for us to add more information to our graphs, for
+example, the plot title, subtitle, and partial caption. This might not
+be particularly useful in this case, but here’s some guidance just in
+case you do require it in your own work.</p>
+<pre class="r"><code>   labs(title = &quot;Plant-pollinator asynchrony&quot;, 
+         subtitle = &quot;For Malus ssp. (apple) flowers and bee pollinators&quot;,
+         caption = &quot;Data from Bartomeus et al. 2013&quot;)</code></pre>
+<p><br></p>
+<div id="control-everything" class="section level4">
+<h4><mark style="background-color:#F9E59B">Control
+everything!</mark></h4>
+<p><mark style="background-color:#F9E59B">Remember, you can also add in
+</mark><mark style="background-color:grey">theme()</mark><mark style="background-color:#F9E59B">
+elements to your plot, which let you customize even more aspects! We
+already introduced theme elements in our <a
+href="https://doublearon83.github.io/DSEE-Labs/DSEE-Lab3.html">previous
+lab</a>. Other things you can play around with are:</mark></p>
+<div class="line-block">   <mark style="background-color:#F9E59B">-
+italicize or bold the text with
+</mark><mark style="background-color:grey">face =
+‘italic’</mark><mark style="background-color:#F9E59B"> or
+</mark><mark style="background-color:grey">face =
+‘bold’</mark><mark style="background-color:#F9E59B">
+respectively</mark></div>
+<div class="line-block">   <mark style="background-color:#F9E59B">-
+center the title using </mark><mark style="background-color:grey">hjust
+= 0.5</mark></div>
+<p><br></p>
+<p>Add the following code to your theme layer to modify the title of the
+plot.</p>
+<pre class="r"><code>theme(plot.title = element_text(size = 14, hjust = 0.5, face = &quot;bold&quot;))</code></pre>
+<p>We can also italicize portions of titles or axes labels using
+<mark style="background-color:grey">expression()</mark>. For example, we
+can italicize the genus name Malus by substituting the following code
+into the theme layer.</p>
+<pre class="r"><code>subtitle = expression(&quot;For&quot;~italic(&quot;Malus&quot;)~&quot;ssp. (apple) flowers and bee pollinators&quot;)</code></pre>
+<p><img src="DSEE-Lab4_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><br></p>
+</div>
+</div>
+<div id="barplot-to-examine-whether-asynchrony-differs-between-families"
+class="section level3">
+<h3>2. Barplot to examine whether asynchrony differs between
+families</h3>
+<p>A barplot is a useful alternative to a boxplot. In fact, I would say
+that they are used more frequently in many fields (including ecology)
+than boxplots.</p>
+<p>The first thing we need to do is calculate the mean asynchrony for
+each family. You should be able to generate that code on your own using
+the <mark style="background-color:grey">dplyr</mark> functionality.</p>
+<pre class="r"><code># Plotting the mean asynchrony for families
+(Asynch_barplot &lt;- ggplot(Pollinator_fam, aes(x = Family, y = Asynchrony, fill = Family)) +
+    geom_bar(position = position_dodge(), stat = &quot;identity&quot;) +
+    theme_bw() +
+    ylab(&quot;Asynchrony\n&quot;) +                             
+    xlab(&quot;Family&quot;)  +
+    theme(axis.text.x = element_text(size = 12, angle = 45, vjust = 1, hjust = 1), 
+          axis.text.y = element_text(size = 12),
+          axis.title = element_text(size = 14, face = &quot;plain&quot;),                      
+          panel.grid = element_blank(),                                          
+          plot.margin = unit(c(1,1,1,1), units = , &quot;cm&quot;)))</code></pre>
+<p><img src="DSEE-Lab4_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>This is a pretty nice plot. However, as biologists, we should
+hopefully notice something is missing from these plots… ERROR BARS. In
+order to add error bars, we must first calculate them. Then, we will add
+them to the plot using the
+<mark style="background-color:grey">geom_errorbar()</mark> function.
+From looking at the code, do you understand how the error bars are
+added? Can you explain it in your own words?</p>
+<pre class="r"><code>#calculate standard error 
+Pollinator_fam &lt;- Pollinators %&gt;%
+  group_by(Family) %&gt;%
+  summarize(Asynchrony_mean = mean(Asynchrony,  na.rm=T),
+            AsyncSD = sd(Asynchrony,  na.rm=T),
+            AsyncN = n(),
+            AsynchSE = AsyncSD/sqrt(AsyncN))
+
+# Plotting the mean asynchrony for families with SE
+(Asynch_barplot &lt;- ggplot(Pollinator_fam, aes(x = Family, y = Asynchrony_mean, fill = Family)) +
+    geom_bar(position = position_dodge(), stat = &quot;identity&quot;) +
+    geom_errorbar(aes(ymin = Asynchrony_mean - AsynchSE, ymax = Asynchrony_mean + AsynchSE), width = .3,  position = &quot;identity&quot;) +
+    theme_bw() +
+    ylab(&quot;Asynchrony\n&quot;) +                             
+    xlab(&quot;Family&quot;)  +
+    theme(axis.text.x = element_text(size = 12, angle = 45, vjust = 1, hjust = 1),  
+          axis.text.y = element_text(size = 12),
+          axis.title = element_text(size = 14, face = &quot;plain&quot;),                      
+          panel.grid = element_blank(),                                          
+          plot.margin = unit(c(1,1,1,1), units = , &quot;cm&quot;)))</code></pre>
+<p><img src="DSEE-Lab4_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><br></p>
+</div>
+<div id="a.-reorder-factors" class="section level3">
+<h3>2a. Reorder factors</h3>
+<p>Sometimes you need to reorder the levels of a variable that is or
+could be a factor (e.g., Family). We often want to do this so that we
+can plot values in a specific order.</p>
+<p>If we wanted to have the family Colletinae come before Andreninae, we
+would first have to reorder the data in the dataframe. From this point,
+after reordering the data,
+<mark style="background-color:grey">ggplot</mark> will always plot
+Colletinae before Andreninae.</p>
+<pre class="r"><code># make Family a factor
+Pollinator_fam$Family &lt;- as.factor(Pollinator_fam$Family)
+
+# Reordering the data
+Pollinator_fam$Family &lt;- factor(Pollinator_fam$Family, 
+                             levels = c(&quot;Colletinae&quot;, &quot;Andreninae&quot;, &quot;Apinae&quot;, &quot;Halictinae&quot;, &quot;Xylocopinae&quot;),
+                             labels = c(&quot;Colletinae&quot;, &quot;Andreninae&quot;, &quot;Apinae&quot;, &quot;Halictinae&quot;, &quot;Xylocopinae&quot;))</code></pre>
+<p>If you re-run the barplot from above, the columns and legend should
+be reordered appropriately.</p>
+<p><br></p>
+</div>
+<div id="b.-modify-the-legend" class="section level3">
+<h3>2b. Modify the legend</h3>
+<p>We can change the legend title to “Bee Family,” by specifying
+<mark style="background-color:grey">name = “Bee Family”</mark> in
+<mark style="background-color:grey">scale_fill_manual()</mark>. In some
+cases, we might not want to have a title for the legend at all, which
+you can do by specifying in
+<mark style="background-color:grey">scale_fill_manual</mark>,
+<mark style="background-color:grey">name = NULL</mark>. There are a lot
+of other ways to modify the look of the legend within
+<mark style="background-color:grey">theme()</mark>. Try out some of the
+modifications on your plot!</p>
+<pre class="r"><code> theme(legend.title = element_text(face = &quot;bold&quot;),
+          legend.position = &quot;bottom&quot;, 
+          legend.box.background = element_rect(color = &quot;grey&quot;, size = 0.3))</code></pre>
+<p>Let’s cover some more of the
+<mark style="background-color:grey">theme()</mark> elements we’ve used
+in the examples above:</p>
+<div class="line-block">   •
+<mark style="background-color:grey">legend.title</mark> allows you to
+change the font size of the legend, or its formatting (e.g. bold).<br />
+   • The <mark style="background-color:grey">legend.position</mark> can
+be defined with accepted positions such as
+<mark style="background-color:grey">“bottom”</mark>, but you can also
+modify the coordinate position with something like this
+<mark style="background-color:grey">legend.position = c(0.1,
+0.8)</mark>. This is a neat trick in some cases, where you have lots of
+blank space within your plot itself and want to fine-tune the legend
+position.<br />
+   • Finally, we’ve used
+<mark style="background-color:grey">legend.box.background =
+element_rect()</mark> to create a light grey rectangle that surrounds
+the legend. If you don’t want this, you can just remove that line of
+code.</div>
+<p><br> Don’t forget that we can use the
+<mark style="background-color:grey">scale_…()</mark> functions to
+customize both the color code AND the legend at once. The
+<mark style="background-color:grey">scale_fill_manual(values =
+c(“your-color-1”, “your-color-2”, …))</mark> function lets you decide on
+custom color values for solid elements (bars, boxplots, ribbons, etc.),
+and its counterpart
+<mark style="background-color:grey">scale_color_manual()</mark> works
+exactly the same for line elements (points in a scatter plot, regression
+lines, box or column outlines, etc.). You need to make sure you put in
+as many colors as there are factor levels in your data.</p>
+<p><br></p>
+<div id="need-inspiration-for-your-colors" class="section level4">
+<h4><mark style="background-color:lightblue">Need inspiration for your
+colors?</mark></h4>
+<p><mark style="background-color:lightblue">Remember, you can define
+colors using R’s <a
+href="http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf">built-in
+colour names</a> or by specifying their <a
+href="https://www.color-hex.com/">Hex codes</a>. The Colour Picker
+package is a great way to pick colors within the comfort of R
+Studio.</mark></p>
+<p><br></p>
+</div>
+</div>
+<div id="more-practice-with-scatterplots-and-regression-lines"
+class="section level3">
+<h3>3. More practice with scatterplots and regression lines</h3>
+<p>In our first data visualization exercise, we added best fit lines to
+scatterplots. Here, we will review this skill and expand upon it.</p>
+<p>Using your amazing data wrangling skills, and a few new tricks we
+will add the climate data to the Mid_bloom dataset.</p>
+<p>The Bartomeus paper (from which these data come) used only April
+temperatures in their analysis. To extract those values, we need to
+convert the date variable in the climate dataset from a Character class
+variable to a Date class variable. Then, we will filter the April
+temperatures out, generate a new dataset with yearly average April
+temperatures (calculated from maximum daily values), and join it with
+the Mid_bloom dataset.</p>
+<pre class="r"><code># package for converting date
+install.packages(&quot;lubridate&quot;)</code></pre>
+<pre class="r"><code>library(lubridate)
+
+# convert &quot;date&quot; from chr to a Date class and specify current date format
+Climate$DATE&lt;- as.Date(Climate$DATE)
+
+# calculate average April max temperature
+April_temp&lt;-filter(Climate,format.Date(DATE, &quot;%m&quot;)== &quot;04&quot;)
+
+# create year variable
+April_temp$Year&lt;-year(April_temp$DATE)
+
+# overwrite April_temp with yearly means
+April_temp &lt;- April_temp %&gt;%
+  group_by(Year) %&gt;%
+  summarize(Tmax = mean(TMAX, na.rm=T))
+
+# join climate data with Mid_bloom data
+Mid_bloom &lt;- left_join(Mid_bloom, April_temp, by = c(&quot;Year&quot;))</code></pre>
+<p>We can view this as a basic scatterplot in ggplot2:</p>
+<pre class="r"><code>(MB_T_scatter &lt;- ggplot(Mid_bloom, aes(x = Mid_bloom_day, y = Tmax)) +
+  geom_point() +
+  theme_bw())</code></pre>
+<p><img src="DSEE-Lab4_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>We can see a pretty clear trend over time. So let’s try to plot a
+simple straight line through this using
+<mark style="background-color:grey">geom_smooth</mark> in ggplot2. If
+you can’t remember how to do this, look up the code from last week!
+<mark style="color:blue"><em>Beautify this plot and save it for your
+write-up.</em></mark></p>
+<p>However, sometimes the relationship isn’t linear. An alternative
+would be to use a different equation. Do you remember the Keeling curve
+from our second week of lab? You should reproduce that curve using
+ggplot2 (make it pretty!) and add a best fit straight line. Then try a
+quadratic fit - something slightly more complicated to produce than the
+standard fits provided by R. Thankfully, ggplot2 lets us customize to
+pretty much any type of fit we want, as we can add in an equation to
+tell it what to plot. There are also several different base fits
+available. You can check out some here.</p>
+<pre class="r"><code># Modify your geom_smooth layer as follows to add a quadratic fit instead of a straight line fit
+geom_smooth(method = &quot;lm&quot;, formula = y ~ x + I(x^2)) +</code></pre>
+<p>Take some time to explore the different ggplot2 fits! For instance,
+<mark style="background-color:grey">method = “loess”</mark> gives a
+smoothed curve. <mark style="color:blue"><em>Save your Keeling curve
+with the quadratic fit for your write-up.</em></mark></p>
+<p><br></p>
+</div>
+<div id="animate-your-plots" class="section level3">
+<h3>4. Animate your plots</h3>
+<p>Plotting best fit lines is a great way to emphasize a trend or
+pattern in a graph. Another effective tool for visualizing patterns is
+to animate your plot. We will animate the scatterplot you made of Mid
+bloom day by year using the
+<mark style="background-color:grey">gganimate</mark> package.</p>
+<p>The process sounds intimidating, but it is quite easy. All you have
+to do is add a layer to your code telling R how you want to transition
+between states, in this case from year to year. We use the
+<mark style="background-color:grey">transition_reveal()</mark> function
+for this. Then you use a couple other functions that tell R to run the
+animation and save it as a .gif file. Warning, the animation may take a
+minute to render and run in RStudio. Be patient.</p>
+<pre class="r"><code># Get required packages
+install.packages(&quot;gganimate&quot;)
+install.packages(&quot;gifski&quot;)</code></pre>
+<pre class="r"><code>require(gganimate)
+require(gifski)
+
+# Plot mid bloom day by year
+MB_scatter &lt;- ggplot(Mid_bloom, aes (x = Year, y = Mid_bloom_day)) +
+  geom_point(alpha = 0.5, size = 3) + 
+  geom_line() + 
+  theme_bw() +
+  ylab(&quot;Mid bloom day\n&quot;) +                             
+  xlab(&quot;\nYear&quot;)  +
+  ylim(90,170) +
+  theme(axis.text.x = element_text(size = 14, angle = 45, vjust = 1, hjust = 1),
+        axis.text.y = element_text(size = 14),
+        axis.title = element_text(size = 16, face = &quot;plain&quot;),                        
+        panel.grid = element_blank(),                                                 
+        plot.margin = unit(c(1,1,1,1), units = , &quot;cm&quot;)) +                 
+        transition_reveal(Year) # Reveals each new time frame
+ 
+animate(MB_scatter, renderer = gifski_renderer()) # plays the animation in RStudio</code></pre>
+<p><img
+src="DSEE-Lab4_files/figure-html/unnamed-chunk-17-1.gif" /><!-- --></p>
+<pre class="r"><code>anim_save(&quot;Mid_bloom_by_year.gif&quot;) # saves animation as a .gif to your working directory</code></pre>
+<p>Check out the <a
+href="https://cran.r-project.org/web/packages/gganimate/gganimate.pdf">documentation</a>
+for the <mark style="background-color:grey">gganimate</mark> package.
+There are a lot of different ways to animate plots besides just using
+the <mark style="background-color:grey">transition_reveal()</mark>
+function.</p>
+<p>For example, you can build a plot that transitions between pollinator
+families (ie, filters by family using
+<mark style="background-color:grey">transition_filter()</mark>) when
+investigating collection day over time. This would be another way (in
+addition to the facetted plot made in the previous lab) to avoid
+cluttering up your visualization with too much information.</p>
+<pre class="r"><code>colors &lt;-  c(&quot;#0000EE&quot;, &quot;#8A2BE2&quot;, &quot;#FF1493&quot;, &quot;#CDAD00&quot;, &quot;#548B54&quot;, &quot;#8B5A00&quot;)
+
+#Install the package if you don&#39;t have it!
+require(transformr)
+
+#create the plot
+pollinator_scatter &lt;- ggplot(Pollinators, aes (x = Year, y = CorrectedCollectionDay, color = Family)) +
+    geom_point(size = 6) +                                               # Changing point size
+    geom_smooth(method = &quot;lm&quot;, aes(fill = Family), se=F, size=3) +               # Adding linear model fit, color-code by country
+    theme_bw() +
+    scale_fill_manual(values = colors) +                # Adding custom colors for solid geoms (ribbon)
+    scale_color_manual(values = colors) +              # Adding custom colors for lines and points
+    ylab(&quot;Collection Day\n&quot;) +                             
+    xlab(&quot;\nYear&quot;)  +
+    theme(axis.text.x = element_text(size = 14, angle = 45, vjust = 1, hjust = 1),     # making the years at a bit of an angle
+          axis.text.y = element_text(size = 14),
+          axis.title = element_text(size = 16, face = &quot;plain&quot;),                        
+          panel.grid = element_blank(),                                   # Removing the background grid lines               
+          plot.margin = unit(c(1,1,1,1), units = , &quot;cm&quot;),                 # Adding a 1cm margin around the plot
+          legend.text = element_text(size = 14, face = &quot;italic&quot;),         # Setting the font for the legend text
+          legend.title = element_blank(),                                 
+          legend.position = c(0.87, 0.84))+
+    transition_filter(                                                    # layer for filter transition
+      transition_length = 2,                                              # amount of time for transition
+      filter_length = 1,                                                  
+      Andreninae = Family == &#39;Andreninae&#39;,                                # Filtering groups
+      Apinae = Family == &#39;Apinae&#39;,
+      Colletinae = Family == &#39;Colletinae&#39;,
+      Halictinae = Family == &#39;Halictinae&#39;,
+      Xylocopinae = Family == &#39;Xylocopinae&#39;,
+      keep = TRUE
+    ) +
+    ggtitle(
+      &#39;Filter: {closest_filter}&#39;,
+      subtitle = &#39;{closest_expression}&#39;
+    ) +
+    exit_recolour(colour = &#39;grey&#39;) +                                      # Color when filtered
+    exit_shrink(size = 0.5)+                                              # Size when filtered
+    exit_fade(alpha=0.2)                                                  # Transparency when filtered
+
+animate(pollinator_scatter, renderer = gifski_renderer(), width = 900, height = 900)</code></pre>
+<p><img
+src="DSEE-Lab4_files/figure-html/unnamed-chunk-18-1.gif" /><!-- --></p>
+<p><br></p>
+</div>
+<div id="create-your-own-ggplot-theme" class="section level3">
+<h3>5. Create your own ggplot theme</h3>
+<p>You might have noticed that the lines starting with
+<mark style="background-color:grey">theme()</mark> quickly pile up.
+We’ve been adjusting the font size of the axes and the labels, the
+position of the title, the background color of the plot, etc. And then
+we’ve been copying and pasting those many lines of codes on all of our
+graphs, which really increases the length of our script, and makes our
+code less readable.</p>
+<p>Here is a simple solution: create a customized theme that combines
+all the <mark style="background-color:grey">theme()</mark> elements you
+want! You can then apply it to your graphs to make things easier and
+increase consistency. You can include as many elements in your theme as
+you want, and when you apply your theme to a graph, only the relevant
+elements will be considered - e.g. for our histograms we won’t need to
+use <mark style="background-color:grey">legend.position</mark>, but it’s
+fine to keep it in the theme in case any future graphs we apply it to do
+have the need for legends.</p>
+<pre class="r"><code>theme_coding &lt;- function(){            # creating a new theme function
+  theme_bw()+                          # using a predefined theme as a base
+  theme(axis.text.x = element_text(size = 12, angle = 45, vjust = 1, hjust = 1),       # customizing lots of things
+        axis.text.y = element_text(size = 12),
+        axis.title = element_text(size = 14),
+        panel.grid = element_blank(),
+        plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), units = , &quot;cm&quot;),
+        plot.title = element_text(size = 20, vjust = 1, hjust = 0.5),
+        legend.text = element_text(size = 12, face = &quot;italic&quot;),
+        legend.title = element_blank(),
+        legend.position = c(0.9, 0.9))
+}</code></pre>
+<p>Try out the effects of the theme by replacing all the code starting
+with <mark style="background-color:grey">theme(……..)</mark> with just
+<mark style="background-color:grey">theme_coding()</mark>.</p>
+<p><br></p>
+</div>
+<div id="challenge-yourself" class="section level3">
+<h3>6. Challenge yourself!</h3>
+<p><mark style="color:blue"><em>Continue flexing those new graphing
+muscles by making and saving the following plots for your
+write-up:</em></mark></p>
+<div class="line-block">      <mark style="color:blue"><em>1) A plot
+that examines the potential relationship between the climate and
+pollinator data.</em></mark></div>
+<div class="line-block">      <mark style="color:blue"><em>2) A plot
+that is animated in some way to emphasize a meaningful
+pattern.</em></mark></div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

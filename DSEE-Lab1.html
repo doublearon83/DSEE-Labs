@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Introduction to R - Part 1</title>
+
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/clipboard-1.7.1/clipboard.min.js"></script>
+<link href="site_libs/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
+<link href="site_libs/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
+<script src="site_libs/klippy-0.0.0.9500/js/klippy.min.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">DSEE Labs</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="DSEE-Lab1.html">DSEE Lab #1</a>
+</li>
+<li>
+  <a href="DSEE-Lab2.html">DSEE Lab #2</a>
+</li>
+<li>
+  <a href="DSEE-Lab3.html">DSEE Lab #3</a>
+</li>
+<li>
+  <a href="DSEE-Lab4.html">DSEE Lab #4</a>
+</li>
+<li>
+  <a href="DSEE-Lab5and6.html">DSEE Lab #5 and 6</a>
+</li>
+<li>
+  <a href="DSEE-Lab7.html">DSEE Lab #7</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Introduction to R - Part 1</h1>
+
+</div>
+
+
+<script>
+  addClassKlippyTo("pre.r, pre.markdown");
+  addKlippy('left', 'top', 'auto', '1', 'Copy code', 'Copied!');
+</script>
+<p><em>Learning goals:</em></p>
+<p><em>1. Understand what are R and R Studio</em></p>
+<p><em>2. Develop the good habit of working with scripts</em></p>
+<p><em>3. Learn to import data in R</em></p>
+<p><em>4. Learn to manipulate R objects like vectors and data
+frames</em></p>
+<p><em>5. Make a simple plot</em></p>
+<p><br></p>
+<p><em>Steps:</em></p>
+<p><em>1.Download R and RStudio</em></p>
+<p><em>2. Import and check data</em></p>
+<p><em>3. Calculate yearly CO2 concentrations</em></p>
+<p><em>4. Create a vector and plot it</em></p>
+<p><em>5. Create a data frame and plot it</em></p>
+<p><br></p>
+<p><strong>Due:</strong> Nothing at the end of lab, but be sure to save
+the plot I ask you to export in part 4 of this document. You will
+incorporate it into your final write-up for the Introduction to R lab
+module. All material you need to include and questions that you must
+answer for final write-ups will be indicated with
+<mark style="color:blue"><em>blue text</em></mark>.</p>
+<p><br></p>
+<div id="introduction" class="section level3">
+<h3>Introduction</h3>
+<p>In our first tutorial we will begin to explore “R” as a tool to
+analyze and visualize data. R is a statistical programming language that
+has rapidly gained popularity in many scientific fields. It was
+developed by Ross Ihaka and Robert Gentleman as an open source
+implementation of the “S” programming language. (Next time you need a
+fun fact, you can say “Did you know that S came before R?”) R is also
+the name of the software that uses this language for statistical
+computing. With a huge online support community and dedicated packages
+that provide extra functionality for virtually any application and field
+of study, there’s hardly anything you can’t do in R.</p>
+<p>If you already know your way around statistical software like SPSS,
+the main difference is that R has no <strong>graphical user
+interface</strong>, which means there are no buttons to click and no
+dropdown menus. R can be run entirely by typing commands into a text
+interface (welcome to the Matrix!). This may seem a little daunting, but
+it also means a whole lot more flexibility, as you are not relying on a
+pre-determined toolkit for your analyses.</p>
+<p>Like with any language, there is a learning curve, but we will take
+it step by step, and in no time you will be coding your own analyses and
+graphs!</p>
+<p>If you need any more convincing, why are we using R and not one of
+the many other statistical packages like MATLAB, Minitab, or even
+Microsoft Excel? Well, R is great because:</p>
+<p>• R is free and open source, and always will be! Anybody can use the
+code and see exactly how it works.</p>
+<p>• Because R is a programming language rather than a graphical
+interface, the user can easily save scripts as small text files for use
+in the future, or share them with collaborators.</p>
+<p>• R has a very active and helpful online community – normally a quick
+search is all it takes to find that somebody has already solved the
+problem you’re having.</p>
+<p><br></p>
+</div>
+<div id="download-r-and-rstudio" class="section level3">
+<h3>1. Download R and RStudio</h3>
+<p>As we said before, R itself does not have a graphical interface, but
+most people interact with R through graphical platforms that provide
+extra functionality. We will be using a program called RStudio as a
+graphical front-end to R, so that we can access our scripts and data,
+find help, and preview plots and outputs all in one place.</p>
+<p>You can download R from <a href="https://cran.r-project.org/">CRAN
+(The Comprehensive R Archive Network)</a>. Select the link appropriate
+for your operating system.</p>
+<p>Then, download RStudio from <a
+href="https://www.rstudio.com/products/rstudio/">the RStudio website</a>
+(select the free open source desktop version).</p>
+<p>Open RStudio. Click on “File/New File/R script”.</p>
+<p><img src="images/R%20Studio%20orientation%20image.png" /></p>
+<p>You will now see a window like the one above. You can type code
+directly into the console on the lower left (doesn’t mean that you
+should^!). Pressing enter at the end of the line runs the code (try
+typing 2 + 2 and running it now). You can (should!) also write your code
+in the script file in the top left window. To run a line of code from
+your script, press <mark style="background-color:grey">Ctrl+R</mark> on
+Windows or <mark style="background-color:grey">Cmd+Enter</mark> on a
+Mac. On newer Windows computers, the default shortcut is
+<mark style="background-color:grey">Ctrl+Enter</mark>. Or highlight the
+code you want to run and hit the run button (top right of the script
+window). The environment window gives you an overview of your current
+workspace^^. You will see the data you have imported, objects you have
+created, functions you have defined, etc. Finally, the last panel has
+multiple tabs and will preview your plot and allow you to navigate
+around folders and look at the packages you currently have installed and
+loaded.</p>
+<p>^A note about scripts (We love scripts!): Remember that if you enter
+code directly into the console, it will not be saved by R: it runs and
+disappears (although you can access your last few operations by hitting
+the ‘up’ key on your keyboard). Instead, by typing your code into a
+script file, you are creating a reproducible record of your analysis.
+Writing your code in a script is similar to writing an essay in Word: it
+saves your progress and you can always pick up where you left off, or
+make some changes to it. (Remember to click Save (Ctrl+S) often, so that
+you actually save your script!)</p>
+<p><strong>When writing a script, it’s useful to add comments to
+describe what you are doing by inserting a hasthag # in front of a line
+of text.</strong> R will see anything that begins with # as text instead
+of code, so it will not try to run it, but the text will provide
+valuable information about the code for whoever is reading your script
+(including future you!). Like with any piece of writing, scripts benefit
+from structure and clarity.</p>
+<p>^^A quicker note about the workspace: The workspace will have
+everything you have used in a session floating around your computer
+memory. When you exit, R will ask you if you want to save the current
+workspace. You almost <a
+href="https://www.r-bloggers.com/2017/04/using-r-dont-save-your-workspace/">never
+need to</a>, and it’s best to click no and start with a clear slate
+every time. (DO make sure you save your script though!!)</p>
+<p><br></p>
+<div id="begin-to-write-in-your-script" class="section level4">
+<h4>Begin to write in your script</h4>
+<p>For now, start by recording who is writing, the date, and the main
+goal – in our case, atmospheric CO2 concentrations from the Mauna Loa
+Observatory in Hawaii. Here’s an example, which you can copy, paste and
+edit into your new script:</p>
+<pre class="r"><code># DSEE – Introduction to R
+# Learning how to import and explore data, and make graphs
+# Modified by Prof Howard from exercise by Gergana Daskalova</code></pre>
+<p>The next few lines of code usually load the packages you will need
+for your analysis. A package is a bundle of commands that can be loaded
+into R to provide extra functionality. For example, you might load a
+package for formatting data, or for making maps. (Or for making graphs
+with <a href="https://github.com/Gibbsdavidl/CatterPlots">cats on
+them</a>, or whatever floats your boat… As we said before, there’s
+virtually nothing you cannot do!)</p>
+<p>To install a package, type
+<mark style="background-color:grey">install.packages(“package-name”)</mark>.
+You only need to install packages once, so in this case you can type
+directly in the console box, rather than saving the line in your script
+and re-installing the package every time. Today we will be using the
+<mark style="background-color:grey">dplyr</mark> <a
+href="https://cran.r-project.org/web/packages/dplyr/index.html">package</a>
+to provide extra commands for formatting and manipulating data.</p>
+<pre class="r"><code>#install package
+install.packages(&quot;dplyr&quot;)</code></pre>
+<p>Once installed, you just need to load the packages using
+<mark style="background-color:grey">library(package-name)</mark>. The
+next lines of code should define your working directory. This is a
+folder on your computer where R will look for data, save your plots,
+etc. To make your workflow easier, it is good practice to save
+everything related to one project in the same place, as it will save you
+a lot of time typing up computer paths or hunting for files that got
+saved R-knows-where. For instance, you could save your script and all
+the data for this tutorial in a folder called “Intro_to_R”. (It is good
+practice to avoid spaces in file names as it can sometimes confuse R.)
+For bigger projects, consider having a root folder with the name of the
+project (e.g. “My_PhD”) as your working directory, and other folders
+nested within to separate data, scripts, images, etc.
+(e.g. My_PhD/Chapter_1/data, My_PhD/Chapter_1/plots,
+My_PhD/Chapter_2/data, etc.).</p>
+<pre class="r"><code>library(dplyr)
+# Note that there are quotation marks when installing a package, but not when loading it
+# and remember that hashtags let you add useful notes to your code! 
+
+setwd(&quot;C:/Users/17163/Documents/DSEE/Labs/Intro_to_R&quot;)
+# This is an example filepath, alter to your own filepath</code></pre>
+<p>To find out where your working directory is now, run the code
+<mark style="background-color:grey">getwd()</mark>. If you want to
+change it, you can use
+<mark style="background-color:grey">setwd()</mark>. Set your working
+directory to a place that makes sense to you.</p>
+<p>Watch out! Note that on a Windows computer, a copied-and-pasted file
+path will have backslashes separating the folders
+<mark style="background-color:grey">(“C:”)</mark>, but the filepath you
+enter into R should use forward slashes
+<mark style="background-color:grey">(“C:/folder/data”)</mark>.</p>
+<p><br></p>
+</div>
+</div>
+<div id="import-and-check-data" class="section level3">
+<h3>2. Import and check data</h3>
+<p>Practice is the best way to learn any new language, so let’s jump
+straight in and do some of our own statistical analysis using a publicly
+available and very famous dataset: atmospheric CO2 concentrations at the
+Mauna Loa Observatory.</p>
+<p>You can download the dataset to your working directory and read the
+data into R from there. In RStudio, you can either click on the Import
+Dataset button and navigate to where you have saved your file, or use
+the <mark style="background-color:grey">read.csv()</mark> command. If
+you use the button, a window will pop up previewing your data. Make sure
+that next to Heading you have selected Yes (this tells R to treat the
+first row of your data as the column names) and click Import. In the
+console, you will see the code for your import, which includes the file
+path - it’s a good idea to copy this code into your script, so that for
+future reference you know where your dataset came from.</p>
+<p><img src="images/R%20Studio%20import%20data.png" /></p>
+<p>R works best with <mark style="background-color:grey">.csv</mark>
+(comma separated values) files. If you entered your data in Excel, you
+would need to click on Save as and select
+<mark style="background-color:grey">.csv</mark> as the file extension.
+When entering data in Excel, don’t put any spaces in your row names, as
+they will confuse R later (e.g. go for something like
+<mark style="background-color:grey">CO2_ppm</mark> rather than
+<mark style="background-color:grey">CO2 (ppm)</mark>. Some computers
+save <mark style="background-color:grey">.csv</mark> files with
+semicolons <mark style="background-color:grey">;</mark>, not commas
+<mark style="background-color:grey">,</mark> as the separators. This
+usually happens when English is not the first or only language on your
+computer. If your files are separated by semicolons, use
+<mark style="background-color:grey">read.csv2()</mark> instead of
+<mark style="background-color:grey">read.csv</mark>, or alternatively
+use the argument “sep” (for separator) in the
+<mark style="background-color:grey">read.csv</mark> function:
+<mark style="background-color:grey">read.csv(“your-file-path”, sep =
+“;”)</mark>.</p>
+<pre class="r"><code>MLO_CO2 &lt;- read.csv(&quot;C:/Users/17163/Documents/DSEE/Labs/Intro_to_R/MLO_CO2.csv&quot;)  
+# This is just an example that will not work for you because you have not downloaded the data.</code></pre>
+<p>Today, we will just read the data in directly from the NOAA website.
+The <mark style="background-color:grey">read.table()</mark> function
+allows you to read data in from a path on your computer or a
+website.</p>
+<pre class="r"><code>MLO_CO2 &lt;- read.table(&quot;https://gml.noaa.gov/aftp/data/trace_gases/co2/flask/surface/txt/co2_mlo_surface-flask_1_ccgg_month.txt&quot;) 
+# This downloads data from the NOAA website.</code></pre>
+<p>Remember to save your script once in a while! If you haven’t saved it
+already, why not save it in the same directory as the rest of the
+tutorial file, and give it a meaningful name.</p>
+<p><mark style="background-color:lightblue">A note about objects: R is
+an object-based language - this means that the data you import, and any
+values you create later, are stored in objects that you name. The arrow
+</mark><mark style="background-color:grey">&lt;-</mark><mark style="background-color:lightblue">
+in the code above is how you assign objects. Here, we assigned our csv
+file to the object
+</mark><mark style="background-color:grey">MLO_CO2</mark><mark style="background-color:lightblue">.
+We could just as easily have called it
+</mark><mark style="background-color:grey">mydata</mark><mark style="background-color:lightblue">
+or
+</mark><mark style="background-color:grey">hello</mark><mark style="background-color:lightblue">
+or
+</mark><mark style="background-color:grey">whatever</mark><mark style="background-color:lightblue">,
+but it’s best to choose a unique, informative, and short name. In the
+top right window of RStudio, you can see the names of any objects
+currently loaded into R. See your
+</mark><mark style="background-color:grey">MLO_CO2</mark><mark style="background-color:lightblue">
+object?</mark></p>
+<p><mark style="background-color:lightblue">When you import your data
+into R, it will most likely become an object called a data frame. A data
+frame is like a table, or spreadsheet – it has rows and columns with the
+different variables and observations you have loaded. But more on that
+later!</mark></p>
+<p>A really important step is to check that your data was imported
+without any mistakes. It’s good practice to always run this code and
+check the output in the console – do you see any missing values, do the
+numbers/names make sense? If you go straight into analysis, you risk
+later finding out that R didn’t read your data correctly and having to
+re-do it, or worse, analyzing wrong data without noticing. To preview
+more than just the few first lines, you can also click on the object in
+your Environment panel, and it will show up as a spreadsheet in a new
+tab next to your open script. Large files may not display entirely, so
+keep in mind you could be missing rows or columns.</p>
+<pre class="r"><code>head(MLO_CO2)      # Displays the first few rows</code></pre>
+<pre><code>##    V1   V2 V3     V4
+## 1 MLO 1969  8 322.51
+## 2 MLO 1969  9 321.36
+## 3 MLO 1969 10 320.74
+## 4 MLO 1969 11 321.98
+## 5 MLO 1969 12 323.78
+## 6 MLO 1970  1 325.13</code></pre>
+<pre class="r"><code>tail(MLO_CO2)        # Displays the last rows</code></pre>
+<pre><code>##      V1   V2 V3     V4
+## 558 MLO 2021  7 416.73
+## 559 MLO 2021  8 414.35
+## 560 MLO 2021  9 413.18
+## 561 MLO 2021 10 413.76
+## 562 MLO 2021 11 414.91
+## 563 MLO 2021 12 416.77</code></pre>
+<pre class="r"><code>str(MLO_CO2)         # Tells you whether the variables are continuous, integers, categorical or characters</code></pre>
+<pre><code>## &#39;data.frame&#39;:    563 obs. of  4 variables:
+##  $ V1: chr  &quot;MLO&quot; &quot;MLO&quot; &quot;MLO&quot; &quot;MLO&quot; ...
+##  $ V2: int  1969 1969 1969 1969 1969 1970 1970 1970 1970 1970 ...
+##  $ V3: int  8 9 10 11 12 1 2 3 4 5 ...
+##  $ V4: num  323 321 321 322 324 ...</code></pre>
+<p><mark style="background-color:grey">str(object.name)</mark> is a
+great command that shows the structure of your data. So often, analyses
+in R go wrong because R decides that a variable is a certain type of
+data that it is not. For instance, you might have four study groups that
+you simply called “1, 2, 3, 4”, and while you know that it should be a
+categorical grouping variable (i.e., a factor), R might decide that this
+column contains numeric (numbers) or integer (whole number) data. If
+your study groups were called “one, two, three, four”, R might decide
+it’s a character variable (words or strings of words), which will not
+get you far if you want to compare means among groups. Bottom line:
+always check your data structure!</p>
+<p>You’ll notice the variables have no names! We can specify them with
+the <mark style="background-color:grey">names()</mark> function.</p>
+<pre class="r"><code>names(MLO_CO2) &lt;- c(&quot;Site&quot;,&quot;Year&quot;,&quot;Month&quot;,&quot;CO2&quot;)   
+# Applies names to each variable in the dataset</code></pre>
+<p>We also used the <mark style="background-color:grey">c()</mark>
+function (c stands for concatenate, or chain if that makes it easier to
+remember). This just combines values, in this case variable names, into
+a vector. We will talk more about vectors later.</p>
+<p>The dataset is composed of four variables: Site (Mauna Loa), Year,
+Month (of year), and CO2 concentration in ppm (parts per million).</p>
+<p>When you want to access just one column of a data frame, you append
+the variable name to the object name with a dollar
+<mark style="background-color:grey">$</mark> sign. This syntax lets you
+see, modify, and/or reassign this variable.</p>
+<pre class="r"><code>unique(MLO_CO2$Year) # The unique function here prints all of the unique year values in the dataset</code></pre>
+<pre><code>##  [1] 1969 1970 1976 1977 1978 1979 1980 1981 1982 1983 1984 1985 1986 1987 1988
+## [16] 1989 1990 1991 1992 1993 1994 1995 1996 1997 1998 1999 2000 2001 2002 2003
+## [31] 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016 2017 2018
+## [46] 2019 2020 2021</code></pre>
+<pre class="r"><code># More exploration
+dim(MLO_CO2) # Displays number of rows and columns</code></pre>
+<pre><code>## [1] 563   4</code></pre>
+<pre class="r"><code>summary(MLO_CO2) # Gives you a summary of the data</code></pre>
+<pre><code>##      Site                Year          Month             CO2       
+##  Length:563         Min.   :1969   Min.   : 1.000   Min.   :320.7  
+##  Class :character   1st Qu.:1986   1st Qu.: 4.000   1st Qu.:347.8  
+##  Mode  :character   Median :1998   Median : 7.000   Median :366.7  
+##                     Mean   :1998   Mean   : 6.563   Mean   :369.0  
+##                     3rd Qu.:2010   3rd Qu.:10.000   3rd Qu.:389.1  
+##                     Max.   :2021   Max.   :12.000   Max.   :419.2</code></pre>
+<pre class="r"><code>summary(MLO_CO2$CO2) # Gives you a summary of that particular variable (column) in your dataset</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   320.7   347.8   366.7   369.0   389.1   419.2</code></pre>
+<p><br></p>
+</div>
+<div id="calculate-yearly-co2-averages" class="section level3">
+<h3>3. Calculate yearly CO2 averages</h3>
+<p>Our <mark style="background-color:grey">MLO_CO2</mark> object has CO2
+records from 1969 through 2021, though a few years are missing. To
+explore these values, we will create a graph showing CO2 concentration
+averages for a subset of those years. You could calculate averages in
+Excel, but that has several disadvantages, especially when working with
+large datasets like ours – you have no record of what you clicked on,
+how you sorted the data and what you copied/deleted - mistakes can slip
+by without you noticing. In R, on the other hand, you have your script,
+so you can go back and check all the steps in your analysis.</p>
+<p>To do this, first we need to split
+<mark style="background-color:grey">MLO_CO2</mark> into multiple
+objects, each containing rows for only one year. We do this with the
+useful <mark style="background-color:grey">filter()</mark> function from
+the <mark style="background-color:grey">dplyr</mark> package.</p>
+<pre class="r"><code>Y1976 &lt;- filter(MLO_CO2, Year == &quot;1976&quot;)
+# The first argument of the function is the data frame, the second argument is the condition you want to filter on. Because we only want the year 1969 here, we say: the variable Year MUST BE EXACTLY (==) 1969 – drop everything else from the dataset. (R is case-sensitive so it&#39;s important to watch your spelling! &quot;year&quot; or &quot;Years&quot; would not have worked here.)
+
+Y1977 &lt;- filter(MLO_CO2, Year == &quot;1977&quot;)  # We do the same with 1977. It&#39;s very similar to filtering in Excel if you are used to it.
+# You can create the objects for the years 1978 through 1980.</code></pre>
+<p>You need to do these steps for the years 1978 through 1980, here we
+have given examples for the first two. If you see an error saying
+<mark style="background-color:grey">R</mark> can’t find the object
+<mark style="background-color:grey">1969</mark> or something similar,
+chances are you either haven’t installed and/or loaded the
+<mark style="background-color:grey">dplyr</mark> package. Go back and
+install it using
+<mark style="background-color:grey">install.packages(“dplyr”)</mark> and
+then load it using
+<mark style="background-color:grey">library(dplyr)</mark>.</p>
+<p>Once you have created objects for each year, we can calculate yearly
+averages. For this, we will use the
+<mark style="background-color:grey">mean()</mark> function.</p>
+<pre class="r"><code>a &lt;- mean(Y1976$CO2)
+b &lt;- mean(Y1977$CO2)
+# You can choose whatever names you want for your objects, here I used a, b, c, d... for the sake of brevity.</code></pre>
+<p>If you type <mark style="background-color:grey">a</mark> (or however
+you named your variables) in the console, what does it return? What does
+it mean? It should represent the year average CO2 concentration.</p>
+<p>Again, calculate the yearly average up to 1980. You are probably
+noticing this is quite repetitive and uses a lot of copying and pasting!
+We will learn how to use more of
+<mark style="background-color:grey">dplyr</mark>’s functions and achieve
+the same result with way less code!</p>
+<p><br></p>
+</div>
+<div id="create-a-vector-and-plot-it" class="section level3">
+<h3>4. Create a vector and plot it</h3>
+<p>Now that we have mean concentration by year, we can combine all those
+values in a vector. A vector is another type of R object that stores
+values. As opposed to a data frame, which has two dimensions (rows and
+columns), a vector only has one. When you call a column of a data frame
+like we did earlier with
+<mark style="background-color:grey">MLO_CO2$CO2</mark>, you are
+essentially producing a vector – but you can also create them from
+scratch.</p>
+<p>We do this using the <mark style="background-color:grey">c()</mark>
+and <mark style="background-color:grey">names()</mark> functions
+again.</p>
+<pre class="r"><code>CO2_y &lt;- c(a, b, c, d, e)     # We are chaining together all the values; pay attention to the object names you have calculated and their order
+names(CO2_y) &lt;- c(&quot;1976&quot;, &quot;1977&quot;, &quot;1978&quot;, &quot;1979&quot;, &quot;1980&quot;)</code></pre>
+<p>Notice:</p>
+<p>• The spaces in front of and behind
+<mark style="background-color:grey">&lt;-</mark> and after
+<mark style="background-color:grey">,</mark> are added to make it easier
+to read the code.</p>
+<p>• Take care to check that you are matching your vector values and
+labels correctly! The good thing about keeping a script is that we can
+go back and check that we have indeed assigned the mean of 1976 to
+<mark style="background-color:grey">a</mark>. Even better practice would
+have been to give more meaningful names to our objects, such as
+<mark style="background-color:grey">mean_1976</mark>.</p>
+<p>• If you highlight a bracket
+<mark style="background-color:grey">)</mark> with your mouse, R Studio
+will highlight its matching one in your code. Missing brackets,
+especially when you start nesting functions like we did earlier with
+<mark style="background-color:grey">length(unique())</mark> are one of
+the most common sources of frustration and error when you start
+coding!</p>
+<p>We can now visualize CO2 concentration with the
+<mark style="background-color:grey">barplot()</mark> function. Plots
+appear in the bottom right window in RStudio.</p>
+<pre class="r"><code>barplot(CO2_y)</code></pre>
+<p><img src="DSEE-Lab1_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>Ta-daaaa! But there are a few things not quite right that we should
+fix – there are no axis titles, not all column labels are visible, and
+the CO2 values exceed the highest value on the y axis, so we need to
+extend it. The great thing about R is that you don’t need to come up
+with all the code on your own - you can use the
+<mark style="background-color:grey">help()</mark> function and see what
+arguments you need to add in. Look through the help output, what code do
+you need to add in?</p>
+<pre class="r"><code>help(barplot)     # For help with the barplot() function
+help(par)         # For help with plotting in general</code></pre>
+<pre class="r"><code># The cex code increases the font size when greater than one (and decreases it when less than one).
+barplot(CO2_y, xlab=&quot;Year&quot;, ylab=&quot;CO2 in parts per million (ppm)&quot;, ylim=c(0,400), cex.names= 1.5, cex.axis=1.5, cex.lab=1.5)</code></pre>
+<p><img src="DSEE-Lab1_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p>We want to <mark style="color:blue"><em>save our plot for the
+write-up</em></mark>. To do this, click Export in the Plots window. If
+you don’t change the directory, the file will be saved in your working
+directory. You can adjust the dimensions to get the bar chart to look
+how you like it, and you should also add in a meaningful file name -
+<mark style="background-color:grey">Rplot01.png</mark> won’t be helpful
+when you try to find the file later.</p>
+<p><img src="images/R%20Studio%20barplot.png" /></p>
+<p><br></p>
+<p>Below is what the final plot should look like with a caption.</p>
+<p><img src="images/R%20Studio%20barplot%20improved.png" /></p>
+<p><br></p>
+<p>Figure 1. Yearly atmospheric CO2 concentration (ppm) for five years
+(1976-1980) at the Mauna Loa Observatory, Hawaii.</p>
+<p><br></p>
+</div>
+<div id="create-a-data-frame-and-plot-it" class="section level3">
+<h3>5. Create a data frame and plot it</h3>
+<p>In the last section we created vectors, i.e., a series of values,
+each with a label. This object type is suitable when dealing with just
+one set of values. Often, however, you will have more than one variable
+and have multiple data types - e.g. some continuous, some categorical.
+In those cases, we use data frame objects. Data frames are tables of
+values: they have a two-dimensional structure with rows and columns,
+where each column can have a different data type. For instance, a column
+called “Wingspan” would have numeric values measured on different birds
+(21.3, 182.1, 25.1, 8.9), and a column “Species” would have character
+values of with the names of the species (“House sparrow”, “Golden
+eagle”, “Eurasian kingfisher”, “Ruby-throated hummingbird”). Another
+possible data format is a matrix - a matrix can have several rows of
+data as well (e.g., you can combine vectors into a matrix), but the
+variables must be all of the same type. For instance they are all
+numerical and are the same length in terms of the number of rows.</p>
+<p><mark style="background-color:lightblue">A note on good housekeeping:
+ALWAYS keep a copy of your raw data as you first collected it. The
+beauty of manipulating a file in an R script is that the modifications
+live on the script, not in the data. For Photoshop-savvy people, it’s
+like adding layers to an image: you’re not altering the original photo,
+just creating new things on top of it. That said, if you wrote a long
+piece of code to tidy up a large dataset and get it ready to analyze,
+you may not want to re-run the whole script every time you need to
+access the clean data. It’s therefore a good idea to save your shiny new
+object as a new csv file that you can load, ready-to-go, with just one
+command. We will now create a data frame with our CO2 concentration
+data, and then save it using
+</mark><mark style="background-color:grey">write.csv()</mark><mark style="background-color:lightblue">.</mark></p>
+<p>We will use the
+<mark style="background-color:grey">data.frame()</mark> function, but
+first we will create an object that contains the names of all the years
+(one column) and another object with the values of CO2 concentration for
+each year (another column).</p>
+<pre class="r"><code># Creating an object called &quot;Year&quot;
+Year &lt;- c(&quot;1976&quot;, &quot;1977&quot;, &quot;1978&quot;, &quot;1979&quot;, &quot;1980&quot;)
+
+# Combining all the values for the CO2 concentrations in an object called CO2
+CO2 &lt;- c(a, b, c, d, e)
+
+# Creating the data frame from the two vectors
+CO2_year &lt;- data.frame(Year, CO2)
+
+# Saving the file
+write.csv(CO2_year, file=&quot;CO2_year.csv&quot;)  # it will be saved in your working directory</code></pre>
+<p>If we want to create and save a barplot using the data frame, we need
+to slightly change the code because data frames can contain multiple
+variables. We need to tell R exactly which one we want it to plot. Like
+before, we can specify columns from a data frame using
+<mark style="background-color:grey">$</mark>:</p>
+<pre class="r"><code>barplot(CO2_year$CO2, names.arg = c(&quot;1976&quot;,&quot;1977&quot;,&quot;1978&quot;,&quot;1979&quot;,&quot;1980&quot;),
+        ylab = &quot;CO2 in parts per million (ppm)&quot;, xlab = &quot;Year&quot;, ylim=c(0,400),
+        cex.names= 1.5, cex.axis=1.5, cex.lab=1.5)</code></pre>
+<p><img src="DSEE-Lab1_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p><br></p>
+<p><em>This is the end of part 1. You have accomplished a lot:</em></p>
+<p><em>1. You are familiar with the RStudio interface</em></p>
+<p><em>2. You can create and annotate a script file</em></p>
+<p><em>3. You can import your own datasets into RStudio</em></p>
+<p><em>4. You can check and explore data</em></p>
+<p><em>5. You can make simple figures</em></p>
+<p><br></p>
+<p>Next week, in Part 2 we will learn how to format and manipulate data
+in a tidy and efficient way. More specifically, in just a few lines of
+code we will create a data frame with the mean CO2 concentration for ALL
+years in the dataset, then we will combine those data with temperature
+values from Mauna Loa and graph them using scatterplots!</p>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
