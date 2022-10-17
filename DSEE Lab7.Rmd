@@ -240,7 +240,7 @@ knn(plot_data[1:80,1:2],plot_data[81:85,1:2],cl=plot_data[1:80,3],k=20, prob = T
 
 You may have also noticed that I specified an argument called “prob” to be true in the above code.  This give the proportion of nearest neighbors within the class or group to which the algorithm assigns the unknowns (emerging variant sequences). 
 
-I developed a function (given below) that uses this proportion of nearest neighbors to estimate the Ro with a weighted mean based on the proportions given.
+I developed a function (given below) that uses this proportion of nearest neighbors to estimate the Ro with a [weighted mean](https://en.wikipedia.org/wiki/Weighted_arithmetic_mean) based on the proportions given.
 
 ```{r}
 # function for finding k nearest neighbors
