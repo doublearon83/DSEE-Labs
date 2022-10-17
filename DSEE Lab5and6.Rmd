@@ -1,4 +1,3 @@
-
 ---
 title: "Lab module 2 – Parts 3 and 4 (Inferential statistics)"
 output:

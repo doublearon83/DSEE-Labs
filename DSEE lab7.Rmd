@@ -1,4 +1,3 @@
-
 ---
 title: "Lab module 3 – Part 1"
 output:
@@ -12,7 +11,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(message=FALSE,warning=FALSE, cache=F)
+knitr::opts_chunk$set(message=FALSE,warning=FALSE, cache=FALSE)
 ```
 
 ```{r klippy, echo=FALSE, include=TRUE}
@@ -262,7 +261,7 @@ knnd <- function(x,y,z,zz) {
   Ro_w<-numeric(ncol(o))
   var<-numeric(ncol(o))
   for (i in 1:ncol(o)){
-    Ro_w[i]<-sum(Ro_d$Ro[match(names(tt[[i]]),Ro_d$Variant)]*tt[[i]])/z #calc weighted mean
+    Ro_w[i]<-sum(zz$Ro[match(names(tt[[i]]),zz$Variant)]*tt[[i]])/z #calc weighted mean
     if (length(names(which.max(tt[[i]])))==0) {var[i]<-NA} else {var[i]<-names(which.max(tt[[i]]))} # determine most similar variant
   }
   print(var)  # print results
