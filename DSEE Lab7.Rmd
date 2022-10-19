@@ -162,7 +162,7 @@ Do the Ro values for any of the variants seem too high to low?  If you are unsur
 
 Next up, we are going to use sars-cov-2 spike protein sequences to classify variants and, in conjunction with results from part 1, estimate the Ro for an emerging variant.  The spike protein plays an important role in binding of the sars-cov-2 virus to human cells, and influences the transmission and virulence of the disease (eg, [Huang et al 2020](https://www.nature.com/articles/s41401-020-0485-4)).  The protein sequences come from NCBI, which has a decent [dashboard](https://www.ncbi.nlm.nih.gov/labs/virus/vssi/#/) for downloading covid related data.
 
-To classify the emerging variant, we are going to use [principle component analysis](https://en.wikipedia.org/wiki/Principal_component_analysis) (PCA) to reduce the dimensionality of the data (protein sequences are quite complex), then use the k-nearest neighbor method (remember back to the lecture from lab last week) to determine which of the [variants of concern](https://www.who.int/en/activities/tracking-SARS-CoV-2-variants/) the emerging variant is most similar to and use the variant of concern Ro as a first step prediction of the emerging variant’s basic reproductive number.
+To classify the emerging variant, we are going to use [principle component analysis](https://en.wikipedia.org/wiki/Principal_component_analysis) (PCA) to reduce the dimensionality of the data (protein sequences are quite complex), then use the k-nearest neighbor method to determine which of the [variants of concern](https://www.who.int/en/activities/tracking-SARS-CoV-2-variants/) the emerging variant is most similar to and use the variant of concern Ro as a first step prediction of the emerging variant’s basic reproductive number.
 
 The k-nearest neighbor method uses a training dataset (called sequences_train on Canvas), in this case, one where we know the variants (and their Ro values).  We use the training dataset to classify the emerging, or unknown, variant (found in the test dataset called sequences_test on Canvas).  The training dataset is composed of 20 sequences for each of four variants of concern: Alpha, Beta, Delta, and Omicron.  The test dataset is composed of 5 sequences.
 
@@ -230,7 +230,7 @@ colors <- c("red","green","blue","purple","orange")
 
 The plot has the principal component variables 1 and 2 on the x and y axes and variants IDs by color.  You can see that the PCs do a pretty good (not perfect!) job of grouping the sequences for variants together.  For example, all of the Omicron sequences are clumped nicely at the top in purple. 
 
-The last step is to use the k-nearest neighbor method to determine which variant of concern the uknowns are most similar to.  More specifically, the code below finds the five nearest neighbors for each of the unknowns and outputs the variant it would assign each emerging sequence to.  It outputs them simply as a list.  
+The last step is to use the k-nearest neighbor method to determine which variant of concern the unknowns are most similar to.  More specifically, the code below finds the twenty nearest neighbors for each of the unknowns and outputs the variant it would assign each emerging sequence to.  It outputs them simply as a list.  
 
 ```{r}
 # finds the 20 (k=20) nearest neighbors for the unknowns and assigns  

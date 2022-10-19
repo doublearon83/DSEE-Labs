@@ -1048,8 +1048,7 @@ downloading covid related data.</p>
 href="https://en.wikipedia.org/wiki/Principal_component_analysis">principle
 component analysis</a> (PCA) to reduce the dimensionality of the data
 (protein sequences are quite complex), then use the k-nearest neighbor
-method (remember back to the lecture from lab last week) to determine
-which of the <a
+method to determine which of the <a
 href="https://www.who.int/en/activities/tracking-SARS-CoV-2-variants/">variants
 of concern</a> the emerging variant is most similar to and use the
 variant of concern Ro as a first step prediction of the emerging
@@ -1126,8 +1125,8 @@ good (not perfect!) job of grouping the sequences for variants together.
 For example, all of the Omicron sequences are clumped nicely at the top
 in purple.</p>
 <p>The last step is to use the k-nearest neighbor method to determine
-which variant of concern the uknowns are most similar to. More
-specifically, the code below finds the five nearest neighbors for each
+which variant of concern the unknowns are most similar to. More
+specifically, the code below finds the twenty nearest neighbors for each
 of the unknowns and outputs the variant it would assign each emerging
 sequence to. It outputs them simply as a list.</p>
 <pre class="r"><code># finds the 20 (k=20) nearest neighbors for the unknowns and assigns  
