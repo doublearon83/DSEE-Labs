@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Lab module 3 – Part 2</title>
+
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/clipboard-1.7.1/clipboard.min.js"></script>
+<link href="site_libs/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
+<link href="site_libs/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
+<script src="site_libs/klippy-0.0.0.9500/js/klippy.min.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">DSEE Labs</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="DSEE-Lab1.html">DSEE Lab #1</a>
+</li>
+<li>
+  <a href="DSEE-Lab2.html">DSEE Lab #2</a>
+</li>
+<li>
+  <a href="DSEE-Lab3.html">DSEE Lab #3</a>
+</li>
+<li>
+  <a href="DSEE-Lab4.html">DSEE Lab #4</a>
+</li>
+<li>
+  <a href="DSEE-Lab5and6.html">DSEE Lab #5 and 6</a>
+</li>
+<li>
+  <a href="DSEE-Lab7.html">DSEE Lab #7</a>
+</li>
+<li>
+  <a href="DSEE-Lab8.html">DSEE Lab #8</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Lab module 3 – Part 2</h1>
+
+</div>
+
+
+<script>
+  addClassKlippyTo("pre.r, pre.markdown");
+  addKlippy('left', 'top', 'auto', '1', 'Copy code', 'Copied!');
+</script>
+<p><em>Lab aims and steps:</em></p>
+<p><em>1. Use neural network to classify covid-19 variants</em></p>
+<p><em>2. Cross-validating our model</em></p>
+<p><em>3. Compare classification methods</em></p>
+<p><em>4. Module 3 write-up</em></p>
+<p><br></p>
+<p><strong>Due:</strong> Module 3 write-up is due 11/2 at 1:30 PM.
+Details of the assignment are at the end of this document.</p>
+<p>In lab module 3 we are focusing on using tools of machine learning to
+describe and predict the spread of covid-19. In the first week we
+focused on generating SIR models and using classification methods to
+make predictions about an emerging variant. This week, we are going to
+learn how to use neural networks to classify covid-19 variants and
+compare the neural network to the k-nearest neighbor method.</p>
+<p><br></p>
+<div id="neural-network-to-classify-covid-19-variants"
+class="section level3">
+<h3>1. Neural network to classify covid-19 variants</h3>
+<p>Like the first week of this module, we are going to use sars-cov-2
+spike protein sequences to classify variants. The spike protein plays an
+important role in binding of the sars-cov-2 virus to human cells, and
+influences the transmission and virulence of the disease (eg, <a
+href="https://www.nature.com/articles/s41401-020-0485-4">Huang et al
+2020</a>). The protein sequences come from NCBI, which has a decent <a
+href="https://www.ncbi.nlm.nih.gov/labs/virus/vssi/#/">dashboard</a> for
+downloading covid related data.</p>
+<p>To classify the emerging variant, we are going to use a neural
+network which, like in the first week of this module, starts with <a
+href="https://en.wikipedia.org/wiki/Principal_component_analysis">principle
+component analysis</a> (PCA) to reduce the dimensionality of the data
+(protein sequences are quite complex).</p>
+<p>Like the k-nearest neighbor method, neural networks use both training
+and test datasets. We use the training dataset to classify the emerging,
+or unknown, variant in the test dataset. Neural networks do a lot better
+when they have a lot of data to use for training. So, I made the
+training dataset for this week much larger. It is a total of 280
+sequences with 35 from each of the following variants: Alpha, Beta,
+Delta, Lambda, Mu, Omicron, and Omicron BA.2, and Omicron BA.5. When
+training, the Omicron and Omicron BA.2 are classified as the same
+variant.</p>
+<p>The code below gets all of the required packages loaded. Be careful,
+you will have to install many of them! It also loads the sequence data
+along with the variant IDs. The sequences_train dataset is the same from
+the first week of the module. However, I added some additional sequences
+in a file called sequences_train2 and the additional Omicron BA.2
+sequences in sequences_test. All datasets can be found on Canvas.</p>
+<p>The code below combines all of those sequence files into one large
+dataset because this week we are not going to deterministically
+designate a subset of sequences to be the test sequences. Instead, we
+are going to randomly subset sequences so that we can perform what is
+called cross-validation of our classification models. We will discuss
+this more later!</p>
+<pre class="r"><code># required packages
+require(ape)
+require(kmer)
+require(class)
+require(ggfortify)
+require(neuralnet)
+require(caret)
+require(nnet)
+require(dplyr)
+
+
+# import data, the data come in what is called fasta format
+train &lt;- read.FASTA(&quot;/Users/17163/Documents/DSEE/Labs/Covid/sequences_train.txt&quot;,type=&quot;AA&quot;)
+train2 &lt;- read.FASTA(&quot;/Users/17163/Documents/DSEE/Labs/Covid/sequences_train2.txt&quot;,type=&quot;AA&quot;)
+BA2 &lt;- read.FASTA(&quot;/Users/17163/Documents/DSEE/Labs/Covid/sequences_BA2.txt&quot;,type=&quot;AA&quot;)
+BA5 &lt;- read.FASTA(&quot;/Users/17163/Documents/DSEE/Labs/Covid/sequences_BA5.txt&quot;,type=&quot;AA&quot;)
+
+# combining datasets
+comb &lt;- c(train, train2 ,BA2, BA5)
+
+# add data IDs (variant)
+vID &lt;- c(rep(&quot;Alpha&quot;,10),rep(&quot;Delta&quot;,10),rep(&quot;Beta&quot;,10),rep(&quot;Omicron&quot;,10),
+         rep(&quot;Alpha&quot;,10),rep(&quot;Beta&quot;,10),rep(&quot;Delta&quot;,10),rep(&quot;Omicron&quot;,10))
+
+vID2 &lt;- c(rep(&quot;Alpha&quot;,15),rep(&quot;Beta&quot;,15),rep(&quot;Delta&quot;,15),rep(&quot;Omicron&quot;,15),
+          rep(&quot;Lambda&quot;,35), rep(&quot;Mu&quot;,35))
+
+vIDBA &lt;- c(rep(&quot;BA2&quot;,35),rep(&quot;BA5&quot;,35))
+
+vID_t &lt;- c(vID, vID2, vIDBA)</code></pre>
+<p>Now that we have our data in R and formatted, we can produce our
+distance matrix and run the PCA (review Module 3 – Part 1 for more
+details). Except this time, instead of only producing two variables
+(principal components), we are going to produce four.</p>
+<p>Note, the code also does some housecleaning like putting the
+principal components and variant IDs into a dataframe, names the
+variables, and changes variant IDs to numbers. We change the variant IDs
+to numbers because that is how the neural network function outputs
+them.</p>
+<pre class="r"><code># calculate distance matrix
+mat_t &lt;- kdistance(comb,k=2, method = &quot;edgar&quot;)
+
+# reformat into square matrix
+re_mat_t &lt;- as.matrix(mat_t)
+
+# principal component analysis
+pcs &lt;- cmdscale(re_mat_t, k=4, eig = TRUE)
+
+# reformat into dataframe
+data_NN &lt;- data.frame(pcs$points[,1],pcs$points[,2],pcs$points[,3], pcs$points[,4],as.factor(vID_t))
+names(data_NN) &lt;- c(&quot;PC1&quot;, &quot;PC2&quot;, &quot;PC3&quot;, &quot;PC4&quot;, &quot;ID&quot;)
+
+# change ID labels to numbers for neural network
+data_NN$ID &lt;- recode(data_NN$ID, Alpha = &quot;1&quot;, Beta = &quot;2&quot;,
+                        Delta = &quot;3&quot;, Lambda = &quot;4&quot;,
+                        Mu = &quot;5&quot;, Omicron = &quot;6&quot;, BA2 = &quot;7&quot;, BA5 = &quot;8&quot;)</code></pre>
+<p>The next bit of code changes IDs into what is called a <a
+href="https://en.wikipedia.org/wiki/One-hot">one-hot vector</a>. This
+produces a unique vector ID for each variant (print the data to
+visualize it). We do this because the neural network function does not
+like to use factors (in this case the variant ID is a factor with 6
+levels).</p>
+<pre class="r"><code># Encode ID as a one hot vector (give each class its own column)
+# make ID a factor with order levels 1-8
+data_NN$ID &lt;- factor(data_NN$ID, levels = c(&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,&quot;5&quot;,&quot;6&quot;,&quot;7&quot;,&quot;8&quot;))
+# class.ind function is from nnet package
+data_NN &lt;- cbind(data_NN[, 1:5], class.ind(as.factor(data_NN$ID)))
+# Set labels name
+names(data_NN) &lt;- c(names(data_NN)[1:5],&quot;l1&quot;,&quot;l2&quot;,&quot;l3&quot;,&quot;l4&quot;,&quot;l5&quot;,&quot;l6&quot;,&quot;l7&quot;,&quot;l8&quot;)</code></pre>
+<p>We are ready to randomly subset our data into training and test
+groups. I have designated that 80% of the data will be training and 20%
+will be test. The random subsetting is done with the
+<mark style="background-color:grey">sample()</mark> function. Replace =
+F means the sampling is done without replacement. Do some Googling if
+you do not know what that means!</p>
+<pre class="r"><code># produce random subset for training and testing datasets
+samp &lt;- sample(1:nrow(data_NN),round(nrow(data_NN)*.8), replace = F)
+train.NN &lt;- data_NN[samp,]
+test.ID &lt;- data_NN[-samp,]</code></pre>
+<p>Drum-roll please! We are now to the point of using our training
+dataset to build the neural network. Recall that a neural network
+simulates how our brain works. It is a connected set of neurons (called
+perceptrons) that take input data (eg, the principal components we
+produced) and produce output (eg, classification into variants) that
+minimizes error. This is similar in concept, but very different in
+execution, to the minimization of sum of square error that we did in
+Module 3 – Part 1 with SIR model parameter optimization.</p>
+<p>In the neural network, the neurons are organized into hidden layers
+(can be one or many) and like neurons in real life they can pass
+information from one neuron and from one layer to the next. How much
+information is passed on from one neuron to the next is called a weight
+and neurons can receive information from many other neurons. A neuron
+combines the weights it receives from other neurons and uses them to
+determine their activation (or firing) via an activation function (in
+our network the function is logistic). The activation function
+determines what is sent to other neurons or the output.</p>
+<p>Remember, the details of these interactions between input, hidden
+layers, and output are based on minimizing error using the known
+classifications given in the training dataset.</p>
+<p>The specific type of network we are producing is called a
+feed-forward neural network because information flows in one direction
+from the input through the hidden layers and to the output. There is no
+looping back or recurrent connections. The other two main types of
+neural networks are <a
+href="https://www.analyticsvidhya.com/blog/2020/02/cnn-vs-rnn-vs-mlp-analyzing-3-types-of-neural-networks-in-deep-learning/">recurrent
+(RNN) and covolutional (CNN)</a>. RNN are good for sequenced or time
+dependent data and CNN are used for image and video processing. <br></p>
+<pre class="r"><code> # generate neural network
+NN &lt;- neuralnet(l1 + l2 + l3 + l4 + l5 + l6 +l7 + l8 ~ PC1 + PC2 + PC3 + PC4, data = train.NN, hidden = c(13,11,9,7),                 linear.output = FALSE, act.fct = &quot;logistic&quot;, stepmax = 3e+06)</code></pre>
+<p>I dictated that the network have four hidden layers with 13, 11, 9,
+and 7 neurons per layer (you can use the help documentation to explore
+the rest of the arguments in the function). The number of layers and
+neurons is something that you can modify when trying to improve the fit
+of your model.</p>
+<p>**NOTE: the network will take some time &gt;20 sec to run. If it
+appears that the network was produced very quickly (in a few sec), then
+it failed to run and you need to re-run it. This may cause a low
+cross-validation rate (see next section).</p>
+<p>I found a cool function on Github for plotting neural networks. The
+code is below. If you cannot directly access the code using the url
+provided below, then you can just try using the standard plot function.
+The code for that is given below, as well. However, I have found that
+with a network as large as ours the standard plot function does not work
+well.</p>
+<p>If you cannot produce a satisfying plot of the network itself, do not
+worry. Visualizing the network does provide a sense of accomplishment
+and it looks pretty. But you cannot extract anything super meaningful to
+interpret from it.</p>
+<pre class="r"><code># plot neural network
+# import the function from Github
+require(devtools)
+source_url(&#39;https://gist.githubusercontent.com/fawda123/7471137/raw/466c1474d0a505ff044412703516c34f1a4684a5/nnet_plot_update.r&#39;)
+
+# fancy plot neural network
+plot.nnet(NN)</code></pre>
+<p><img src="DSEE-Lab8_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<pre class="r"><code># standard neural network plot
+plot(NN)</code></pre>
+<p><br></p>
+</div>
+<div id="cross-validate-our-model" class="section level3">
+<h3>2. Cross-validate our model</h3>
+<p>Next up, we need to assess the utility of our model using
+cross-validation. Cross-validation is a method of out-of-sample testing
+to determine the generalizability of a statistical model. Basically, we
+build the model using our training dataset, then test the model with our
+test dataset. What is the output of cross-validation? In our case, it is
+a proportion or percentage indicating how many of the sequences in the
+test dataset were assigned to the correct category (variant).</p>
+<p>This is a little different than the way we did things in the first
+week of the module. There, we skipped this validation step and just used
+our model to classify unknown variants. However, cross-validation using
+a test dataset with known categories (variants) is critical to building
+the best possible model. Why is this? Because if you just test the model
+using your training dataset, then you risk your model overfitting to
+your data. What this means in practice is you could build a model that
+is really good at categorizing your training data but no other data. If
+your model is not generalizable, then it has no utility. Remember the
+ultimate goal here is to categorize sequences from unknown variants.</p>
+<pre class="r"><code># Test the network with cross-validation
+# Create test dataset without IDs
+test &lt;- subset(test.ID, select = c(&quot;PC1&quot;, &quot;PC2&quot;, &quot;PC3&quot;, &quot;PC4&quot;))
+
+# Predict results (classify sequences)
+NN.results &lt;- predict(NN, test)
+
+# Compare predicted to actual (% correctly labeled)
+
+# find variant with highest probability and assign it as the variant
+results1 &lt;- apply(NN.results, 1, which.max)
+# calculate proportion of assigned classes that are correct
+length(test.ID$ID[results1==test.ID$ID])/nrow(test.ID)</code></pre>
+<pre><code>## [1] 0.7678571</code></pre>
+<p>The neural network you produced above should have a validation of
+somewhere around 70-80%, which is pretty good! Note, that your numbers
+will be different than mine because subsetting the dataset into the
+train and test groups is random.</p>
+<p>However, there are also a lot of ways you can make it better:</p>
+<ol style="list-style-type: decimal">
+<li><p>Increase the number of training sequences. Neural networks always
+do better with more information.</p></li>
+<li><p>Increase the number of principal components (we used 4). Why? See
+the reason for number 1.</p></li>
+<li><p>Increase the number of neurons and hidden layers. There is no set
+rule for the appropriate number of hidden layers or neurons in a
+network, except that generally speaking increasing model complexity
+(more layers and neurons) is better. Note, if you increase the number of
+hidden layers and neurons you may need to increase the number of steps
+the algorithm goes through to train the network (this is the “stepmax”
+argument within the neuralnet function). As you add layers and steps you
+are asking more and more of your computer. It may take a while for it to
+produce the model. I recommend saving your work regularly.</p></li>
+</ol>
+<p>See if you can increase the correct classification percentage!</p>
+<p><br></p>
+</div>
+<div id="compare-classification-methods" class="section level3">
+<h3>3. Compare classification methods</h3>
+<p>Let’s compare our neural network to the k-nearest neighbor method
+from the first week of this module. To do so, you first need to run the
+knn function code (it is just one line of code!!) I gave you last week
+using the expanded training and testing datasets from this week. Then,
+you need to calculate the proportion of correctly assigned variant
+classes by modifying the last line of code I gave you in part 2
+above.</p>
+<p><br></p>
+<div id="bonus-content-monte-carlo-cross-validation"
+class="section level4">
+<h4>Bonus content: Monte Carlo Cross-validation</h4>
+<p><strong>You do not need to run the code in this subsection. It is
+just additional code I wanted to include because I am a
+nerd.</strong></p>
+<p>Below is code for multiple sub-sampling cross-validation of your
+network. This is a more accurate validation of your model because it
+parses data into both the training and testing groups (depending on the
+iteration). Whereas, a singular split (as we did above) results in data
+parsed into only one of the two groups, which could bias the
+results.</p>
+<p><strong>WARNING: The runtime on this code can be quite long. So be
+patient.</strong></p>
+<pre class="r"><code># Monte Carlo Cross-validation
+
+# vector for percent correct values
+perc_correct &lt;- numeric(10)
+i &lt;- 1
+#while loop for generating 10 cross-validations
+#we use a while loop to re-run iteration if the model fails
+while (i &lt;= 10) {
+
+# Partitioning of data into test and train groups
+samp &lt;- sample(1:nrow(data_NN),round(nrow(data_NN)*.8), replace = F)
+train.NN &lt;- data_NN[samp,]
+test.ID &lt;- data_NN[-samp,]
+
+# generate neural network
+NN &lt;- neuralnet(l1 + l2 + l3 + l4 + l5 + l6 + l7 + l8 ~ PC1 + PC2 + PC3 + PC4, data = train.NN, hidden = c(13,11,9,7), 
+                linear.output = FALSE, act.fct = &quot;logistic&quot;, stepmax = 3e+07)
+
+# Create test dataset without IDs
+test &lt;- subset(test.ID, select = c(&quot;PC1&quot;, &quot;PC2&quot;, &quot;PC3&quot;, &quot;PC4&quot;))
+
+# Predict results (classify sequences)
+NN.results &lt;- predict(NN, test)
+
+# Compare predicted to actual (% correctly labeled)
+
+# find variant with highest probability and assign it as the variant
+results1 &lt;- apply(NN.results, 1, which.max)
+
+# calculate proportion of assigned classes that are correct
+perc_correct[i] &lt;- length(test.ID$ID[results1==test.ID$ID])/nrow(test.ID)
+
+if (perc_correct[i] &lt; 0.25) {print(&quot;model failure&quot;)} # if model fails to run (results in very low % correct)
+# if model fails to run - re-run iteration
+if (perc_correct[i] &gt; 0.25) {print(i)} # if model successfully runs - prints iteration
+if (perc_correct[i] &gt; 0.25) {i &lt;- i + 1} # if model runs successfully - move to next iteration
+}
+
+#mean percent correct across iterations
+mean(perc_correct)</code></pre>
+<p><br></p>
+</div>
+</div>
+<div id="assignment" class="section level3">
+<h3>4. Assignment</h3>
+<p><mark style="color:blue"><em>Your lab write-up for module 3 is a
+short (3-5 total pages, including figures), but complete scientific
+paper that includes introduction, methods, results, discussion, and
+literature cited sections.</em></mark></p>
+<div id="detailed-expectations" class="section level4">
+<h4><mark style="color:blue"><em>Detailed expectations:</em></mark></h4>
+<p><mark style="color:blue"><em>Due: Tuesday, 11/2 at 1:30 PM, Points:
+60 pts.</em></mark></p>
+<p><mark style="color:blue"><em>Your write-up should:</em></mark></p>
+<p><mark style="color:blue"><em>1) Address the following
+question:</em></mark></p>
+<p><mark style="color:blue"><em>- How do the knn method and neural
+network compare when used to assign sars-cov-2 spike protein sequences
+to variants and predict the Ro within the SIR model
+framework?</em></mark></p>
+<p><mark style="color:blue"><em>2) Include a methods section describing
+where data was accessed, how it was analyzed, and how appropriate
+analyses were compared.</em></mark></p>
+<p><mark style="color:blue"><em>3) Include publication quality plots
+of:</em></mark></p>
+<p><mark style="color:blue"><em>- optimized model infection parameters
+(from Part 1, you do not need to include the variants added to the
+dataset in part 2)</em></mark></p>
+<p><mark style="color:blue"><em>- principal component plot (from Part
+1)</em></mark></p>
+<p><mark style="color:blue"><em>- a plot that compares the validity of
+the knn method and neural network (perhaps just a simple barplot of
+percent correct classification?)</em></mark></p>
+<p><mark style="color:blue"><em>4) Use both the knn method and neural
+network to predict the variant and Ro of 5 sequences from NCBI (use the
+same dashboard from last week) that we have not used in either part 1 or
+part 2 of this assignment. If your unknown sequences are assigned to
+variants added in part 2, then we did not estimate their R0 values. Just
+use an R0 value you can find from a peer-reviewed, published
+paper.</em></mark></p>
+<p><mark style="color:blue"><em>5) Include a discussion section with all
+the requisite parts including methodological limitations and future
+directions. Comparison to the literature at large can be limited to one
+paragraph.</em></mark></p>
+<p><mark style="color:blue"><em>6) Include a literature cited section. I
+do not care how it is formatted.</em></mark></p>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

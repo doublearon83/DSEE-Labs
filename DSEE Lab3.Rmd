@@ -150,7 +150,7 @@ The default <mark style="background-color:grey">ggplot()</mark> settings are not
 ```{r}
 (asynchrony_hist <- ggplot(Pollinators, aes(x = Asynchrony)) +                
   geom_histogram(binwidth = 2, color = "#8B5A00", fill = "#CD8500") +    # Changing the binwidth and colors
-  geom_vline(aes(xintercept = mean(Asynchrony)),                       # Adding a line for mean abundance
+  geom_vline(aes(xintercept = mean(Asynchrony)),                       # Adding a line for mean asynchrony
              color = "red", linetype = "dashed", size=1) +           # Changing the look of the line
     theme_bw() +                                                      # Changing the theme to get rid of the gray background
   ylab("Frequency\n") +                                                   # Changing the text of the y axis label
@@ -265,7 +265,7 @@ colors <-  c("#0000EE", "#8A2BE2", "#FF1493", "#CDAD00", "#548B54", "#8B5A00")
           legend.position = "right"))       # Setting legend position
 ```
 
-Some useful arguments to include in <mark style="background-color:grey">facet_wrap()</mark> are <mark style="background-color:grey">nrow =</mark> or <mark style="background-color:grey">ncol =</mark> , specifying the number of rows or columns, respectively. You can also see that we used <mark style="background-color:grey">scales = "free_y"</mark>, to allow different y axis values because of the wide range of abundance values in the data. You can use “fixed” when you want to constrain all axis values.
+Some useful arguments to include in <mark style="background-color:grey">facet_wrap()</mark> are <mark style="background-color:grey">nrow =</mark> or <mark style="background-color:grey">ncol =</mark> , specifying the number of rows or columns, respectively. You can also see that we used <mark style="background-color:grey">scales = "free_y"</mark>, to allow different y axis values because of the wide range of values in the data. You can use “fixed” when you want to constrain all axis values.
 
 <br>
 

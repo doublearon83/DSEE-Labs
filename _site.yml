@@ -16,4 +16,6 @@ navbar:
       href: DSEE-Lab5and6.html
     - text: "DSEE Lab #7"
       href: DSEE-Lab7.html
+    - text: "DSEE Lab #8"
+      href: DSEE-Lab8.html
 output_dir: "docs"

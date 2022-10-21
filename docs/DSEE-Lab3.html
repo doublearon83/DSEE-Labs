@@ -346,6 +346,9 @@ div.tocify {
 <li>
   <a href="DSEE-Lab7.html">DSEE Lab #7</a>
 </li>
+<li>
+  <a href="DSEE-Lab8.html">DSEE Lab #8</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -506,7 +509,7 @@ each other. Lets beautify the histogram a bit! This is where the true
 power of ggplot2 shines.</p>
 <pre class="r"><code>(asynchrony_hist &lt;- ggplot(Pollinators, aes(x = Asynchrony)) +                
   geom_histogram(binwidth = 2, color = &quot;#8B5A00&quot;, fill = &quot;#CD8500&quot;) +    # Changing the binwidth and colors
-  geom_vline(aes(xintercept = mean(Asynchrony)),                       # Adding a line for mean abundance
+  geom_vline(aes(xintercept = mean(Asynchrony)),                       # Adding a line for mean asynchrony
              color = &quot;red&quot;, linetype = &quot;dashed&quot;, size=1) +           # Changing the look of the line
     theme_bw() +                                                      # Changing the theme to get rid of the gray background
   ylab(&quot;Frequency\n&quot;) +                                                   # Changing the text of the y axis label
@@ -685,9 +688,8 @@ colors &lt;-  c(&quot;#0000EE&quot;, &quot;#8A2BE2&quot;, &quot;#FF1493&quot;, &
 <mark style="background-color:grey">ncol =</mark> , specifying the
 number of rows or columns, respectively. You can also see that we used
 <mark style="background-color:grey">scales = “free_y”</mark>, to allow
-different y axis values because of the wide range of abundance values in
-the data. You can use “fixed” when you want to constrain all axis
-values.</p>
+different y axis values because of the wide range of values in the data.
+You can use “fixed” when you want to constrain all axis values.</p>
 <p><br></p>
 <div id="good-to-know" class="section level4">
 <h4><mark style="background-color:#F9E59B">Good to know</mark></h4>
