@@ -530,7 +530,7 @@ href="https://www.analyticsvidhya.com/blog/2020/02/cnn-vs-rnn-vs-mlp-analyzing-3
 (RNN) and covolutional (CNN)</a>. RNN are good for sequenced or time
 dependent data and CNN are used for image and video processing. <br></p>
 <pre class="r"><code> # generate neural network
-NN &lt;- neuralnet(l1 + l2 + l3 + l4 + l5 + l6 +l7 + l8 ~ PC1 + PC2 + PC3 + PC4, data = train.NN, hidden = c(13,11,9,7),                 linear.output = FALSE, act.fct = &quot;logistic&quot;, stepmax = 3e+06)</code></pre>
+NN &lt;- neuralnet(l1 + l2 + l3 + l4 + l5 + l6 +l7 + l8 ~ PC1 + PC2 + PC3 + PC4, data = train.NN, hidden = c(13,11,9,7), linear.output = FALSE, act.fct = &quot;logistic&quot;, stepmax = 3e+06)</code></pre>
 <p>I dictated that the network have four hidden layers with 13, 11, 9,
 and 7 neurons per layer (you can use the help documentation to explore
 the rest of the arguments in the function). The number of layers and
@@ -630,7 +630,7 @@ above.</p>
 <p><br></p>
 <div id="bonus-content-monte-carlo-cross-validation"
 class="section level4">
-<h4>Bonus content: Monte Carlo Cross-validation</h4>
+<h4>Bonus content: Monte Carlo cross-validation</h4>
 <p><strong>You do not need to run the code in this subsection. It is
 just additional code I wanted to include because I am a
 nerd.</strong></p>
@@ -642,7 +642,7 @@ parsed into only one of the two groups, which could bias the
 results.</p>
 <p><strong>WARNING: The runtime on this code can be quite long. So be
 patient.</strong></p>
-<pre class="r"><code># Monte Carlo Cross-validation
+<pre class="r"><code># Monte Carlo cross-validation
 
 # vector for percent correct values
 perc_correct &lt;- numeric(10)
@@ -657,8 +657,7 @@ train.NN &lt;- data_NN[samp,]
 test.ID &lt;- data_NN[-samp,]
 
 # generate neural network
-NN &lt;- neuralnet(l1 + l2 + l3 + l4 + l5 + l6 + l7 + l8 ~ PC1 + PC2 + PC3 + PC4, data = train.NN, hidden = c(13,11,9,7), 
-                linear.output = FALSE, act.fct = &quot;logistic&quot;, stepmax = 3e+07)
+NN &lt;- neuralnet(l1 + l2 + l3 + l4 + l5 + l6 + l7 + l8 ~ PC1 + PC2 + PC3 + PC4, data = train.NN, hidden = c(13,11,9,7), linear.output = FALSE, act.fct = &quot;logistic&quot;, stepmax = 3e+07)
 
 # Create test dataset without IDs
 test &lt;- subset(test.ID, select = c(&quot;PC1&quot;, &quot;PC2&quot;, &quot;PC3&quot;, &quot;PC4&quot;))
@@ -676,7 +675,7 @@ perc_correct[i] &lt;- length(test.ID$ID[results1==test.ID$ID])/nrow(test.ID)
 
 if (perc_correct[i] &lt; 0.25) {print(&quot;model failure&quot;)} # if model fails to run (results in very low % correct)
 # if model fails to run - re-run iteration
-if (perc_correct[i] &gt; 0.25) {print(i)} # if model successfully runs - prints iteration
+if (perc_correct[i] &gt; 0.25) {print(i)} # if model successfully runs - print iteration
 if (perc_correct[i] &gt; 0.25) {i &lt;- i + 1} # if model runs successfully - move to next iteration
 }
 
@@ -686,14 +685,14 @@ mean(perc_correct)</code></pre>
 </div>
 </div>
 <div id="assignment" class="section level3">
-<h3>4. Assignment</h3>
+<h3><mark style="color:blue"><em>4. Assignment</em></mark></h3>
 <p><mark style="color:blue"><em>Your lab write-up for module 3 is a
 short (3-5 total pages, including figures), but complete scientific
 paper that includes introduction, methods, results, discussion, and
 literature cited sections.</em></mark></p>
 <div id="detailed-expectations" class="section level4">
 <h4><mark style="color:blue"><em>Detailed expectations:</em></mark></h4>
-<p><mark style="color:blue"><em>Due: Tuesday, 11/2 at 1:30 PM, Points:
+<p><mark style="color:blue"><em>Due: Monday, 11/7 at 11:59 PM, Points:
 60 pts.</em></mark></p>
 <p><mark style="color:blue"><em>Your write-up should:</em></mark></p>
 <p><mark style="color:blue"><em>1) Address the following

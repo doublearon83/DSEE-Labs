@@ -137,7 +137,7 @@ The specific type of network we are producing is called a feed-forward neural ne
 
 ```{r}
  # generate neural network
-NN <- neuralnet(l1 + l2 + l3 + l4 + l5 + l6 +l7 + l8 ~ PC1 + PC2 + PC3 + PC4, data = train.NN, hidden = c(13,11,9,7),                 linear.output = FALSE, act.fct = "logistic", stepmax = 3e+06)
+NN <- neuralnet(l1 + l2 + l3 + l4 + l5 + l6 +l7 + l8 ~ PC1 + PC2 + PC3 + PC4, data = train.NN, hidden = c(13,11,9,7), linear.output = FALSE, act.fct = "logistic", stepmax = 3e+06)
 ```
 
 I dictated that the network have four hidden layers with 13, 11, 9, and 7 neurons per layer (you can use the help documentation to explore the rest of the arguments in the function).  The number of layers and neurons is something that you can modify when trying to improve the fit of your model.
@@ -231,8 +231,7 @@ train.NN <- data_NN[samp,]
 test.ID <- data_NN[-samp,]
 
 # generate neural network
-NN <- neuralnet(l1 + l2 + l3 + l4 + l5 + l6 + l7 + l8 ~ PC1 + PC2 + PC3 + PC4, data = train.NN, hidden = c(13,11,9,7), 
-                linear.output = FALSE, act.fct = "logistic", stepmax = 3e+07)
+NN <- neuralnet(l1 + l2 + l3 + l4 + l5 + l6 + l7 + l8 ~ PC1 + PC2 + PC3 + PC4, data = train.NN, hidden = c(13,11,9,7), linear.output = FALSE, act.fct = "logistic", stepmax = 3e+07)
 
 # Create test dataset without IDs
 test <- subset(test.ID, select = c("PC1", "PC2", "PC3", "PC4"))
@@ -250,7 +249,7 @@ perc_correct[i] <- length(test.ID$ID[results1==test.ID$ID])/nrow(test.ID)
 
 if (perc_correct[i] < 0.25) {print("model failure")} # if model fails to run (results in very low % correct)
 # if model fails to run - re-run iteration
-if (perc_correct[i] > 0.25) {print(i)} # if model successfully runs - prints iteration
+if (perc_correct[i] > 0.25) {print(i)} # if model successfully runs - print iteration
 if (perc_correct[i] > 0.25) {i <- i + 1} # if model runs successfully - move to next iteration
 }
 
@@ -261,13 +260,13 @@ mean(perc_correct)
 
 <br>
 
-### 4. Assignment
+### <mark style="color:blue">*4. Assignment*</mark>
 
 <mark style="color:blue">*Your lab write-up for module 3 is a short (3-5 total pages, including figures), but complete scientific paper that includes introduction, methods, results, discussion, and literature cited sections.*</mark>
 
 #### <mark style="color:blue">*Detailed expectations:*</mark>
 
-<mark style="color:blue">*Due: Tuesday, 11/2 at 1:30 PM, Points: 60 pts.*</mark> 
+<mark style="color:blue">*Due: Monday, 11/7 at 11:59 PM, Points: 60 pts.*</mark> 
 
 <mark style="color:blue">*Your write-up should:*</mark> 
 
