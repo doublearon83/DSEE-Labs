@@ -44,7 +44,7 @@ klippy::klippy()
     
 <br>
 
-**Due:** 9/21/22 at 1:30 PM, Introduction to R write-up (20 pts.).  This assignment includes the plot from lab #1, everything asked of you in the <mark style="color:blue">*blue questions*</mark> within this document, along with the additional materials and questions at the very end.  The write-up should be completed in your favorite word processor and uploaded to the assignment on Canvas.
+**Due:** In ONE week at the start of lab (see Canvas for more details), Introduction to R write-up (20 pts.).  This assignment includes the plot from lab #1, everything asked of you in the <mark style="color:blue">*blue questions*</mark> within this document, along with the additional materials and questions at the very end.  The write-up should be completed in your favorite word processor and uploaded to the assignment on Canvas.
 
 <br>
 

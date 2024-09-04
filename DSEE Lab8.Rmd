@@ -286,6 +286,8 @@ mean(perc_correct)
 
 <mark style="color:blue">*4) Use both the knn method and neural network to predict the variant and Ro of 5 sequences from NCBI (use the same dashboard from last week) that we have not used in either part 1 or part 2 of this assignment.  If your unknown sequences are assigned to variants added in part 2, then we did not estimate their R0 values.  Just use an R0 value you can find from a peer-reviewed, published paper.*</mark>
 
+<mark style="color:blue">*- If you report these results in a table, you can [explore packages](https://dmyee.files.wordpress.com/2016/03/table_workshop.pdf) that help you create publication quality tables in R.*</mark>
+
 <mark style="color:blue">*5) Include a discussion section with all the requisite parts including methodological limitations and future directions. Comparison to the literature at large can be limited to one paragraph.*</mark>
 
 

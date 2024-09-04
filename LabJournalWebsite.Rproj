@@ -13,3 +13,4 @@ RnwWeave: knitr
 LaTeX: pdfLaTeX
 
 BuildType: Website
+WebsitePath: C:/Users/ahoward1/Documents/DSEE/Labs/DSEE-Labs
