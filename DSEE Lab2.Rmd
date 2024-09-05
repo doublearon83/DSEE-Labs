@@ -371,7 +371,7 @@ If you do not remember what some of these graphing parameters do, use <mark styl
 
 Sometimes you have multiple data files concerning the same project. Depending on your analytical needs, it may be very useful to have all the information in one table. This is where merging, or joining, datasets comes in handy.
 
-The CO2 concentration data we have is interesting on its own.  However, it is not meaningful unless we can directly connect it to climate change.  Fortunately for us, NOAA also has temperature data for the Mauna Loa Observatory from 1977 to the present.  Unfortunately for us, the data is only available on the hourly scale and with each year in a separate text file.  This equates to 45 datasets each with 8760 rows.  We will need to do some serious wrangling in order to merge the temperature and CO2 data. 
+The CO2 concentration data we have is interesting on its own.  However, it is not meaningful unless we can directly connect it to climate change.  Fortunately for us, NOAA also has temperature data for the Mauna Loa Observatory from 1977 to the present.  Unfortunately for us, the data is only available on the hourly scale and with each year in a separate text file.  This equates to tens of datasets each with 8760 rows.  We will need to do some serious wrangling in order to merge the temperature and CO2 data. 
 
 We will once again use the <mark style="background-color:grey">read.table()</mark> function to download the text files from NOAA, but we will also use something called a <mark style="background-color:grey">for</mark> loop.  Loops are when a designated set of code is repeated, or run many times.  In a <mark style="background-color:grey">for</mark> loop, you specify the number of times the code is run (e.g., the number of years for which we have temperature data).  The other common type of loop is a <mark style="background-color:grey">while</mark> loop, where the code is repeated until a specified logical condition is satisfied (e.g., when year is equal to whatever is the last year of available data).
 
@@ -385,11 +385,15 @@ Within that repository is a [README](https://en.wikipedia.org/wiki/README) file 
 
 ```{r}
 # creating a data frame where yearly temperature means will be stored
-MLO_temp <- data.frame(c(1977:2021),numeric(length(c(1977:2021))))
+
+#first, let's get the latest full year of data (this year minus 1)
+cy_1 <- as.numeric(format(Sys.Date(),"%Y"))-1 #can you explain this code?
+
+MLO_temp <- data.frame(c(1977:cy_1),numeric(length(c(1977:cy_1))))
 names(MLO_temp) <- c("Year","Temperature")
 
 # for loop to extract temperature data from the NOAA website
-# all of the code within the {} below will be run for each year (1977-2021) and the associated datasets on NOAA website
+# all of the code within the {} below will be run for each year (1977 through most recent year with data) and the associated datasets on NOAA website
 for (i in 1:nrow(MLO_temp)) {
 
   # reads in the yearly temperature datasets from NOAA

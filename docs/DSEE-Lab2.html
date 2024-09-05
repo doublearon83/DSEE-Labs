@@ -1070,8 +1070,8 @@ However, it is not meaningful unless we can directly connect it to
 climate change. Fortunately for us, NOAA also has temperature data for
 the Mauna Loa Observatory from 1977 to the present. Unfortunately for
 us, the data is only available on the hourly scale and with each year in
-a separate text file. This equates to 45 datasets each with 8760 rows.
-We will need to do some serious wrangling in order to merge the
+a separate text file. This equates to tens of datasets each with 8760
+rows. We will need to do some serious wrangling in order to merge the
 temperature and CO2 data.</p>
 <p>We will once again use the
 <mark style="background-color:grey">read.table()</mark> function to
@@ -1103,11 +1103,15 @@ the dataset: <a
 href="https://gml.noaa.gov/aftp/data/meteorology/in-situ/mlo/README"
 class="uri">https://gml.noaa.gov/aftp/data/meteorology/in-situ/mlo/README</a></p>
 <pre class="r"><code># creating a data frame where yearly temperature means will be stored
-MLO_temp &lt;- data.frame(c(1977:2021),numeric(length(c(1977:2021))))
+
+#first, let&#39;s get the latest full year of data (this year minus 1)
+cy_1 &lt;- as.numeric(format(Sys.Date(),&quot;%Y&quot;))-1 #can you explain this code?
+
+MLO_temp &lt;- data.frame(c(1977:cy_1),numeric(length(c(1977:cy_1))))
 names(MLO_temp) &lt;- c(&quot;Year&quot;,&quot;Temperature&quot;)
 
 # for loop to extract temperature data from the NOAA website
-# all of the code within the {} below will be run for each year (1977-2021) and the associated datasets on NOAA website
+# all of the code within the {} below will be run for each year (1977 through most recent year with data) and the associated datasets on NOAA website
 for (i in 1:nrow(MLO_temp)) {
 
   # reads in the yearly temperature datasets from NOAA
@@ -1163,18 +1167,18 @@ summary(lm(Temperature ~ CO2, data = MLO_t_c))</code></pre>
 ## 
 ## Residuals:
 ##      Min       1Q   Median       3Q      Max 
-## -1.11315 -0.25076 -0.08213  0.30161  1.21294 
+## -1.05385 -0.26792 -0.07177  0.31895  1.21540 
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) 2.971350   1.232136   2.412  0.02023 *  
-## CO2         0.011755   0.003315   3.545  0.00096 ***
+##             Estimate Std. Error t value Pr(&gt;|t|)   
+## (Intercept) 3.435590   1.130611   3.039  0.00395 **
+## CO2         0.010462   0.003025   3.459  0.00120 **
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 0.5331 on 43 degrees of freedom
-## Multiple R-squared:  0.2262, Adjusted R-squared:  0.2082 
-## F-statistic: 12.57 on 1 and 43 DF,  p-value: 0.0009604</code></pre>
+## Residual standard error: 0.5276 on 45 degrees of freedom
+## Multiple R-squared:   0.21,  Adjusted R-squared:  0.1925 
+## F-statistic: 11.96 on 1 and 45 DF,  p-value: 0.001198</code></pre>
 <p><br></p>
 </div>
 <div id="assignment" class="section level3">
