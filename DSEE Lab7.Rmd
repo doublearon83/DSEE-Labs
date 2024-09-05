@@ -48,7 +48,7 @@ require(deSolve)
 require(ggplot2)
 
 # upload data
-pdata <- read.csv("C:/Users/17163/Documents/DSEE/Labs/Covid/Alpha.csv",header=T)
+pdata <- read.csv("C:/Users/ahoward1/Documents/DSEE/Labs/Covid/Alpha.csv",header=T)
 pdata <- data.frame(as.numeric(pdata$week),as.numeric(pdata$count))
 names(pdata) <- c("t","I")
 
@@ -176,14 +176,14 @@ require(class)
 require(ggfortify)
 
 # training data, the data come in what is called fasta format
-train <- read.FASTA("/Users/17163/Documents/DSEE/Labs/Covid/sequences_train.txt",type="AA")
+train <- read.FASTA("/Users/ahoward1/Documents/DSEE/Labs/Covid/sequences_train.txt",type="AA")
 
 # training data IDs (variant)
 vID <- c(rep("Alpha",10),rep("Delta",10),rep("Beta",10),rep("Omicron",10),
                rep("Alpha",10),rep("Beta",10),rep("Delta",10),rep("Omicron",10))
 
 # test data (unknowns)
-test <- read.FASTA("/Users/17163/Documents/DSEE/Labs/Covid/sequences_test.txt",type="AA")
+test <- read.FASTA("/Users/ahoward1/Documents/DSEE/Labs/Covid/sequences_test.txt",type="AA")
 
 # combining training and test data
 comb <- c(train,test)

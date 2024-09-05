@@ -383,7 +383,7 @@ pollinator_scatter <- ggplot(Pollinators, aes (x = Year, y = CorrectedCollection
     exit_shrink(size = 0.5)+                                              # Size when filtered
     exit_fade(alpha=0.2)                                                  # Transparency when filtered
 
-animate(pollinator_scatter, renderer = gifski_renderer(), width = 900, height = 900)
+animate(pollinator_scatter, renderer = gifski_renderer())
 ```
 
 <br>

@@ -79,9 +79,9 @@ library(gridExtra)
 library(lubridate) 
 
 #import datasets
-Mid_bloom<-read.csv("C:/Users/17163/Documents/DSEE/Labs/Apple pollinators/Mid_bloom.csv",header=T)
-Climate<-read.csv("C:/Users/17163/Documents/DSEE/Labs/Apple pollinators/Climate.csv",header=T)
-Pollinators<-read.csv("C:/Users/17163/Documents/DSEE/Labs/Apple pollinators/Pollinators.csv",header=T)
+Mid_bloom<-read.csv("C:/Users/ahoward1/Documents/DSEE/Labs/Apple pollinators/Mid_bloom.csv",header=T)
+Climate<-read.csv("C:/Users/ahoward1/Documents/DSEE/Labs/Apple pollinators/Climate.csv",header=T)
+Pollinators<-read.csv("C:/Users/ahoward1/Documents/DSEE/Labs/Apple pollinators/Pollinators.csv",header=T)
 
 
 #calculate asynchrony
@@ -311,7 +311,7 @@ Import the US_pop.csv dataset (it is available on Canvas).  It is the US populat
 
 ```{r, eval=T, echo=T}
 #import dataset
-US_pop<-read.csv("C:/Users/17163/Documents/DSEE/Labs/Apple pollinators/US_pop.csv",header=T)
+US_pop<-read.csv("C:/Users/ahoward1/Documents/DSEE/Labs/Apple pollinators/US_pop.csv",header=T)
 
 #run logistic growth regression
 LG.mod <- nls(Population ~ SSlogis(Year, Asym, xmid, scal), data= US_pop)

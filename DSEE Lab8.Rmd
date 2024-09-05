@@ -61,10 +61,10 @@ require(dplyr)
 
 
 # import data, the data come in what is called fasta format
-train <- read.FASTA("/Users/17163/Documents/DSEE/Labs/Covid/sequences_train.txt",type="AA")
-train2 <- read.FASTA("/Users/17163/Documents/DSEE/Labs/Covid/sequences_train2.txt",type="AA")
-BA2 <- read.FASTA("/Users/17163/Documents/DSEE/Labs/Covid/sequences_BA2.txt",type="AA")
-BA5 <- read.FASTA("/Users/17163/Documents/DSEE/Labs/Covid/sequences_BA5.txt",type="AA")
+train <- read.FASTA("/Users/ahoward1/Documents/DSEE/Labs/Covid/sequences_train.txt",type="AA")
+train2 <- read.FASTA("/Users/ahoward1/Documents/DSEE/Labs/Covid/sequences_train2.txt",type="AA")
+BA2 <- read.FASTA("/Users/ahoward1/Documents/DSEE/Labs/Covid/sequences_BA2.txt",type="AA")
+BA5 <- read.FASTA("/Users/ahoward1/Documents/DSEE/Labs/Covid/sequences_BA5.txt",type="AA")
 
 # combining datasets
 comb <- c(train, train2 ,BA2, BA5)

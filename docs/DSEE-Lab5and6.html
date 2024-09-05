@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Lab module 2 – Parts 3 and 4 (Inferential statistics)</title>
+
+<script src="site_libs/header-attrs-2.27/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/clipboard-1.7.1/clipboard.min.js"></script>
+<link href="site_libs/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
+<link href="site_libs/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
+<script src="site_libs/klippy-0.0.0.9500/js/klippy.min.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">DSEE Labs</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="DSEE-Lab1.html">DSEE Lab #1</a>
+</li>
+<li>
+  <a href="DSEE-Lab2.html">DSEE Lab #2</a>
+</li>
+<li>
+  <a href="DSEE-Lab3.html">DSEE Lab #3</a>
+</li>
+<li>
+  <a href="DSEE-Lab4.html">DSEE Lab #4</a>
+</li>
+<li>
+  <a href="DSEE-Lab5and6.html">DSEE Lab #5 and 6</a>
+</li>
+<li>
+  <a href="DSEE-Lab7.html">DSEE Lab #7</a>
+</li>
+<li>
+  <a href="DSEE-Lab8.html">DSEE Lab #8</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Lab module 2 – Parts 3 and 4 (Inferential
+statistics)</h1>
+
+</div>
+
+
+<script>
+  addClassKlippyTo("pre.r, pre.markdown");
+  addKlippy('left', 'top', 'auto', '1', 'Copy code', 'Copied!');
+</script>
+<p><em>Lab aims and steps:</em></p>
+<p><em>1. Introduction to linear models: t-tests and ANOVAs</em></p>
+<p><em>2. Introduction to linear regression (machine learning)</em></p>
+<p><em>3. Choosing your model structure</em></p>
+<p><em>4. Checking assumptions</em></p>
+<p><em>5. Nonlinear regression</em></p>
+<p><em>6. Lab write-up</em></p>
+<p><br></p>
+<p><strong>Due:</strong> lab module write-up is due 10/19 at 1:30 PM.
+Details of the assignment are at the end of this document.</p>
+<p>For the next two labs we will focus on making inferences about and
+predictions using our data. We will primarily (but not exclusively) be
+using the datasets we used the past two labs (from the <a
+href="https://fandm.instructure.com/courses/17827/files?preview=1433579">Bartomeus
+paper</a>).</p>
+<p><br></p>
+<div id="introduction-to-linear-models-t-tests-and-anovas"
+class="section level3">
+<h3>1. Introduction to linear models: t-tests and ANOVAs</h3>
+<p>As you are setting out to answer your research questions, often you
+might want to know what the effect of X on Y is, how X changes with Y,
+etc. To know these things, you need to run a statistical analysis. The
+answer to “What statistical analysis are you going to use?” will
+probably be a model of some sort. A model in its simplest form may look
+something like:</p>
+<p><mark style="background-color:grey">apple.m &lt;- lm(Mid_bloom_day ~
+Year, data = Mid_bloom)</mark> - i.e. we are trying to determine the
+effect of time (the independent, predictor, or explanatory variable) on
+bloom date (the dependent, or response variable). We might hypothesize
+that as time increases, bloom date gets earlier, which would give you a
+negative effect (i.e. a downward slope).</p>
+<p>A slightly more complicated model might look like:
+<mark style="background-color:grey">pollinator.m &lt;- lm(Asynchrony ~
+Year + Family, data = Pollinators)</mark>. Here you are modeling
+Asynchrony, the response variable, as a function of Family (eg, a
+categorical variable describing different pollinator families) AND Year,
+which are both your explanatory variables. The
+<mark style="background-color:grey">data</mark> argument refers to the
+data frame in which all the variables are stored.</p>
+<p>Confused when hearing the terms linear regression, linear model, and
+ANOVA? Let’s put an end to this: they’re all fundamentally the same
+thing!</p>
+<p>Linear regression and linear model are complete synonyms, and we
+usually use these terms when we’re quantifying the effect of a
+continuous explanatory variable on a continuous response variable: what
+is the change in Y for a 1 unit change in X?</p>
+<p>Now enters the ANOVA, which stands for Analysis of Variance. We
+usually talk about an ANOVA when we’re quantifying the effect of a
+discrete, or categorical explanatory variable on a continuous response
+variable. It is also a linear model, but instead of getting a slope that
+allows us to predict bloom date over time, we get an estimate of a
+response variable for each category. A t-test is just an ANOVA with only
+a two-category explanatory variable.</p>
+<p>Just to let it sink in, repeat after me: ANOVA is a linear regression
+(and <a
+href="https://www.theanalysisfactor.com/why-anova-and-linear-regression-are-the-same-analysis/">here</a>
+is a nice article explaining the nitty gritty stuff).</p>
+<p>We will start by exploring t-tests and ANOVAs. As always create a new
+script and add in your details. We will start by investigating the
+effect of <mark style="background-color:grey">Family</mark> on
+<mark style="background-color:grey">Asynchrony</mark>.</p>
+<p>Before we run our models, it’s a good idea to visualize the data just
+to get an idea of what to expect. So, remake or review the boxplot of
+<mark style="background-color:grey">Asynchrony</mark> by
+<mark style="background-color:grey">Family</mark> you made previously.
+From looking at this boxplot alone, one might think our hypothesis of an
+effect of family on asynchrony is supported. Let’s run a model to
+explicitly test this.</p>
+<p><br></p>
+</div>
+<div id="a.-t-test" class="section level3">
+<h3>1a. T-test</h3>
+<p>If we are interested in only comparing two families, say Colletinae
+and Halictinae, then we would run a t-test. Remember, a linear
+regression, ANOVA, and t-test are all essentially the same thing, so we
+run them using the <mark style="background-color:grey">lm()</mark>
+(stands for linear model) function. The summary function prints the
+results in a table.</p>
+<p><strong>Note, you need to generate the Pollinators_CH dataset
+referenced in the code below. This requires you to reproduce the
+Pollinator dataset we used in previous labs. This is why saving code in
+scripts is so useful!!</strong></p>
+<pre class="r"><code>pollinators.m &lt;- lm(Asynchrony ~ Family, data = Pollinators_CH)</code></pre>
+<pre class="r"><code>summary(pollinators.m)</code></pre>
+<p>Check out the summary output of our model:</p>
+<p><img src="images/t-test%20output.png" /></p>
+<p>Turns out that Asynchrony does significantly differ between the two
+families, so we can reject the null hypothesis of no difference/
+effect.</p>
+<p>But let’s take a look at a few other things from the summary output.
+Notice how because Family is a factor, you get results for Halictinae.
+If you are looking for the Colletinae category, that is the intercept: R
+just picks the first category in alphabetical order and makes that one
+the intercept. A very important thing to understand is that the
+estimates for the other categories are presented relative to the
+reference level. So, for the Halictinae, the estimated value from the
+model is not 8.825, but 8.825 + -8.270 = 0.555.</p>
+<p>You also get a Multiple R-squared value and an Adjusted R-squared
+value. These values refer to how much of the variation in the Asynchrony
+variable is explained by our predictor. The values go from 0 to 1, with
+1 meaning that our model variables explain 100% of the variation in the
+examined variable. R-squared values tend to increase as you add more
+terms to your model, but you also need to be wary of overfitting. The
+Adjusted R-squared value takes into account how many terms your model
+has and how many data points are available in the response variable.</p>
+<p><br></p>
+</div>
+<div id="b.-anova" class="section level3">
+<h3>1b. ANOVA</h3>
+<p>What if we are interested in the effect of family overall? Do we need
+to run multiple t-tests? No, we can run an ANOVA (analysis of variance),
+which includes all of the families in the dataset and tests the
+hypothesis that there is an overall effect of family on asynchrony.</p>
+<pre class="r"><code>pollinators.m &lt;- lm(Asynchrony ~ Family, data = Pollinators)</code></pre>
+<pre class="r"><code>summary(pollinators.m)</code></pre>
+<p>Check out the summary output of our model:</p>
+<p><img src="images/ANOVA%20output.png" /></p>
+<p>Remember, that R picks the reference level alphabetically. So, the
+intercept represents the estimate for the Andreninae family and all
+other estimates are relative to the reference level. When we use
+<mark style="background-color:grey">lm()</mark> to run and ANOVA, the
+Pr(&gt;|t|) column examines whether or not each level is significantly
+different from the reference level. What is more useful to us is the
+p-value on the last line of the output., which indicates that there is a
+significant effect of family on asynchrony.</p>
+<p>So now, can we say this is a good model? It certainly tells us that
+family has a significant effect on asynchrony, but maybe not a very
+important one compared to other possible factors, as they only explains
+around 1.8% of the variation in asynchrony. Imagine all the other things
+that could have an impact on asynchrony that we have not examined: time,
+temperature, geography, etc. No matter how excited you might be to
+report significant effects of your variables, especially if they confirm
+your hypotheses, always take the time to assess your model with a
+critical eye!</p>
+<p><br></p>
+</div>
+<div id="introduction-to-linear-regression" class="section level3">
+<h3>2. Introduction to linear regression</h3>
+<p>So far we have examined the effect of a categorical explanatory
+variable. Now, we will switch gears and examine continuous explanatory
+variables. When you run a statistical test with both continuous
+explanatory and response variables, you are running a linear
+regression.</p>
+<p>Linear regression, and really any linear model is considered to be
+“supervised machine learning” because your computer (machine), is
+determining or extracting (learning) patterns or relationships in data
+that is “labeled”. Here labeled means we tell the computer (supervise)
+what variables to use to extract information. In subsequent labs, we
+will explore “unsupervised” machine learning, where “unlabeled” data is
+used to cluster data (eg, cluster analysis or neural networks) or reduce
+dimensionality (eg, principle component analysis). You can think of it
+like the computer producing variables for us instead of us providing
+variables to the computer.</p>
+<p>The most common forms of linear models determine patterns in data
+using the least-squares method. Where the sum of squares is minimized.
+For a linear regression, this means that the best fit line (pattern) is
+the one that minimizes the differences between each value in the dataset
+and said best-fit line. Let’s look at a cool animation of the mid bloom
+data to help understand this process.</p>
+<pre class="r"><code>install.packages(&quot;animation&quot;) #download package</code></pre>
+<pre class="r"><code>require(animation) #load package into R
+
+# data
+x &lt;- Mid_bloom$Year
+y &lt;- Mid_bloom$Mid_bloom_day
+
+# run animation
+least.squares(x,y, ylab=&quot;Mid bloom day&quot;, xlab=&quot;Year&quot;, b.range=c(-0.198,-0.187))</code></pre>
+<p>Now, let’s build our own model with the pollinator data, and test the
+hypothesis that asynchrony increases with time (year).</p>
+<pre class="r"><code>pollinators.reg &lt;- lm(Asynchrony ~ Year, data = Pollinators)</code></pre>
+<pre class="r"><code>summary(pollinators.reg)</code></pre>
+<p><img src="images/simple%20regression%20output.png" /></p>
+<p>Can you spot the difference between this model and the previous ones?
+In the family models, our predictor was a categorical variable. Here,
+our predictor is a continuous variable. For the family models, the
+output gave us the asynchrony estimate (mean) for each level of family
+(with Intercept being our reference level).</p>
+<p>Here, the intercept is the value of Y when X is 0. In many models
+this is not of interest and sometimes doesn’t make a ton of sense. In
+our case, it would be asynchrony in the year 0. Then, the output gives
+us an estimate, which is the slope of the relationship. In this case,
+every additional year of time there is an average decrease of 0.03 days
+in asynchrony. You probably remember how to write linear equations from
+school, so that you could write it as: asynchrony = 61 -
+0.03*(Year).</p>
+<p>So far, so good? Hold your horses! The p-value is above 0.05,
+therefore the slope of Year is not significantly different from zero. In
+other words, asynchrony does not change with time. This is consistent
+with the very low R^2 of 0.1%.</p>
+<p>What if we include the effect of family in the model, as well? Let’s
+run a new model to test this:</p>
+<pre class="r"><code>pollinators.reg &lt;- lm(Asynchrony ~ Year*Family, data = Pollinators)</code></pre>
+<pre class="r"><code>summary(pollinators.reg)</code></pre>
+<p>Can you make sense of the output? Take a moment to examine yours and
+try to work it out. It is a bit tricky because it include both
+continuous and categorical explanatory variables (this is called an
+ANCOVA). For instance, could you calculate the estimated asynchrony of
+Xylocopinae in the year 1970?</p>
+<p><img src="images/ANCOVA%20output.png" /></p>
+<p>Let’s write the equation. To do this, we are modifying the intercepts
+and slopes according the family and year.</p>
+<p>Note, for both Xylocopinae (and other families) there is a
+significant interaction term, meaning that asynchrony changes
+significantly over time that family. It always makes a lot more sense
+when you can visualize the relationship. So I suggest looking at the
+appropriate plot (hint: you’ve already made something very similar in a
+previous lab!).</p>
+<p>For Xylocopinae, in the year 1970:</p>
+<p>asynchrony = 196.11 + -742.21 + -0.098x(Year) + 0.37258x(year). The
+asynchrony in 1970 would be 196.11 + -742.21 + -0.098x(1970) +
+0.37258x(1970) = -5.1774 days.</p>
+<p>Let’s try another example. For Halictinae in the year 2010, it would
+be:</p>
+<p>asynchrony = 196.11 + -342.56 + -0.098x(Year) + 0.17257x(year). The
+asynchrony in 2010 would be 196.11 + -342.56 + -0.098x(2010) +
+0.17257x(2010) = 3.4257 days.</p>
+<p><br></p>
+</div>
+<div id="choosing-your-model-structure" class="section level3">
+<h3>3. Choosing your model structure</h3>
+<p>Another important aspect of modeling to consider is how many terms,
+i.e. explanatory variables, you want your model to include. It’s a good
+idea to draft out your model structure before you even open your R
+session. Let your hypotheses guide you! Think about what it is you want
+to examine and what the potential confounding variables are, i.e. what
+else might influence your response variable, aside from the explanatory
+variable you are most interested in? Here is an example model structure
+from before:</p>
+<p><strong>You do not have to run any of the code within this section.
+It is include for demonstration purposes.</strong></p>
+<pre class="r"><code>pollinators.reg &lt;- lm(Asynchrony ~ Year + Family, data = Pollinators)</code></pre>
+<p>Here we are chiefly interested in the effect of time (Year): does
+asynchrony change over time? This is the research question we might have
+set out to answer, but we still need to acknowledge that time is
+probably not the only thing out there influencing phenology. Based on
+our ecological understanding, we can select other variables we may want
+to control for. For example, the insect family a pollinator belongs to
+may influence phenology, so we need to account for that.</p>
+<p>But wait - surely phenology depends on where the pollinators occur.
+Thus, let’s add latitude + longitude to the model.</p>
+<pre class="r"><code>pollinators.reg &lt;- lm(Asynchrony ~ Year + Family + Latitude + Longitude, data = Pollinators)</code></pre>
+<p>Last, imagine your read a paper indicating that precipitation
+significantly influences some pollinator flight dates. Ignoring this
+would weaken your final results - is Asynchrony different / the same
+because time has no / an effect, or because there was variance in rain?
+To test that, you can include a PRCP term in your model.</p>
+<pre class="r"><code>pollinators.reg &lt;- lm(Asynchrony ~ Year + Family + Latitude + Longitude + PRCP, data = Pollinators)</code></pre>
+<p>Some might say this model is very complex, and they would be right -
+there are a lot of terms in it! A simple model is usually preferred to a
+complex model, but if you have strong reasons for including a term in
+your model, then it should be there (whether it ends up having an effect
+or not). Once you have carefully selected the variables whose effects
+you need to quantify or account for, you can move onto running your
+models.</p>
+<p><br></p>
+<div id="dont-go-over-the-top" class="section level4">
+<h4><mark style="background-color:#F9E59B">Don’t go over the
+top!</mark></h4>
+<p><mark style="background-color:#F9E59B">It is important to be aware of
+the multiple factors that may influence your response variables, but if
+your model has a lot of variables, you are also in danger of
+overfitting. This means that there is simply not enough variation in
+your dataset (often because it is too small) to be accounted by all
+those variables, and your model will end up being super tailored to this
+specific dataset, but not necessarily representative of the generalized
+process or relationship you are trying to describe. Overfitting can cast
+doubt over your model’s output, so think carefully about the structure
+of your model, and read more about how to detect and avoid overfitting
+<a
+href="https://statisticsbyjim.com/regression/overfitting-regression-models/">here</a>.</mark></p>
+<p><mark style="background-color:#F9E59B">Another thing to think about
+is collinearity among your explanatory variables. If two variables in
+your dataset are very correlated with each other (eg, temperature and
+time), chances are they will both explain similar amounts of variation
+in your response variable - but the same variation, not different or
+complementary aspects of it! Imagine that you measured tree heights as
+you walked up a mountain, and at each measuring point you recorded your
+elevation and the air temperature. As you may expect that air
+temperature goes down with increasing elevation, including both these
+factors as explanatory variables may be risky.</mark></p>
+<p><br></p>
+</div>
+</div>
+<div id="checking-assumptions" class="section level3">
+<h3>4. Checking assumptions</h3>
+<p>In addition to checking whether a model makes sense from an
+ecological perspective, we should check that it actually meets the
+assumptions of a linear model:</p>
+<p>1- are the residuals, which describe the difference between the
+observed and predicted value of the dependent variable, normally
+distributed?</p>
+<p>2- are the data homoscedastic? (i.e. is the variance in the data
+approximately the same at all values of the predictor variable)</p>
+<p>3- is there a linear relationship between x and y?</p>
+<p>4-are the observations independent?</p>
+<p>There are statistical tests out there to examine these assumptions,
+such as the Shapiro-Wilk test for normality, and the Bartlett test for
+homoscedasticity. However, I prefer to look at diagnostic plots.</p>
+<pre class="r"><code>plot(pollinators.reg)  # you will have to press Enter in the command line to view the plots</code></pre>
+<p>This will produce a set of four plots. However you really only need
+to look at the first two:</p>
+<ul>
+<li>Residuals versus fitted (predicted) values. This plot assesses
+whether or not you have issues with variance or linearity. Here are some
+examples:</li>
+</ul>
+<p><img src="images/Residual%20plot.png" /></p>
+<ul>
+<li>Q-Q plot of standardized residuals. This plot examines the normality
+assumption. If the values fall near the dotted line, then the assumption
+is met. If the values deviate severely, then the assumption is not
+met.</li>
+</ul>
+<p><img src="images/QQ%20plot.png" /></p>
+<p><mark style="background-color:#F9E59B">We do not typically test for
+independence of data points. We design our experiment so that they are
+independent, making no test required.</mark></p>
+<p><br></p>
+</div>
+<div id="non-simple-linear-regression" class="section level3">
+<h3>5. Non-simple linear regression</h3>
+<p>In the linear regressions we have explored so far, we have assumed a
+simple straight line relationship between the explanatory and response
+variables. However, not all relationship follow a straight line. Two
+examples that we saw from class are exponential and logistic growth.
+Historically, one solution for non-simple linear relationships was to
+transform the data (eg, log-transformation). However, that makes
+interpretation of the results difficult. It is a mental load to think
+about log-growth versus just growth. With the computing power that we
+have today, we can analyze the data without transforming it.</p>
+<p><br></p>
+</div>
+<div id="a.-logistic-growth-model" class="section level3">
+<h3>5a. Logistic growth model</h3>
+<p>Import the US_pop.csv dataset (it is available on Canvas). It is the
+US population size at every census going back to its founding. Instead
+of using <mark style="background-color:grey">lm()</mark> we are using
+<mark style="background-color:grey">nls</mark>, which stands for
+nonlinear least squares. We also specify that we are estimating a
+logistic growth curve with
+<mark style="background-color:grey">SSlogis()</mark>. The logisitic
+growth equation requires three parameters be estimated: Asym (carrying
+capacity), xmid (inflection point), and scal (intercept).</p>
+<pre class="r"><code>#import dataset
+US_pop&lt;-read.csv(&quot;C:/Users/ahoward1/Documents/DSEE/Labs/Apple pollinators/US_pop.csv&quot;,header=T)
+
+#run logistic growth regression
+LG.mod &lt;- nls(Population ~ SSlogis(Year, Asym, xmid, scal), data= US_pop)</code></pre>
+<pre class="r"><code>#print results
+summary(LG.mod)</code></pre>
+<p><img src="images/Non-linear%20regression%20output.png" /> From the
+summary output we can see that the estimated carrying capacity for the
+US population is nearly 500 million people! Why may this be higher than
+values from more sophisticated models, like the chohort-component
+projection?</p>
+<p>It is probably a good idea to visualize these results. Let’s start
+with a simple plot showing the population values and best-fit line.</p>
+<pre class="r"><code>#load ggplot2 before making plot
+require(ggplot2)
+
+(LG_plot &lt;- ggplot(US_pop, aes(x = Year, y = Population)) +
+    geom_point(size = 3, color = &quot;blue&quot;) +
+    geom_line(aes(x = US_pop$Year, y = predict(LG.mod)), size = 1.25, alpha = 0.5) +
+    theme_bw() +
+    theme(axis.text.x = element_text(size = 12, angle = 45, vjust = 1, hjust = 1),
+          axis.text.y = element_text(size = 12),
+          axis.title = element_text(size = 12, face = &quot;plain&quot;),                        
+          panel.grid = element_blank(),                                                 
+          plot.margin = unit(c(1,1,1,1), units = , &quot;cm&quot;))
+)</code></pre>
+<p><img src="DSEE-Lab5and6_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p>What good is a model like this if we do not make predictions?! This
+is where a prediction interval comes in. Regressions can project future
+response variable outcomes simply by plugging values for explanatory
+variables into the best-fit line equation (eg, the asynchrony examples
+above). However, you also need to quantify the uncertainty in your
+prediction with prediction intervals. You have all used confidence
+intervals before, but prediction intervals are a little different.
+Confidence intervals quantify variation in a mean or best-fit line due
+to sampling error. Whereas, prediction intervals incorporate sampling
+error AND uncertainty in future values. When you are predicting a future
+value, you are predicting a single value, not a mean. So, your interval
+must include sampling error and the uncertainty of any one possible
+future outcome.</p>
+<p>Now let’s produce predictions for the decadal censuses through
+2100.</p>
+<pre class="r"><code># propagate package is required to produce predicted values for nls
+install.packages(&quot;propagate&quot;)</code></pre>
+<p>For those using Macs, you may run into an error when loading the
+propagate package. If you do, it usually can be fixed by going to this
+website: <a
+href="https://github.com/fxcoudert/gfortran-for-macOS/releases"
+class="uri">https://github.com/fxcoudert/gfortran-for-macOS/releases</a>
+and downloading, then installing the package that matches your
+computer’s operating system.</p>
+<pre class="r"><code>require(propagate)
+
+# this produces a dataframe of years when pop. size will be predicted
+pred_data &lt;- data.frame(Year = c(seq(2020,2100,10)))
+
+# generates 95% prediction intervals
+pred_pop &lt;- predictNLS(LG.mod, newdata=pred_data, interval=&quot;prediction&quot;, alpha=0.05)
+
+# a dataframe of the predicted values (from best-fit line) and prediction intervals
+pred_pop &lt;- data.frame(pred_pop$summary$Sim.Mean,pred_pop$summary[,11],pred_pop$summary[,12], pred_data$Year)
+names(pred_pop) &lt;- c(&quot;Population&quot;, &quot;lwr&quot;, &quot;upr&quot;, &quot;Year&quot;)</code></pre>
+<p>Next, we can include the prediction intervals to our plot by adding
+<mark style="background-color:grey">geom_ribbon()</mark> and
+<mark style="background-color:grey">geom_line()</mark> layers.</p>
+<pre class="r"><code>(LG_plot &lt;- ggplot(US_pop, aes(x = Year, y = Population)) +
+    geom_point(size = 3, color = &quot;blue&quot;) +
+    geom_line(aes(x = US_pop$Year, y = predict(LG.mod)), size = 1.25, alpha = 0.5) + 
+    geom_line(data = pred_pop, aes(x = Year, y = Population), size = 1.25, alpha = 0.5) + # prediction (from best-fit line)
+    geom_ribbon(data=pred_pop, aes(ymin = lwr, ymax = upr), fill = &quot;blue&quot;, alpha = 0.2) + # prediction interval
+    theme_bw() +
+    theme(axis.text.x = element_text(size = 12, angle = 45, vjust = 1, hjust = 1),
+          axis.text.y = element_text(size = 12),
+          axis.title = element_text(size = 12, face = &quot;plain&quot;),                        
+          panel.grid = element_blank(),                                                 
+          plot.margin = unit(c(1,1,1,1), units = , &quot;cm&quot;))
+)</code></pre>
+<p><img src="DSEE-Lab5and6_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p>Notice that as our prediction moves father away from the existing
+data the intervals get larger. This is because uncertainty in future
+values increases as we move further away from established values in the
+dataset. This logistic model suggests that the US will not reach its
+carrying capacity by 2100. Do you agree with this prediction?</p>
+<p><br></p>
+</div>
+<div id="assignment" class="section level3">
+<h3><mark style="color:blue"><em>6. Assignment</em></mark></h3>
+<p><mark style="color:blue"><em>Your lab write-up for module 2 is a
+results and discussion section. This can either be in the form of a
+scientific paper, or data driven blog post. In this course, we have
+almost exclusively read scientific papers, but one lofty goal of data
+science is to clearly communicate interesting and potentially complex
+results to non-scientists.</em></mark></p>
+<p><br></p>
+<div id="detailed-expectations" class="section level4">
+<h4><mark style="color:blue"><em>Detailed expectations:</em></mark></h4>
+<p><mark style="color:blue"><em>Due: Wednesday, 10/19 at 1:30 PM,
+Points: 40 pts.</em></mark></p>
+<p><mark style="color:blue"><em>Your write-up should:</em></mark></p>
+<p><mark style="color:blue"><em>1) Address the following
+question:</em></mark></p>
+<p><mark style="color:blue"><em>- Is there phenological mismatch between
+apple (Malus ssp.) flowers and their pollinators.</em></mark></p>
+<p><mark style="color:blue">2) Include all the plots you saved from the
+data visualization labs, and at least one additional plot that includes
+prediction intervals.</mark></p>
+<p><mark style="color:blue"><em>- If you are writing a scientific paper,
+the plots need captions.</em></mark></p>
+<p><mark style="color:blue"><em>- If you are writing a blog post, the
+plots need titles.</em></mark></p>
+<p><mark style="color:blue"><em>3) Include any statistical results that
+are required to assess patterns or relationships shown in
+plots.</em></mark></p>
+<p><mark style="color:blue"><em>- If you are writing a scientific paper,
+the statistical results should be provided parenthetically (remember
+back to BIO 110!).</em></mark></p>
+<p><mark style="color:blue"><em>- If you are writing a blog post, they
+can be included as endnotes.</em></mark></p>
+<p><mark style="color:blue"><em>- I don’t really care about formatting
+details. Use whatever citation type you want.</em></mark></p>
+<p><mark style="color:blue"><em>4) Include a discussion section that
+addresses the question given above and associated hypotheses and makes
+some predictions about the ecological future of both the pollinators and
+apple trees. You do not need to address the literature at large, discuss
+weaknesses in the experiment, or provide future
+directions.</em></mark></p>
+<p><mark style="color:blue"><em>5) Include any code I asked you to save
+from previous labs. Include it as an appendix.</em></mark></p>
+<p><mark style="color:blue"><em>A few additional things:</em></mark></p>
+<p><mark style="color:blue"><em>You may use the published paper (cited
+at the start of this lab document) as a guide (no reference section is
+required), but note that many of its figures are quite bad,
+visually.</em></mark></p>
+<p><mark style="color:blue"><em>For data driven blog post examples, you
+should look at <a
+href="https://fivethirtyeight.com/">FiveThirtyEight</a> (Nate Silver is
+my statistical hero!), like the <a
+href="https://fandm.instructure.com/courses/17827/files/folder/Readings?preview=1470282">Ukraine
+article</a>, the <a href="https://www.nytimes.com/section/upshot">NY
+Times The Upshot</a>, or The American Scientist (<a
+href="https://fandm.instructure.com/courses/17827/files/folder/Readings?preview=1470284">Budburst
+article</a> example).</em></mark></p>
+<p><br></p>
+</div>
+<div id="additional-prediction-interval-code" class="section level4">
+<h4>Additional Prediction Interval Code</h4>
+<p>Below is example code for generating prediction intervals using
+<mark style="background-color:grey">lm()</mark>.</p>
+<pre class="r"><code># run model
+bloom.lm&lt;-lm(Mid_bloom_day~Year, data = Mid_bloom)
+
+# create new data for predictions
+newdata&lt;-as.data.frame(c(2011:2050))
+names(newdata)&lt;-c(&quot;Year&quot;)
+
+# predict new values
+pred_vals&lt;-predict(bloom.lm,newdata,interval= &quot;predict&quot;)
+
+# create dataframe of new data with prediction values
+pred_data&lt;-data.frame(pred_vals,newdata)
+names(pred_data)&lt;- c(&quot;Mid_bloom_day&quot;,&quot;lwr&quot;,&quot;upr&quot;,&quot;Year&quot;)
+
+# make plot
+(LG_plot &lt;- ggplot(Mid_bloom, aes(x = Year, y = Mid_bloom_day)) +
+geom_point(size = 3, color = &quot;blue&quot;) +
+geom_line(aes(x = Mid_bloom$Year, y = predict(bloom.lm)), size = 1.25, alpha = 0.5) + 
+geom_line(data = pred_data, aes(x = Year, y = Mid_bloom_day), size = 1.25, alpha = 0.5) + # prediction (from best-fit line)
+geom_ribbon(data = pred_data, aes(ymin = lwr, ymax = upr), fill = &quot;blue&quot;, alpha = 0.2) + # prediction interval
+theme_bw() +
+    theme(axis.text.x = element_text(size = 12, angle = 45, vjust = 1, hjust = 1),
+     axis.text.y = element_text(size = 12),
+     axis.title = element_text(size = 12, face = &quot;plain&quot;),
+     panel.grid = element_blank(), 
+     plot.margin = unit(c(1,1,1,1), units = , &quot;cm&quot;))
+)</code></pre>
+<p><img src="DSEE-Lab5and6_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
