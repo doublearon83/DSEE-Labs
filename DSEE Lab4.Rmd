@@ -58,10 +58,12 @@ If we want to manipulate the x-axis to display every 5 values from -30 through 3
 We can also specify the limits of the plot axes – add the layers (of code) below to your <mark style="background-color:grey">ggplot()</mark> code and you’ll be able to see that the limit of the y axis now extends to the value of 160.  I’ll leave it to you to decide where to add these layers.  Remember that layers override each other if they modify the same features of the plot.
 
 ```{r, eval=T, echo=F}
+require(tidyverse)
+
 #import datasets
-Mid_bloom<-read.csv("C:/Users/17163/Documents/DSEE/Labs/Apple pollinators/Mid_bloom.csv",header=T)
-Climate<-read.csv("C:/Users/17163/Documents/DSEE/Labs/Apple pollinators/Climate.csv",header=T)
-Pollinators<-read.csv("C:/Users/17163/Documents/DSEE/Labs/Apple pollinators/Pollinators.csv",header=T)
+Mid_bloom<-read.csv("C:/Users/ahoward1/Documents/DSEE/Labs/Apple pollinators/Mid_bloom.csv",header=T)
+Climate<-read.csv("C:/Users/ahoward1/Documents/DSEE/Labs/Apple pollinators/Climate.csv",header=T)
+Pollinators<-read.csv("C:/Users/ahoward1/Documents/DSEE/Labs/Apple pollinators/Pollinators.csv",header=T)
 
 #calculate asynchrony
 

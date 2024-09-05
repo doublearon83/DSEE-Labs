@@ -8,14 +8,14 @@ navbar:
       href: DSEE-Lab1.html
     - text: "DSEE Lab #2"
       href: DSEE-Lab2.html
-    - text: "DSEE Lab #3"
-      href: DSEE-Lab3.html
-    - text: "DSEE Lab #4"
-      href: DSEE-Lab4.html
-    - text: "DSEE Lab #5 and 6"
-      href: DSEE-Lab5and6.html
-    - text: "DSEE Lab #7"
-      href: DSEE-Lab7.html
-    - text: "DSEE Lab #8"
-      href: DSEE-Lab8.html
+ #   - text: "DSEE Lab #3"
+ #     href: DSEE-Lab3.html
+ #   - text: "DSEE Lab #4"
+ #     href: DSEE-Lab4.html
+ #   - text: "DSEE Lab #5 and 6"
+ #     href: DSEE-Lab5and6.html
+ #   - text: "DSEE Lab #7"
+ #     href: DSEE-Lab7.html
+ #   - text: "DSEE Lab #8"
+ #     href: DSEE-Lab8.html
 output_dir: "docs"

@@ -90,9 +90,9 @@ Get them uploaded into R (review “Introduction to R” labs for assistance).
 
 ```{r,eval=T, echo=F}
 #import datasets
-Mid_bloom<-read.csv("C:/Users/17163/Documents/DSEE/Labs/Apple pollinators/Mid_bloom.csv",header=T)
-Climate<-read.csv("C:/Users/17163/Documents/DSEE/Labs/Apple pollinators/Climate.csv",header=T)
-Pollinators<-read.csv("C:/Users/17163/Documents/DSEE/Labs/Apple pollinators/Pollinators.csv",header=T)
+Mid_bloom<-read.csv("C:/Users/ahoward1/Documents/DSEE/Labs/Apple pollinators/Mid_bloom.csv",header=T)
+Climate<-read.csv("C:/Users/ahoward1/Documents/DSEE/Labs/Apple pollinators/Climate.csv",header=T)
+Pollinators<-read.csv("C:/Users/ahoward1/Documents/DSEE/Labs/Apple pollinators/Pollinators.csv",header=T)
 
 ```
 

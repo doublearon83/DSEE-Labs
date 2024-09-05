@@ -13,7 +13,7 @@
 
 <title>Introduction to R - Part 1</title>
 
-<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.27/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -29,7 +29,7 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
@@ -506,9 +506,12 @@ to provide extra commands for formatting and manipulating data.</p>
 <pre class="r"><code>#install package
 install.packages(&quot;dplyr&quot;)</code></pre>
 <p>Once installed, you just need to load the packages using
-<mark style="background-color:grey">library(package-name)</mark>. The
-next lines of code should define your working directory. This is a
-folder on your computer where R will look for data, save your plots,
+<mark style="background-color:grey">library(package-name)</mark>.</p>
+<pre class="r"><code>library(dplyr)
+# Note that there are quotation marks when installing a package, but not when loading it
+# and remember that hashtags let you add useful notes to your code! </code></pre>
+<p>The next lines of code should define your working directory. This is
+a folder on your computer where R will look for data, save your plots,
 etc. To make your workflow easier, it is good practice to save
 everything related to one project in the same place, as it will save you
 a lot of time typing up computer paths or hunting for files that got
@@ -520,11 +523,7 @@ project (e.g. “My_PhD”) as your working directory, and other folders
 nested within to separate data, scripts, images, etc.
 (e.g. My_PhD/Chapter_1/data, My_PhD/Chapter_1/plots,
 My_PhD/Chapter_2/data, etc.).</p>
-<pre class="r"><code>library(dplyr)
-# Note that there are quotation marks when installing a package, but not when loading it
-# and remember that hashtags let you add useful notes to your code! 
-
-setwd(&quot;C:/Users/17163/Documents/DSEE/Labs/Intro_to_R&quot;)
+<pre class="r"><code>setwd(&quot;C:/Users/ahoward1/Documents/DSEE/Labs/Intro_to_R&quot;)
 # This is an example filepath, alter to your own filepath</code></pre>
 <p>To find out where your working directory is now, run the code
 <mark style="background-color:grey">getwd()</mark>. If you want to
@@ -629,14 +628,14 @@ keep in mind you could be missing rows or columns.</p>
 ## 6 MLO 1970  1 325.13</code></pre>
 <pre class="r"><code>tail(MLO_CO2)        # Displays the last rows</code></pre>
 <pre><code>##      V1   V2 V3     V4
-## 558 MLO 2021  7 416.73
-## 559 MLO 2021  8 414.35
-## 560 MLO 2021  9 413.18
-## 561 MLO 2021 10 413.76
-## 562 MLO 2021 11 414.91
-## 563 MLO 2021 12 416.77</code></pre>
+## 582 MLO 2023  7 421.33
+## 583 MLO 2023  8 419.70
+## 584 MLO 2023  9 418.84
+## 585 MLO 2023 10 418.74
+## 586 MLO 2023 11 419.85
+## 587 MLO 2023 12 421.63</code></pre>
 <pre class="r"><code>str(MLO_CO2)         # Tells you whether the variables are continuous, integers, categorical or characters</code></pre>
-<pre><code>## &#39;data.frame&#39;:    563 obs. of  4 variables:
+<pre><code>## &#39;data.frame&#39;:    587 obs. of  4 variables:
 ##  $ V1: chr  &quot;MLO&quot; &quot;MLO&quot; &quot;MLO&quot; &quot;MLO&quot; ...
 ##  $ V2: int  1969 1969 1969 1969 1969 1970 1970 1970 1970 1970 ...
 ##  $ V3: int  8 9 10 11 12 1 2 3 4 5 ...
@@ -670,21 +669,21 @@ see, modify, and/or reassign this variable.</p>
 <pre><code>##  [1] 1969 1970 1976 1977 1978 1979 1980 1981 1982 1983 1984 1985 1986 1987 1988
 ## [16] 1989 1990 1991 1992 1993 1994 1995 1996 1997 1998 1999 2000 2001 2002 2003
 ## [31] 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016 2017 2018
-## [46] 2019 2020 2021</code></pre>
+## [46] 2019 2020 2021 2022 2023</code></pre>
 <pre class="r"><code># More exploration
 dim(MLO_CO2) # Displays number of rows and columns</code></pre>
-<pre><code>## [1] 563   4</code></pre>
+<pre><code>## [1] 587   4</code></pre>
 <pre class="r"><code>summary(MLO_CO2) # Gives you a summary of the data</code></pre>
-<pre><code>##      Site                Year          Month             CO2       
-##  Length:563         Min.   :1969   Min.   : 1.000   Min.   :320.7  
-##  Class :character   1st Qu.:1986   1st Qu.: 4.000   1st Qu.:347.8  
-##  Mode  :character   Median :1998   Median : 7.000   Median :366.7  
-##                     Mean   :1998   Mean   : 6.563   Mean   :369.0  
-##                     3rd Qu.:2010   3rd Qu.:10.000   3rd Qu.:389.1  
-##                     Max.   :2021   Max.   :12.000   Max.   :419.2</code></pre>
+<pre><code>##      Site                Year          Month            CO2       
+##  Length:587         Min.   :1969   Min.   : 1.00   Min.   :320.7  
+##  Class :character   1st Qu.:1987   1st Qu.: 4.00   1st Qu.:349.0  
+##  Mode  :character   Median :1999   Median : 7.00   Median :368.5  
+##                     Mean   :1999   Mean   : 6.56   Mean   :371.1  
+##                     3rd Qu.:2011   3rd Qu.:10.00   3rd Qu.:392.7  
+##                     Max.   :2023   Max.   :12.00   Max.   :424.4</code></pre>
 <pre class="r"><code>summary(MLO_CO2$CO2) # Gives you a summary of that particular variable (column) in your dataset</code></pre>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##   320.7   347.8   366.7   369.0   389.1   419.2</code></pre>
+##   320.7   349.0   368.5   371.1   392.7   424.4</code></pre>
 <p><br></p>
 </div>
 <div id="calculate-yearly-co2-averages" class="section level3">
@@ -771,7 +770,7 @@ coding!</p>
 <mark style="background-color:grey">barplot()</mark> function. Plots
 appear in the bottom right window in RStudio.</p>
 <pre class="r"><code>barplot(CO2_y)</code></pre>
-<p><img src="DSEE-Lab1_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p><img src="DSEE-Lab1_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 <p>Ta-daaaa! But there are a few things not quite right that we should
 fix – there are no axis titles, not all column labels are visible, and
 the CO2 values exceed the highest value on the y axis, so we need to
@@ -784,7 +783,7 @@ you need to add in?</p>
 help(par)         # For help with plotting in general</code></pre>
 <pre class="r"><code># The cex code increases the font size when greater than one (and decreases it when less than one).
 barplot(CO2_y, xlab=&quot;Year&quot;, ylab=&quot;CO2 in parts per million (ppm)&quot;, ylim=c(0,400), cex.names= 1.5, cex.axis=1.5, cex.lab=1.5)</code></pre>
-<p><img src="DSEE-Lab1_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p><img src="DSEE-Lab1_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 <p>We want to <mark style="color:blue"><em>save our plot for the
 write-up</em></mark>. To do this, click Export in the Plots window. If
 you don’t change the directory, the file will be saved in your working
@@ -855,7 +854,7 @@ before, we can specify columns from a data frame using
 <pre class="r"><code>barplot(CO2_year$CO2, names.arg = c(&quot;1976&quot;,&quot;1977&quot;,&quot;1978&quot;,&quot;1979&quot;,&quot;1980&quot;),
         ylab = &quot;CO2 in parts per million (ppm)&quot;, xlab = &quot;Year&quot;, ylim=c(0,400),
         cex.names= 1.5, cex.axis=1.5, cex.lab=1.5)</code></pre>
-<p><img src="DSEE-Lab1_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p><img src="DSEE-Lab1_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 <p><br></p>
 <p><em>This is the end of part 1. You have accomplished a lot:</em></p>
 <p><em>1. You are familiar with the RStudio interface</em></p>
