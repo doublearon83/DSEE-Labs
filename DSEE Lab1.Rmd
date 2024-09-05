@@ -258,7 +258,7 @@ Notice:
 
 • Take care to check that you are matching your vector values and labels correctly! The good thing about keeping a script is that we can go back and check that we have indeed assigned the mean of 1976 to <mark style="background-color:grey">a</mark>. Even better practice would have been to give more meaningful names to our objects, such as <mark style="background-color:grey">mean_1976</mark>.
 
-• If you highlight a bracket  <mark style="background-color:grey">)</mark> with your mouse, R Studio will highlight its matching one in your code. Missing brackets, especially when you start nesting functions like we did earlier with <mark style="background-color:grey">length(unique())</mark> are one of the most common sources of frustration and error when you start coding!
+• If you highlight a bracket  <mark style="background-color:grey">)</mark> with your mouse, R Studio will highlight its matching one in your code. Missing brackets, especially when you start nesting functions like with <mark style="background-color:grey">length(unique())</mark> are one of the most common sources of frustration and error when you start coding!
 
 We can now visualize CO2 concentration with the <mark style="background-color:grey">barplot()</mark> function. Plots appear in the bottom right window in RStudio.
 

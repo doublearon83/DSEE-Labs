@@ -851,23 +851,24 @@ organized.</p>
 is often called long format. Now if you wanted to compare between
 groups, treatments, etc., R would be able to split the dataframe
 correctly, as each grouping factor has its own column.</p>
-<p>The <mark style="background-color:grey">spread()</mark> function from
-the <mark style="background-color:grey">tidyr</mark> package will let us
-convert long-format data (tidy dataframe) to wide-format. The
-<mark style="background-color:grey">gather()</mark> function will let us
-convert a wide-format table to a tidy dataframe.</p>
+<p>The <mark style="background-color:grey">pivot_wider()</mark> function
+from the <mark style="background-color:grey">tidyr</mark> package will
+let us convert long-format data (tidy dataframe) to wide-format. The
+<mark style="background-color:grey">pivot_longer()</mark> function will
+let us convert a wide-format table to a tidy dataframe.</p>
 <pre class="r"><code>install.packages(&quot;tidyr&quot;)  # install the package</code></pre>
 <pre class="r"><code>library(tidyr)             # load the package
 
-# Spread() allows you to go from long to wide format
-MLO_CO2_wide &lt;- spread(MLO_CO2, Year, CO2)                # in this order: data frame, key, value
+# pivot_wider() allows you to go from long to wide format
+MLO_CO2_wide &lt;- pivot_wider(MLO_CO2,names_from = Year, values_from = CO2)                 
 
-# the key variable (Year) dictates the new columns (one for each year) and the value variable (CO2) indicates that CO2 concentrations are given within each Year column
-#CO2 values are spread by year
+# the names_from variable (Year) dictates the names new columns (one for each year) and the value_from variable (CO2) indicates that CO2 concentrations are given within each Year column
+#CO2 values are organized by year
 
-# Let&#39;s reverse! gather() is the inverse function, allowing you to go from wide to long format
-MLO_CO2_long &lt;- gather(MLO_CO2_wide,Year, CO2,        # in this order: data frame, key, value
-                                      c(3:50))        # we gather CO2 values by year (the first two of the 50 columns in MLO_CO2_wide are not CO2 values)</code></pre>
+# Let&#39;s reverse! pivot_longer() is the inverse function, allowing you to go from wide to long format
+MLO_CO2_long &lt;- pivot_longer(MLO_CO2_wide, cols = c(3:ncol(MLO_CO2_wide)),
+                             names_to = &quot;Year&quot;, values_to = &quot;CO2&quot;)       
+# the cols argument tells us that the first two of the columns in MLO_CO2_wide are not CO2 values, so they will not be pivoted, the names_to variable dictates the name for the new Year variable and the values_to argument tells us the name for the new CO2 variable.</code></pre>
 <p>Since our original data was in long, tidy form, the new data frame
 MLO_CO2_long should be very similar to the original dataset. However it
 is slightly different. It added a few extra rows for the missing months
