@@ -30,7 +30,7 @@ output: html_document
 </div>
 <div class="col-sm-6">
 
-### [Data Science for Ecology and the Environment](https://fandm.instructure.com/courses/17827)
+### [Data Science for Ecology and the Environment](hhttps://fandm.instructure.com/courses/22067)
 
 ![](images/Covid.png)
 Figure: Example of a plot you will create in the Data modeling and disease ecology module.  Observed and estimated (lines) number of individuals infected with four covid variants (x-axis is weeks after first sequenced variant).  Estimates are based on SIR model.
