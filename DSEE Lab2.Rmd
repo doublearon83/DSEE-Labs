@@ -408,7 +408,56 @@ for (i in 1:nrow(MLO_temp)) {
     MLO_temp$Temperature[i]<-mean(MLO_t_data[,10],na.rm=T)
 
 }
+
+# optional coding challenge: modify the loop above to generate a dataset with mean temperatures by MONTH and not by year. The final dataframe should incorporate data from all the years, but it should only have 12 rows.
 ```
+
+```{r, eval=FALSE, include=FALSE}
+# creating a data frame where monthly temperature means will be stored
+
+#first, let's get the latest full year of data (this year minus 1)
+cy_1 <- as.numeric(format(Sys.Date(),"%Y"))-1 #can you explain this code?
+
+Year <- rep(c(1977:cy_1),each=12)
+Month <- rep(1:12,length(c(1977:cy_1)))
+Temperature <- numeric(length(Month))
+
+MLO_temp_month <- data.frame(Year,Month,Temperature)
+
+mn <- seq(1,length(Temperature),12)
+
+# for loop to extract temperature data from the NOAA website
+# all of the code within the {} below will be run for each year (1977 through most recent year with data) and the associated datasets on NOAA website
+# it also extracts data for each 12 month period in each year (i is dictated by total accumulated months, mn)
+for (i in mn) {
+
+  # reads in the yearly temperature datasets from NOAA
+  MLO_t_data <- read.table(
+    paste("https://gml.noaa.gov/aftp/data/meteorology/in-situ/mlo/met_mlo_insitu_1_obop_hour_",
+          MLO_temp_month$Year[i],".txt",sep=""))	# can you figure out what the paste function does?
+  
+  # subset data and name variables
+  MLO_t_data <- MLO_t_data[,c(2,3,10)]
+  names(MLO_t_data) <- c("Year","Month","Temperature")
+  
+  # NOAA codes miss values as "-999.9", we convert those to NA
+  MLO_t_data$Temperature[MLO_t_data$Temperature==-999.9]<-NA
+  
+  # calculates the mean value for each month
+  MLO_temp_month[i:(i+11),2:3]<- MLO_t_data %>% 
+    group_by(Month) %>% 
+    summarize(Temperature = mean(Temperature,na.rm=T))
+  
+}
+
+# calculate mean values for each month ACROSS years
+MLO_temp_month<- MLO_temp_month %>% 
+  group_by(Month) %>% 
+  summarize(Temperature = mean(Temperature,na.rm=T))
+
+plot(MLO_temp_month$Temperature)
+```
+
 
 Now that we have a temperature data frame.  The next step is to merge it with the yearly CO2 dataset.  We can do this because both datasets have a column representing the Year.
 
