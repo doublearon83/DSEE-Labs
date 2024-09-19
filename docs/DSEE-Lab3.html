@@ -617,6 +617,30 @@ histogram you made just now.</p>
 <p><img src="images/Colourpicker2.png" /></p>
 <p><br></p>
 </div>
+<div id="accessible-colors" class="section level3">
+<h3>Accessible colors</h3>
+<p>About 10% of the population is color blind. Unfortunately, the
+default colors used in ggplot2 are not optimal for this group of people.
+Fortunately, it is also possible to access predefined color palettes
+that are color blind friendly. One of the most widely-used is a set
+designed by Cynthia Brewer (who is a cartographer at Penn State, I
+think). It was designed for using color in maps, but it has a subset
+that is friendly to colorblind people. To use it, you need to install
+the RColorBrewer package, then load it into your document. To display
+the colors in various palettes, use the
+<mark style="background-color:grey">display.brewer()</mark>
+function.</p>
+<pre class="r"><code>library(RColorBrewer)
+display.brewer.all(colorblindFriendly=TRUE)</code></pre>
+<p><img src="DSEE-Lab3_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>To use one of the palettes in a plot, use the
+<mark style="background-color:grey">scale_fill_brewer(palette=?)</mark>
+or
+<mark style="background-color:grey">scale_color_brewer(palette=?)</mark>
+function. You should replace the question mark with the name of the
+palette you want to use, enclosed in quotation marks.</p>
+<p><br></p>
+</div>
 <div id="b.-scatter-plot-to-examine-change-over-time"
 class="section level3">
 <h3>3b. Scatter plot to examine change over time</h3>
@@ -629,7 +653,7 @@ Pollinators$Family &lt;- as.factor(Pollinators$Family)
 # Using default ggplot2 graphics
 (pollinator_scatter &lt;- ggplot(Pollinators, aes(x = Year, y = CorrectedCollectionDay, color = Family)) +  
                              geom_point())</code></pre>
-<p><img src="DSEE-Lab3_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><img src="DSEE-Lab3_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <p>Hopefully by now we’ve convinced you of the perks of ggplot2, but
 again like with the histogram, the graph above needs a bit more work. We
 are adding best fit lines, along with other features.</p>
@@ -652,7 +676,7 @@ colors &lt;-  c(&quot;#0000EE&quot;, &quot;#8A2BE2&quot;, &quot;#FF1493&quot;, &
           legend.text = element_text(size = 12, face = &quot;italic&quot;),         # Setting the font for the legend text
           legend.title = element_blank(),                                 # Removing the legend title
           legend.position = c(0.87, 0.84)))                                 # Setting legend position - 0 is left/bottom, 1 is top/right</code></pre>
-<p><img src="DSEE-Lab3_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p><img src="DSEE-Lab3_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 <p>That’s cluttered! Can you really figure out what the families are
 doing? By adding a facetting layer, we can split the data in multiple
 facets representing the different families. This is done using
@@ -678,7 +702,7 @@ colors &lt;-  c(&quot;#0000EE&quot;, &quot;#8A2BE2&quot;, &quot;#FF1493&quot;, &
           legend.text = element_text(size = 12, face = &quot;italic&quot;),   # Setting the font for the legend text
           legend.title = element_blank(),   # Removing the legend title
           legend.position = &quot;right&quot;))       # Setting legend position</code></pre>
-<p><img src="DSEE-Lab3_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p><img src="DSEE-Lab3_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 <p>Some useful arguments to include in
 <mark style="background-color:grey">facet_wrap()</mark> are
 <mark style="background-color:grey">nrow =</mark> or
@@ -710,7 +734,7 @@ families</h3>
 your data, and allow you to quickly compare values among groups.</p>
 <pre class="r"><code># boxplot of pollinator family asynchrony
 (pollinator_boxplot &lt;- ggplot(Pollinators, aes(Family, Asynchrony)) + geom_boxplot())</code></pre>
-<p><img src="DSEE-Lab3_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p><img src="DSEE-Lab3_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <pre class="r"><code># Beautifying
 (pollinator_boxplot &lt;- ggplot(Pollinators, aes(Family, Asynchrony)) + 
     geom_boxplot(aes(fill = Family)) +
@@ -724,7 +748,10 @@ your data, and allow you to quickly compare values among groups.</p>
           panel.grid = element_blank(),                     # Removing the background grid lines               
           plot.margin = unit(c(1,1,1,1), units = , &quot;cm&quot;),   # Adding a margin
           legend.position = &quot;none&quot;))                        # Removing legend</code></pre>
-<p><img src="DSEE-Lab3_files/figure-html/unnamed-chunk-12-2.png" width="672" /></p>
+<p><img src="DSEE-Lab3_files/figure-html/unnamed-chunk-13-2.png" width="672" /></p>
+<p>Now reproduce the boxplot above, but with color blind friendly
+colors. Does it help, hinder, or not influence your visual experience?
+Your answer may depend on whether or not you are color blind!</p>
 <p>We have made several plots today! Do any patterns you saw in the
 plots tell us something interesting about the relationships between
 plants, pollinators, and climate?</p>

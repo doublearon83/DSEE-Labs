@@ -1127,7 +1127,7 @@ for (i in 1:nrow(MLO_temp)) {
 
 }
 
-# optional coding challenge: modify the loop above to generate a dataset with mean temperatures by MONTH and not by year. The final dataframe should incorporate data from all the years, but it should only have 12 rows.</code></pre>
+# optional coding challenge: modify the loop above to generate a dataset with mean temperatures by MONTH and not by year. The final dataframe should incorporate data from all the years, but it should only have 12 rows. This really is a challenge! So do not feel bad if you can&#39;t figure it out.</code></pre>
 <p>Now that we have a temperature data frame. The next step is to merge
 it with the yearly CO2 dataset. We can do this because both datasets
 have a column representing the Year.</p>
@@ -1159,7 +1159,10 @@ plot(Temperature ~ CO2,data = MLO_t_c)</code></pre>
 running an inferential statistical test. We’ll go into more detail
 regarding how to test this in subsequent labs, but we can run a quick
 linear regression right now because who doesn’t like a little instant
-gratification.</p>
+gratification. Here is a nice <a
+href="https://www.statology.org/interpret-regression-output-in-r/">little
+tutorial</a> if you want some quick information on interpreting R output
+from the <mark style="background-color:grey">lm()</mark> function.</p>
 <pre class="r"><code># linear regression of yearly temperature by CO2 concentration
 # Values in the second row of the “Coefficients” table indicate the slope of the best fit line, SE, t-value, and p-value
 summary(lm(Temperature ~ CO2, data = MLO_t_c))</code></pre>

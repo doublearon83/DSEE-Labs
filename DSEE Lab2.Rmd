@@ -409,7 +409,7 @@ for (i in 1:nrow(MLO_temp)) {
 
 }
 
-# optional coding challenge: modify the loop above to generate a dataset with mean temperatures by MONTH and not by year. The final dataframe should incorporate data from all the years, but it should only have 12 rows.
+# optional coding challenge: modify the loop above to generate a dataset with mean temperatures by MONTH and not by year. The final dataframe should incorporate data from all the years, but it should only have 12 rows. This really is a challenge! So do not feel bad if you can't figure it out.
 ```
 
 ```{r, eval=FALSE, include=FALSE}
@@ -480,7 +480,7 @@ Now that we have gone to the trouble of merging our data, let’s check if tempe
 plot(Temperature ~ CO2,data = MLO_t_c)
 ```
 
-Are these variables related to each other? It is hard to tell without running an inferential statistical test.  We’ll go into more detail regarding how to test this in subsequent labs, but we can run a quick linear regression right now because who doesn’t like a little instant gratification.
+Are these variables related to each other? It is hard to tell without running an inferential statistical test.  We’ll go into more detail regarding how to test this in subsequent labs, but we can run a quick linear regression right now because who doesn’t like a little instant gratification.  Here is a nice [little tutorial](https://www.statology.org/interpret-regression-output-in-r/) if you want some quick information on interpreting R output from the <mark style="background-color:grey">lm()</mark> function.
 
 ```{r}
 # linear regression of yearly temperature by CO2 concentration
