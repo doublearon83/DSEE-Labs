@@ -34,7 +34,7 @@ klippy::klippy()
 
 **Due:** Nothing this week
 
-For the next two labs we will focus on communicating results using visualizations, or graphics.  The data we are going to use for these labs is from a paper published in 2013 on the role of biodiversity in mitigating phenological mismatches.  The [paper](https://fandm.instructure.com/courses/17827/files?preview=1433579) uses a long term dataset of bloom times for apple trees (*Malus* ssp.) and flight times for apple flower pollinators.
+For the next two labs we will focus on communicating results using visualizations, or graphics.  The data we are going to use for these labs is from a paper published in 2013 on the role of biodiversity in mitigating phenological mismatches.  The [paper](https://drive.google.com/file/d/1zLrlETQ4B8tQhaqqXvBvEdsASySKkvU6/view?usp=sharing) uses a long term dataset of bloom times for apple trees (*Malus* ssp.) and flight times for apple flower pollinators.
 
 For part 1, there are a few bits of code and several plots that you will need to save for your write-up.  They are indicated with the *<mark style="color:blue">blue text</mark>*.
 
