@@ -700,15 +700,23 @@ families (ie, filters by family using
 investigating collection day over time. This would be another way (in
 addition to the facetted plot made in the previous lab) to avoid
 cluttering up your visualization with too much information.</p>
+<p>An animated plot with all of the pollinator data can take a long time
+to render (unless you have a powerful CPU).</p>
+<p>So, YOU should make a new dataframe called “Pollinators_ym” composed
+of yearly mean collection day values for each pollinator family. Note,
+this means you need to group by two variables (Family and Year).</p>
+<p>Once you create that dataframe, the code below should work to produce
+an animated plot of those yearly averages by Family. This plot may still
+take several minutes to render, so be patient.</p>
 <pre class="r"><code>colors &lt;-  c(&quot;#0000EE&quot;, &quot;#8A2BE2&quot;, &quot;#FF1493&quot;, &quot;#CDAD00&quot;, &quot;#548B54&quot;, &quot;#8B5A00&quot;)
 
 #Install the package if you don&#39;t have it!
 require(transformr)
 
 #create the plot
-pollinator_scatter &lt;- ggplot(Pollinators, aes (x = Year, y = CorrectedCollectionDay, color = Family)) +
-    geom_point(size = 6) +                                               # Changing point size
-    geom_smooth(method = &quot;lm&quot;, aes(fill = Family), se=F, size=3) +               # Adding linear model fit, color-code by country
+pollinator_scatter &lt;- ggplot(Pollinators_ym, aes (x = Year, y = CorrectedCollectionDay, color = Family)) +
+    geom_point(size = 4) +                                               # Changing point size
+    geom_smooth(method = &quot;lm&quot;, aes(fill = Family), se=F, size=2) +               # Adding linear model fit, color-code by country
     theme_bw() +
     scale_fill_manual(values = colors) +                # Adding custom colors for solid geoms (ribbon)
     scale_color_manual(values = colors) +              # Adding custom colors for lines and points
@@ -719,9 +727,9 @@ pollinator_scatter &lt;- ggplot(Pollinators, aes (x = Year, y = CorrectedCollect
           axis.title = element_text(size = 16, face = &quot;plain&quot;),                        
           panel.grid = element_blank(),                                   # Removing the background grid lines               
           plot.margin = unit(c(1,1,1,1), units = , &quot;cm&quot;),                 # Adding a 1cm margin around the plot
-          legend.text = element_text(size = 10, face = &quot;italic&quot;),         # Setting the font for the legend text
+          legend.text = element_text(size = 9, face = &quot;italic&quot;),         # Setting the font for the legend text
           legend.title = element_blank(),                                 
-          legend.position = c(0.87, 0.84))+
+          legend.position = c(0.87, 0.74))+
     transition_filter(                                                    # layer for filter transition
       transition_length = 2,                                              # amount of time for transition
       filter_length = 1,                                                  
@@ -742,7 +750,7 @@ pollinator_scatter &lt;- ggplot(Pollinators, aes (x = Year, y = CorrectedCollect
 
 animate(pollinator_scatter, renderer = gifski_renderer())</code></pre>
 <p><img
-src="DSEE-Lab4_files/figure-html/unnamed-chunk-18-1.gif" /><!-- --></p>
+src="DSEE-Lab4_files/figure-html/unnamed-chunk-19-1.gif" /><!-- --></p>
 <p><br></p>
 </div>
 <div id="create-your-own-ggplot-theme" class="section level3">

@@ -342,6 +342,19 @@ Check out the [documentation](https://cran.r-project.org/web/packages/gganimate/
 
 For example, you can build a plot that transitions between pollinator families (ie, filters by family using <mark style="background-color:grey">transition_filter()</mark>) when investigating collection day over time.  This would be another way (in addition to the facetted plot made in the previous lab) to avoid cluttering up your visualization with too much information.
 
+An animated plot with all of the pollinator data can take a long time to render (unless you have a powerful CPU). 
+
+So, YOU should make a new dataframe called "Pollinators_ym" composed of yearly mean collection day values for each pollinator family. Note, this means you need to group by two variables (Family and Year).
+
+```{r, eval=T, include=F}
+Pollinators_ym <- Pollinators %>% 
+  group_by(Family,Year) %>% 
+  summarize(CorrectedCollectionDay = mean(CorrectedCollectionDay,na.rm=T))
+```
+
+
+Once you create that dataframe, the code below should work to produce an animated plot of those yearly averages by Family. This plot may still take several minutes to render, so be patient.
+
 ```{r}
 colors <-  c("#0000EE", "#8A2BE2", "#FF1493", "#CDAD00", "#548B54", "#8B5A00")
 
@@ -349,9 +362,9 @@ colors <-  c("#0000EE", "#8A2BE2", "#FF1493", "#CDAD00", "#548B54", "#8B5A00")
 require(transformr)
 
 #create the plot
-pollinator_scatter <- ggplot(Pollinators, aes (x = Year, y = CorrectedCollectionDay, color = Family)) +
-    geom_point(size = 6) +                                               # Changing point size
-    geom_smooth(method = "lm", aes(fill = Family), se=F, size=3) +               # Adding linear model fit, color-code by country
+pollinator_scatter <- ggplot(Pollinators_ym, aes (x = Year, y = CorrectedCollectionDay, color = Family)) +
+    geom_point(size = 4) +                                               # Changing point size
+    geom_smooth(method = "lm", aes(fill = Family), se=F, size=2) +               # Adding linear model fit, color-code by country
     theme_bw() +
     scale_fill_manual(values = colors) +                # Adding custom colors for solid geoms (ribbon)
     scale_color_manual(values = colors) +              # Adding custom colors for lines and points
@@ -362,9 +375,9 @@ pollinator_scatter <- ggplot(Pollinators, aes (x = Year, y = CorrectedCollection
           axis.title = element_text(size = 16, face = "plain"),                        
           panel.grid = element_blank(),                                   # Removing the background grid lines               
           plot.margin = unit(c(1,1,1,1), units = , "cm"),                 # Adding a 1cm margin around the plot
-          legend.text = element_text(size = 10, face = "italic"),         # Setting the font for the legend text
+          legend.text = element_text(size = 9, face = "italic"),         # Setting the font for the legend text
           legend.title = element_blank(),                                 
-          legend.position = c(0.87, 0.84))+
+          legend.position = c(0.87, 0.74))+
     transition_filter(                                                    # layer for filter transition
       transition_length = 2,                                              # amount of time for transition
       filter_length = 1,                                                  
