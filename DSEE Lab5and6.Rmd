@@ -155,7 +155,7 @@ Check out the summary output of our model:
 
 ![](images/ANOVA output.png)
 
-Remember, that R picks the reference level alphabetically. So, the intercept represents the estimate for the Andreninae family and all other estimates are relative to the reference level.  When we use <mark style="background-color:grey">lm()</mark> to run and ANOVA, the Pr(>|t|) column examines whether or not each level is significantly different from the reference level.  What is more useful to us is the p-value on the last line of the output., which indicates that there is a significant effect of family on asynchrony.
+Remember, that R picks the reference level alphabetically. So, the intercept represents the estimate for the Andreninae family and all other estimates are relative to the reference level.  When we use <mark style="background-color:grey">lm()</mark> to run an ANOVA, the Pr(>|t|) column examines whether or not each level is significantly different from the reference level.  What is more useful to us is the p-value on the last line of the output., which indicates that there is a significant effect of family on asynchrony.
 
 So now, can we say this is a good model? It certainly tells us that family has a significant effect on asynchrony, but maybe not a very important one compared to other possible factors, as they only explains around 1.8% of the variation in asynchrony. Imagine all the other things that could have an impact on asynchrony that we have not examined: time, temperature, geography, etc. No matter how excited you might be to report significant effects of your variables, especially if they confirm your hypotheses, always take the time to assess your model with a critical eye!
 
@@ -395,7 +395,7 @@ Notice that as our prediction moves father away from the existing data the inter
 
 #### <mark style="color:blue">*Detailed expectations:*</mark>
 
-<mark style="color:blue">*Due: Wednesday, 10/19 at 1:30 PM, Points: 40 pts.*</mark>
+<mark style="color:blue">*Due: 10/17 at 1:30 PM, Points: 40 pts.*</mark>
 
 <mark style="color:blue">*Your write-up should:*</mark>
 

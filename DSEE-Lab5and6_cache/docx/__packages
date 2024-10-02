@@ -1,0 +1,17 @@
+tidyr
+dplyr
+ggplot2
+readr
+gridExtra
+lubridate
+MASS
+mvtnorm
+Matrix
+sandwich
+gmm
+tmvtnorm
+Rcpp
+bit
+ff
+minpack.lm
+propagate
