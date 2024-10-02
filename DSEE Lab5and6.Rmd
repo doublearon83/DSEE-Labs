@@ -7,7 +7,6 @@ output:
     collapsed: false
     number_sections: false
     toc_depth: 3
-    #code_folding: hide
 ---
 
 ```{r setup, include=FALSE}
@@ -35,9 +34,9 @@ klippy::klippy()
       
 <br>
 
-**Due:** lab module write-up is due 10/19 at 1:30 PM.  Details of the assignment are at the end of this document.
+**Due:** lab module write-up is due 10/17 at 1:30 PM.  Details of the assignment are at the end of this document.
 
-For the next two labs we will focus on making inferences about and predictions using our data.  We will primarily (but not exclusively) be using the datasets we used the past two labs (from the [Bartomeus paper](https://fandm.instructure.com/courses/17827/files?preview=1433579)). 
+For the next two labs we will focus on making inferences about and predictions using our data.  We will primarily (but not exclusively) be using the datasets we used the past two labs (from the [Bartomeus paper](https://drive.google.com/file/d/1zLrlETQ4B8tQhaqqXvBvEdsASySKkvU6/view?usp=sharing)). 
 
 <br>
 
@@ -402,7 +401,7 @@ Notice that as our prediction moves father away from the existing data the inter
 
 <mark style="color:blue">*1) Address the following question:*</mark>
 
-<mark style="color:blue">*-  Is there phenological mismatch between apple (Malus ssp.) flowers and their pollinators.*</mark>  
+<mark style="color:blue">*-  Is there phenological mismatch between apple (Malus ssp.) flowers and their pollinators?*</mark>  
 	
 <mark style="color:blue">2) Include all the plots you saved from the data visualization labs, and at least one additional plot that includes prediction intervals.</mark>
 
