@@ -30,7 +30,7 @@ klippy::klippy()
     
 <br>
 
-**Due:** Module 3 write-up is due 11/2 at 1:30 PM.  Details of the assignment are at the end of this document.
+**Due:** Module 3 write-up is due 11/7 at 1:30 PM.  Details of the assignment are at the end of this document.
 
 In lab module 3 we are focusing on using tools of machine learning to describe and predict the spread of covid-19.  In the first week we focused on generating SIR models and using classification methods to make predictions about an emerging variant.  This week, we are going to learn how to use neural networks to classify covid-19 variants and compare the neural network to the k-nearest neighbor method.
 
@@ -266,7 +266,7 @@ mean(perc_correct)
 
 #### <mark style="color:blue">*Detailed expectations:*</mark>
 
-<mark style="color:blue">*Due: Monday, 11/7 at 11:59 PM, Points: 60 pts.*</mark> 
+<mark style="color:blue">*Due: 11/7 at 1:30 PM, Points: 60 pts.*</mark> 
 
 <mark style="color:blue">*Your write-up should:*</mark> 
 
